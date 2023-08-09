@@ -42,13 +42,22 @@ public class AnnnounceController {
 	public String register(AnnounceVO vo, RedirectAttributes rttr) {
 		boardService.register(vo);
 		rttr.addFlashAttribute("result", vo.getBno());
+		rttr.addFlashAttribute("operation", "register");
 		return "redirect:/announce/list";
 	}
 
+	@GetMapping("/modify")
+	public String modify(Long bno, Model model) {
+		model.addAttribute("board", boardService.get(bno));
+		return "/board/announce/modify";
+	}
+
+	
 	@PostMapping("/modify")
 	public String modify(AnnounceVO vo, RedirectAttributes rttr) {
 		if(boardService.modify(vo)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", vo.getBno());
+			rttr.addFlashAttribute("operation", "modify");
 		}
 		return "redirect:/announce/list";
 	}
@@ -57,7 +66,8 @@ public class AnnnounceController {
 	@PostMapping("/remove")
 	public String remove(Long bno, RedirectAttributes rttr) {
 		if(boardService.remove(bno)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", bno);
+			rttr.addFlashAttribute("operation", "remove");
 		}
 		return "redirect:/announce/list";
 	}
