@@ -9,7 +9,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
-import com.petti.board.domain.BoardVO;
+import com.petti.domain.AnnounceVO;
+import com.petti.repository.BoardRepository;
 
 import lombok.extern.log4j.Log4j;
 
@@ -22,14 +23,14 @@ public class BoardRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void testGetList() {
-		List<BoardVO> list = boardRepository.getList();
+		List<AnnounceVO> list = boardRepository.getList();
 		log.info(list);
 	}
 
 	@Test
 //	@Ignore
 	public void testRead() {
-		BoardVO read = boardRepository.read(1L);
+		AnnounceVO read = boardRepository.read(1L);
 		log.info(read);
 	}
 	
@@ -37,7 +38,7 @@ public class BoardRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void testInsert() {
-		BoardVO vo = BoardVO.builder()
+		AnnounceVO vo = AnnounceVO.builder()
 				.title("새로 작성하는 글...")
 				.content("새로 작성하는 글 내용")
 				.writer("관리자")
@@ -56,7 +57,7 @@ public class BoardRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void testUpdate() {
-		BoardVO vo = BoardVO.builder()
+		AnnounceVO vo = AnnounceVO.builder()
 				.bno(1L)
 				.title("수정제목")
 				.content("수정 내용")
