@@ -1,7 +1,5 @@
 package com.petti.board.repository;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Ignore;
@@ -10,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.repository.BoardRepository;
+import com.petti.repository.AnnoBoardRepository;
 
 import lombok.extern.log4j.Log4j;
 
@@ -18,13 +16,13 @@ import lombok.extern.log4j.Log4j;
 public class BoardRepositoryTest extends AppTest{
 
 	@Autowired
-	private BoardRepository boardRepository;
+	private AnnoBoardRepository boardRepository;
 	
 	@Test
 	@Ignore
 	public void testGetList() {
-		List<AnnounceVO> list = boardRepository.getList();
-		log.info(list);
+//		List<AnnounceVO> list = boardRepository.getList();
+//		log.info(list);
 	}
 
 	@Test

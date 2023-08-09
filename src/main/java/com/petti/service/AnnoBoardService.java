@@ -2,11 +2,12 @@ package com.petti.service;
 
 import java.util.List;
 
+import com.petti.domain.Criteria;
 import com.petti.domain.board.AnnounceVO;
 
-public interface BoardService {
+public interface AnnoBoardService {
 
-	List<AnnounceVO> getList(); // 게시판 목록
+	List<AnnounceVO> getList(Criteria criteria); // 게시판 목록
 	
 	void register(AnnounceVO board); // 등록
 	
@@ -15,4 +16,6 @@ public interface BoardService {
 	boolean modify(AnnounceVO board); // 수정
 	
 	boolean remove(Long bno); // 삭제
+	
+	int totalCount();
 }

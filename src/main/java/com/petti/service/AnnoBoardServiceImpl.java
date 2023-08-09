@@ -2,22 +2,24 @@ package com.petti.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.petti.domain.Criteria;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.repository.BoardRepository;
+import com.petti.repository.AnnoBoardRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService {
+public class AnnoBoardServiceImpl implements AnnoBoardService {
 
-	private final BoardRepository boardRepository;
+	private final AnnoBoardRepository boardRepository;
 
 	@Override
-	public List<AnnounceVO> getList() {
-		return boardRepository.getList();
+	public List<AnnounceVO> getList(Criteria criteria) {
+		return boardRepository.getList(criteria);
 	}
 
 	@Override
@@ -38,6 +40,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean remove(Long bno) {
 		return boardRepository.delete(bno)==1;
+	}
+
+	@Override
+	public int totalCount() {
+		return boardRepository.getTotalCount();
 	}
 
 

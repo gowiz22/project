@@ -8,27 +8,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.petti.domain.Criteria;
+import com.petti.domain.Pagination;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.service.BoardService;
+import com.petti.service.AnnoBoardService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/announce")
 @Log4j
-public class AnnnounceController {
+public class AnnounceController {
 	
 	@Autowired
-	private BoardService boardService; 
+	private AnnoBoardService boardService; 
 	
 	@GetMapping("/list")
-	public String list(Model model) {
-		model.addAttribute("list", boardService.getList());
+	public String list(Model model, Criteria criteria) {
+		model.addAttribute("list", boardService.getList(criteria));
+		model.addAttribute("p", new Pagination(criteria, boardService.totalCount()));
 		return "/board/announce/list";
 	}
 	
 	@GetMapping("/get")
-	public String get(Long bno, Model model) {
+	public String get(Long bno, Model model, Criteria criteria) {
 		model.addAttribute("board", boardService.get(bno));
 		return "/board/announce/get";
 	}

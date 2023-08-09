@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.petti.domain.Criteria;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.service.BoardService;
+import com.petti.service.AnnoBoardService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,11 +20,11 @@ import lombok.extern.log4j.Log4j;
 public class ReviewController {
 	
 	@Autowired
-	private BoardService boardService; 
+	private AnnoBoardService boardService; 
 	
 	@GetMapping("/list")
-	public String list(Model model) {
-		model.addAttribute("list", boardService.getList());
+	public String list(Model model, Criteria criteria) {
+		model.addAttribute("list", boardService.getList(criteria));
 		return "/board/review/list";
 	}
 	

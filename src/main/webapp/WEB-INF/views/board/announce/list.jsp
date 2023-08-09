@@ -28,7 +28,7 @@
 							<tr>
 								<td>${board.bno}</td>
 								<td>
-								<a href="${ctxPath}/announce/get?bno=${board.bno}">${board.title}</a>
+								<a class="move" href="${ctxPath}/announce/get?bno=${board.bno}">${board.title}</a>
 								</td>
 								<td>${board.writer}</td>
 								<td><tf:formatDateTime value="${board.regDate}" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -37,16 +37,38 @@
 						</c:forEach>
 						</tbody>
 					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="float-right d-flex">
-		<button id="regBtn" class="btn btn-xs btn-primary">공지사항 등록</button>
+					<div class="float-right d-flex">
+						<button id="regBtn" class="btn btn-xs btn-primary">공지사항 등록</button>
+					</div>
+					<ul class="pagination justify-content-center">
+						<c:if test="${p.prev }">
+							<li class="page-item">
+								<a class="page-link" href="${p.startPage-p.displayPageNum}">이전페이지</a>
+							</li>
+						</c:if>
+						<c:forEach begin="${p.startPage}" end="${p.endPage }" var="pagelink">
+							<li class="page-item ${ pagelink == p.criteria.pageNum ? 'active':''}">
+								<a href="${pagelink}" class="page-link ">${pagelink}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${p.next }">
+							<li class="page-item">
+								<a class="page-link" href="${p.endPage+1}">다음페이지</a>
+							</li>
+						</c:if>
+					</ul>
+					<form id="listForm" action="${ctxPath}/announce/list" method="get">
+						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
+						<input type="hidden" name="amount" value="${p.criteria.amount}">
+					</form>
+				</div> <!-- card body end -->
+			</div> <!-- card end -->
+		</div> <!-- col end -->
 	</div>
 </div>
 
-	<form id="listForm" action="${ctxPath}/board/list"></form>
+
+<form id="listForm" action="${ctxPath}/board/list"></form>
 
 <%@ include file="../../includes/footer.jsp"%>
 
@@ -96,5 +118,22 @@ $(function(){
 		listForm.attr('action', '${ctxPath}/announce/register')
 				.submit()
 	})
+	
+	// 페이지 이동
+	$('.pagination a').click(function(e){
+		e.preventDefault();
+		let pageNum = $(this).attr('href');
+		listForm.find('input[name="pageNum"]').val(pageNum)
+		listForm.submit();
+	});	
+
+	// 조회 페이지로 이동 
+		$('.move').click(function(e){
+			e.preventDefault();
+			let bnoValue = $(this).attr('href');
+			listForm.append($('<input/>',{type : 'hidden', name : 'bno', value : bnoValue}))
+					.attr('action','${ctxPath}/announce/get')
+					.submit();
+		});
 })
 </script>
