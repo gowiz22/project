@@ -2,7 +2,7 @@ package com.petti.repository;
 
 import java.util.List;
 
-import com.petti.domain.AnnounceVO;
+import com.petti.domain.board.AnnounceVO;
 
 public interface BoardRepository {
 

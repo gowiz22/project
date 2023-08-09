@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.petti.domain.AnnounceVO;
+import com.petti.domain.board.AnnounceVO;
 import com.petti.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;

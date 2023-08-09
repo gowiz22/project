@@ -2,7 +2,7 @@ package com.petti.service;
 
 import java.util.List;
 
-import com.petti.domain.AnnounceVO;
+import com.petti.domain.board.AnnounceVO;
 
 public interface BoardService {
 

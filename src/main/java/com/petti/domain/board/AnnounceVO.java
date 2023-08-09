@@ -1,4 +1,4 @@
-package com.petti.domain;
+package com.petti.domain.board;
 
 import java.time.LocalDateTime;
 

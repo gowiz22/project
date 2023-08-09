@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
-import com.petti.domain.AnnounceVO;
+import com.petti.domain.board.AnnounceVO;
 import com.petti.repository.BoardRepository;
 
 import lombok.extern.log4j.Log4j;

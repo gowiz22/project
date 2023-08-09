@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.petti.domain.AnnounceVO;
+import com.petti.domain.board.AnnounceVO;
 import com.petti.service.BoardService;
 
 import lombok.extern.log4j.Log4j;
