@@ -7,7 +7,7 @@ import com.petti.board.AppTest;
 import com.petti.domain.board.AnnounceVO;
 import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.repository.board.AnnoBoardRepository;
-import com.petti.repository.board.FreeBoardRepository;
+import com.petti.repository.free_board.FreeBoardRepository;
 
 public class Free_DataInsert extends AppTest{
 	

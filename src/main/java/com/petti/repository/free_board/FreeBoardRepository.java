@@ -1,4 +1,4 @@
-package com.petti.repository.board;
+package com.petti.repository.free_board;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import com.petti.domain.free_board.FreeBoardVO;
 
 public interface FreeBoardRepository {
 
-	List<FreeBoardVO> getList();
+	List<FreeBoardVO> getList(Criteria criteria);
 	
 	void insert(FreeBoardVO vo);
 	
@@ -18,6 +18,8 @@ public interface FreeBoardRepository {
 	FreeBoardVO read(Long bno);
 	
 	int delete(Long bno);
+	
+	int update(FreeBoardVO vo);
 	
 	List<FreeBoardVO> getList(
 			@Param("pageNum") int pageNum,

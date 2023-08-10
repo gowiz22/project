@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.petti.repository.board.FreeBoardRepository">
+ <mapper namespace="com.petti.repository.free_board.FreeBoardRepository">
  	<sql id="criteria">
  		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
  			<foreach collection="types" item="type">
@@ -24,10 +24,10 @@
  	</sql>
  
 	<select id="getList" resultType="freeVO">
-	    <![CDATA[ 
+	    	 <![CDATA[ 
 	    	select * from 
-			(select /*+ INDEX_DESC(tbl_freeBoard pk_free_board) */  
-	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, regDate, updateDate 
+			(select /*+ INDEX_DESC(tbl_FreeBoard pk_Free_board) */  
+	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, category, regDate, updateDate 
 	    		FROM tbl_freeBoard where
 	    ]]>		
 	    <include refid="criteria"/>
@@ -35,11 +35,11 @@
    		 rownum <= #{maxRow}) 
 			where rn > #{minRow}
 		]]>
-    </select>
+	</select>
 
     <select id="getTotalCount" resultType="int">
     	select count(bno) from tbl_freeBoard where
-    	<include refid="criteria"/>
+	   	<include refid="criteria"/>
     	bno > 0
     </select>
 

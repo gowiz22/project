@@ -1,7 +1,5 @@
 package com.petti.board.repository;
 
-import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

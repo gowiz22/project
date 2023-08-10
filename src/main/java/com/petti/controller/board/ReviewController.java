@@ -1,4 +1,4 @@
-package com.petti.controller;
+package com.petti.controller.board;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

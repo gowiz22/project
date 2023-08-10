@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petti.domain.Criteria;
-import com.petti.domain.board.AnnounceVO;
-import com.petti.service.board.AnnoBoardService;
-
-import lombok.extern.log4j.Log4j;
+import com.petti.domain.Pagination;
+import com.petti.domain.free_board.FreeBoardVO;
+import com.petti.service.free_board.FreeBoardService;
 
 @Controller
 @RequestMapping("/free")
-@Log4j
 public class FreeController {
 	
 	@Autowired
-	private AnnoBoardService boardService; 
+	private FreeBoardService boardService; 
 	
 	@GetMapping("/list")
 	public String list(Model model, Criteria criteria) {
 		model.addAttribute("list", boardService.getList(criteria));
+		model.addAttribute("p",new Pagination(criteria, boardService.totalCount(criteria)));
 		return "/board/free/free_list";
 	}
 	
@@ -35,25 +34,33 @@ public class FreeController {
 	}
 
 	@PostMapping("/register")
-	public String register(AnnounceVO vo, RedirectAttributes rttr) {
+	public String register(FreeBoardVO vo, RedirectAttributes rttr) {
 		boardService.register(vo);
 		rttr.addFlashAttribute("result", vo.getBno());
+		rttr.addFlashAttribute("operation", "register");
 		return "redirect:/board/free/free_list";
 	}
 
+	@GetMapping("/modify")
+	public String modify(Long bno, Model model) {
+		model.addAttribute("board", boardService.get(bno));
+		return "/board/free/free_modify";
+	}
+	
 	@PostMapping("/modify")
-	public String modify(AnnounceVO vo, RedirectAttributes rttr) {
+	public String modify(FreeBoardVO vo, RedirectAttributes rttr) {
 		if(boardService.modify(vo)) {
 			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("operation", "modify");
 		}
 		return "redirect:/board/free/free_list";
 	}
-	
 	
 	@PostMapping("/remove")
 	public String remove(Long bno, RedirectAttributes rttr) {
 		if(boardService.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("operation", "remove");
 		}
 		return "redirect:/board/free/free_list";
 	}
