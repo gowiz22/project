@@ -31,8 +31,8 @@
 						<label>작성자</label>
 						<input class="form-control" name="writer" value="${board.writer}" readonly="readonly"/>
 					</div>
-					<button class="btn btn-light modify">수정페이지</button>
-					<button class="btn btn-info list">목록으로</button>						
+					<button data-oper='modify' class="btn btn-light modify">수정페이지</button>
+					<button data-oper='list' class="btn btn-info list">목록으로</button>						
 				</div>
 			</div>
 		</div>
@@ -47,9 +47,20 @@
 
 <script>
 $(function(){
-	let getForm = $('form');
+	let getForm = $('form')
+	let operration = $(this).data('oper')
+	let type = '${criteria.type}'
+	let keyword = '${criteria.keyword}'
 	
-	
+	getForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
+			.append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))
+			.attr('method','get')
+			
+	if(type&&keyword){
+		getForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
+	}
+
 	// 수정페이지 
 	$('.modify').click(function(){
 		getForm.attr('action','${ctxPath}/announce/modify')

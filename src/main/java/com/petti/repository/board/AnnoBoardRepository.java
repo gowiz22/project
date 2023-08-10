@@ -1,4 +1,4 @@
-package com.petti.repository;
+package com.petti.repository.board;
 
 import java.util.List;
 
@@ -25,5 +25,5 @@ public interface AnnoBoardRepository {
 			@Param("pageNum") int pageNum,
 			@Param("amount") int amount);
 	
-	int getTotalCount(); // 전체 게시물 수
+	int getTotalCount(Criteria criteria); // 전체 게시물 수
 }

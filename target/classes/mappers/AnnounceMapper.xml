@@ -2,16 +2,46 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.petti.repository.AnnoBoardRepository">
+ <mapper namespace="com.petti.repository.board.AnnoBoardRepository">
+ 	<sql id="criteria">
+ 		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+ 			<foreach collection="types" item="type">
+ 				<trim prefix="OR">
+ 					<choose>
+	    				<when test="type=='T'.toString()">
+	    					TITLE like '%'||#{keyword}||'%'
+	    				</when>
+	    				<when test="type=='C'.toString()">
+	    					CONTENT like '%'||#{keyword}||'%'
+	    				</when>
+	    				<when test="type=='W'.toString()">
+	    					WRITER like '%'||#{keyword}||'%'
+	    				</when>	  					
+ 					</choose>
+ 				</trim>
+ 			</foreach>
+ 		</trim>
+ 	</sql>
+ 
 	<select id="getList" resultType="board">
-	<![CDATA[ 
-	  	select * from 
-		(select /*+INDEX_DESC(tbl_announceBoard pk_board)*/  
-	  		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, regDate, updateDate 
-	  		FROM tbl_announceBoard where rownum <= #{pageNum}*#{amount}) 
-		where rn > (#{pageNum}-1)*#{amount} order by bno desc
-	]]>
-	</select>
+	    <![CDATA[ 
+	    	select * from 
+			(select /*+ INDEX_DESC(tbl_announceBoard pk_board) */  
+	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, regDate, updateDate 
+	    		FROM tbl_announceBoard where
+	    ]]>		
+	    <include refid="criteria"/>
+   	    <![CDATA[ 		
+   		 rownum <= #{maxRow}) 
+			where rn > #{minRow}
+		]]>
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+    	select count(bno) from tbl_announceBoard where
+    	<include refid="criteria"/>
+    	bno > 0
+    </select>
 
 	<insert id="insert">
 		insert into tbl_announceBoard(bno,title,content,writer)
@@ -38,10 +68,5 @@
 		updateDate = sysdate
 		where bno=#{bno}
 	</update>
-
-<select id="getTotalCount" resultType="int">
-    	select count(bno) from tbl_announceBoard
-</select>
-
-
+	
  </mapper>

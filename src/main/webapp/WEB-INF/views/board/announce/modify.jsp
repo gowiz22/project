@@ -78,19 +78,27 @@
 
 <script>
 $(function(){
-	let modifyForm = $('form');	
+	let modifyForm = $('form')
+	let type = '${criteria.type}'
+	let keyword = '${criteria.keyword}'
+
+	if(type&&keyword){
+		modifyForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
+	}
 	
 	$('button').click(function(){
 		let operation = $(this).data('oper');
-		alert(operation)
+		modifyForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
+					.append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))	
+
 		if(operation=='list'){ // 목록으로
-			self.location = '${ctxPath}/announce/list'
-			return;
+			modifyForm.attr('action','${ctxPath}/announce/list')
+						.attr('method','get');
 		} else if(operation=='modify'){ // 수정처리
-			
+
 		} else if(operation=='remove'){ // 삭제처리
 			modifyForm.attr('action','${ctxPath}/announce/remove')
-						.submit()
 		}
 		modifyForm.submit();
 	});	

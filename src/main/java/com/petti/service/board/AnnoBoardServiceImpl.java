@@ -1,4 +1,4 @@
-package com.petti.service;
+package com.petti.service.board;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.repository.AnnoBoardRepository;
+import com.petti.repository.board.AnnoBoardRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,8 +43,8 @@ public class AnnoBoardServiceImpl implements AnnoBoardService {
 	}
 
 	@Override
-	public int totalCount() {
-		return boardRepository.getTotalCount();
+	public int totalCount(Criteria criteria) {
+		return boardRepository.getTotalCount(criteria);
 	}
 
 

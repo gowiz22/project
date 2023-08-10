@@ -28,7 +28,7 @@
 							<tr>
 								<td>${board.bno}</td>
 								<td>
-								<a class="move" href="${ctxPath}/announce/get?bno=${board.bno}">${board.title}</a>
+									<a class="move" href="${board.bno}">${board.title}</a>
 								</td>
 								<td>${board.writer}</td>
 								<td><tf:formatDateTime value="${board.regDate}" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -37,6 +37,30 @@
 						</c:forEach>
 						</tbody>
 					</table>
+					<form class="my-3" id="searchForm" action="${ctxPath}/announce/list">
+						<div class="d-inline-block">
+							<select name="type" class="form-control">
+								<option value="" ${p.criteria.type == null ? 'selected' : '' }>------</option>
+								<option value="T" ${p.criteria.type eq 'T' ? 'selected' : '' }>제목</option>
+								<option value="C" ${p.criteria.type eq 'C' ? 'selected' : '' }>내용</option>
+								<option value="W" ${p.criteria.type eq 'W' ? 'selected' : '' }>작성자</option>
+								<option value="TC" ${p.criteria.type eq 'TC' ? 'selected' : '' }>제목+내용</option>
+								<option value="TW" ${p.criteria.type eq 'TW' ? 'selected' : '' }>제목+작성자</option>
+								<option value="TCW" ${p.criteria.type eq 'TCW' ? 'selected' : '' }>제목+내용+작성자</option>
+							</select>
+						</div>
+						<div class="d-inline-block col-4">
+							<input type="text" name="keyword" value="${p.criteria.keyword}" class="form-control">
+						</div>
+						<div class="d-inline-block">
+							<button class="btn btn-primary">검색</button>
+						</div>
+						<div class="d-inline-block">
+							<a href="${ctxPath}/announce/list" class="btn btn-outline-info">새로고침</a>
+						</div>
+						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
+						<input type="hidden" name="amount" value="${p.criteria.amount}">
+					</form>
 					<div class="float-right d-flex">
 						<button id="regBtn" class="btn btn-xs btn-primary">공지사항 등록</button>
 					</div>
@@ -68,7 +92,7 @@
 </div>
 
 
-<form id="listForm" action="${ctxPath}/board/list"></form>
+<%-- <form id="listForm" action="${ctxPath}/board/list"></form> --%>
 
 <%@ include file="../../includes/footer.jsp"%>
 
@@ -98,6 +122,14 @@
 $(function(){
 	let listForm = $('#listForm')
 	let result = "${result}"
+	let searchForm = $('#searchForm')
+	let searchCondition = function(){
+		if(searchForm.find('option:selected').val() && searchForm.find('[name="keyword"]')){ // 검색 조건이 있을 때
+			listForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+					.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
+		}		
+	} 
+	
 	checkModal(result)
 	
 	function checkModal(result){
@@ -124,6 +156,7 @@ $(function(){
 		e.preventDefault();
 		let pageNum = $(this).attr('href');
 		listForm.find('input[name="pageNum"]').val(pageNum)
+		searchCondition();
 		listForm.submit();
 	});	
 
@@ -131,9 +164,26 @@ $(function(){
 		$('.move').click(function(e){
 			e.preventDefault();
 			let bnoValue = $(this).attr('href');
+			searchCondition();
 			listForm.append($('<input/>',{type : 'hidden', name : 'bno', value : bnoValue}))
 					.attr('action','${ctxPath}/announce/get')
 					.submit();
 		});
+	
+		// 검색 이벤트 처리 
+		
+		$('#searchForm button').click(function(e){
+			e.preventDefault();
+			if(!searchForm.find('option:selected').val()){
+				alert('검색종류를 선택하세요');
+				return; 
+			}
+			if(!searchForm.find('[name="keyword"]').val()){
+				alert('키워드를 입력하세요');
+				return; 
+			}
+			searchForm.find('[name="pageNum"]').val(1); 
+			searchForm.submit();
+		});	
 })
 </script>

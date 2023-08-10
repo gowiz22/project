@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.repository.AnnoBoardRepository;
+import com.petti.repository.board.AnnoBoardRepository;
 
 import lombok.extern.log4j.Log4j;
 

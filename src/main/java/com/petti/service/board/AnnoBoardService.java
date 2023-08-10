@@ -1,4 +1,4 @@
-package com.petti.service;
+package com.petti.service.board;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public interface AnnoBoardService {
 	
 	boolean remove(Long bno); // 삭제
 	
-	int totalCount();
+	int totalCount(Criteria criteria);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.petti.domain.Criteria;
 import com.petti.domain.Pagination;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.service.AnnoBoardService;
+import com.petti.service.board.AnnoBoardService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,7 +26,7 @@ public class AnnounceController {
 	@GetMapping("/list")
 	public String list(Model model, Criteria criteria) {
 		model.addAttribute("list", boardService.getList(criteria));
-		model.addAttribute("p", new Pagination(criteria, boardService.totalCount()));
+		model.addAttribute("p", new Pagination(criteria, boardService.totalCount(criteria)));
 		return "/board/announce/list";
 	}
 	
@@ -50,7 +50,7 @@ public class AnnounceController {
 	}
 
 	@GetMapping("/modify")
-	public String modify(Long bno, Model model) {
+	public String modify(Long bno, Model model, Criteria criteria) {
 		model.addAttribute("board", boardService.get(bno));
 		return "/board/announce/modify";
 	}

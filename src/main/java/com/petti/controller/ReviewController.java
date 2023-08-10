@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.board.AnnounceVO;
-import com.petti.service.AnnoBoardService;
+import com.petti.service.board.AnnoBoardService;
 
 import lombok.extern.log4j.Log4j;
 

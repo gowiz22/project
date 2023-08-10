@@ -19,18 +19,33 @@
 </script>
 </head>
 <body>
-	<div class="">
+	<div align="center">
 		<div class="d-inline-block">
 	        <a class="nav-link" href="${ctxPath == '' ? '/': ctxPath}">petti</a>
-	    </div>       
-	    <div class="d-inline-block">
-	         <input type="text" name="main_search" class="" placeholder="검색할 내용을 입력해주세요">
-		</div>
-		<div class="d-inline-block">
-			<button class="btn btn-primary">검색</button>
-		</div>
+	    </div>   
+	    <div class="d-inline-block col-8">    
+			<form class="my-3" id="mainSearch" action="${ctxPath}/mainSearch">
+				<div class="d-inline-block">
+					<select name="type" class="form-control">
+						<option value="T">제목</option>
+						<option value="C">내용</option>
+						<option value="W">작성자</option>
+						<option value="TC" selected="selected">제목+내용</option>
+						<option value="TW">제목+작성자</option>
+						<option value="TCW">제목+내용+작성자</option>
+					</select>
+				</div>
+				<div class="d-inline-block col-4">
+					<input type="text" name="keyword" class="form-control" placeholder="통합 검색">
+				</div>
+				<div class="d-inline-block">
+					<button class="btn btn-primary">검색</button>
+				</div>
+			</form>
+		</div>	
 	</div>
-<nav class="navbar navbar-expand-sm bg-light">
+	
+<nav class="navbar navbar-expand-sm bg-light justify-content-center">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="${ctxPath}/announce/list">공지사항</a>
@@ -46,3 +61,26 @@
         </li>
     </ul>
 </nav>
+<div align="right">
+<button class="btn btn-primary" id="login">로그인</button>
+<button class="btn btn-primary" id="join">회원가입</button>
+</div>
+
+
+<script>
+//검색 이벤트 처리 
+let mainSearch = $('#mainSearch');
+$('#mainSearch button').click(function(e){
+	e.preventDefault();
+	if(!mainSearch.find('option:selected').val()){
+		alert('검색종류를 선택하세요');
+		return; 
+	}
+	if(!mainSearch.find('[name="keyword"]').val()){
+		alert('키워드를 입력하세요');
+		return; 
+	}
+	mainSearch.find('[name="pageNum"]').val(1);
+	mainSearch.submit();
+});
+</script>
