@@ -11,7 +11,17 @@
 	<div class="row mb-3">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">자유 게시판</div>
+				<div class="card-header">
+					<select class="amount form-control" id="category">
+						<option value="">전체</option>
+						<c:forEach items="${category}"  var="category">
+							<option value="${category}" >${category}</option>
+						</c:forEach>					
+					</select>
+					<div>
+						<button>추천글</button>
+					</div>
+				</div>
 				<div class="card-body">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
@@ -62,6 +72,7 @@
 						</div>
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
+						<input type="hidden" name="category" value="${p.criteria.kind}">
 					</form>
 					<div class="float-right d-flex">
 						<button id="regBtn" class="btn btn-xs btn-primary">게시물 등록</button>
@@ -163,29 +174,36 @@ $(function(){
 	});	
 
 	// 조회 페이지로 이동 
-		$('.move').click(function(e){
-			e.preventDefault();
-			let bnoValue = $(this).attr('href');
-			searchCondition();
-			listForm.append($('<input/>',{type : 'hidden', name : 'bno', value : bnoValue}))
-					.attr('action','${ctxPath}/free/get')
-					.submit();
-		});
+	$('.move').click(function(e){
+		e.preventDefault();
+		let bnoValue = $(this).attr('href');
+		searchCondition();
+		listForm.append($('<input/>',{type : 'hidden', name : 'bno', value : bnoValue}))
+				.attr('action','${ctxPath}/free/get')
+				.submit();
+	});
 	
-		// 검색 이벤트 처리 
+	// 검색 이벤트 처리 
+	$('#searchForm button').click(function(e){
+		e.preventDefault();
+		if(!searchForm.find('option:selected').val()){
+			alert('검색종류를 선택하세요')
+			return;
+		}
+		if(!searchForm.find('[name="keyword"]').val()){
+			alert('키워드를 입력하세요')
+			return
+		}
+		searchForm.find('[name="pageNum"]').val(1); 
+		searchForm.submit()
+	})
 		
-		$('#searchForm button').click(function(e){
-			e.preventDefault();
-			if(!searchForm.find('option:selected').val()){
-				alert('검색종류를 선택하세요');
-				return; 
-			}
-			if(!searchForm.find('[name="keyword"]').val()){
-				alert('키워드를 입력하세요');
-				return; 
-			}
-			searchForm.find('[name="pageNum"]').val(1); 
-			searchForm.submit();
-		});	
+	//카테고리 처리
+	$('#category').change(function(){
+		let category = $(this).val()
+		searchForm.find('[name="category"]').val(category)
+		$(this).attr('selected');
+		searchForm.submit()
+	})
 })
 </script>

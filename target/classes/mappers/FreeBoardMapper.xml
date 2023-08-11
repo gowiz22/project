@@ -16,12 +16,20 @@
 	    				</when>
 	    				<when test="type=='W'.toString()">
 	    					WRITER like '%'||#{keyword}||'%'
-	    				</when>	  					
+	    				</when>
  					</choose>
  				</trim>
  			</foreach>
  		</trim>
  	</sql>
+ 
+<!--  	<sql id="category"> -->
+<!--  		<if test='category.kind !=null and category.kind !="전체"'> -->
+<!-- 	 		<trim prefix="(" suffix=") AND"> -->
+<!-- 	 			category = #{kind} -->
+<!-- 	 		</trim> -->
+<!--  		</if> -->
+<!--  	</sql> -->
  
 	<select id="getList" resultType="freeVO">
 	    	 <![CDATA[ 
@@ -31,6 +39,7 @@
 	    		FROM tbl_freeBoard where
 	    ]]>		
 	    <include refid="criteria"/>
+<!-- 	    <include refid="category"/> -->
    	    <![CDATA[ 		
    		 rownum <= #{maxRow}) 
 			where rn > #{minRow}
@@ -69,5 +78,9 @@
 		updateDate = sysdate
 		where bno=#{bno}
 	</update>
+	
+	<select id="category" resultType="string">
+		select * from tbl_category
+	</select>
 	
  </mapper>

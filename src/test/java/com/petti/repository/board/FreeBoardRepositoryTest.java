@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
-import com.petti.domain.board.AnnounceVO;
+import com.petti.domain.Criteria;
 import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.repository.free_board.FreeBoardRepository;
 
@@ -20,10 +20,14 @@ public class FreeBoardRepositoryTest extends AppTest{
 	private FreeBoardRepository boardRepository;
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void testGetList() {
-//		List<FreeBoardVO> list = boardRepository.getList();
-//		log.info(list);
+		Criteria criteria = new Criteria();
+//		criteria.setType("C");
+//		criteria.setKeyword("자바");
+		criteria.setKind("일상");
+		List<FreeBoardVO> list = boardRepository.getList(criteria);
+		log.info(list);
 	}
 	
 	@Test
@@ -64,7 +68,14 @@ public class FreeBoardRepositoryTest extends AppTest{
 				.category("질문")
 				.build();
 		int update = boardRepository.update(vo);
-		
 		log.info(update);
+	}
+	
+	@Test
+	@Ignore
+	public void category() {
+		List<String> count = boardRepository.category();
+		log.info(count);
+		
 	}
 }

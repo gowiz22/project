@@ -26,4 +26,8 @@ public interface FreeBoardRepository {
 			@Param("amount") int amount);
 	
 	int getTotalCount(Criteria criteria);
+	
+	List<String> category();
+	
+	
 }

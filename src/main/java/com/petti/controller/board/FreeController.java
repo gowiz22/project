@@ -24,11 +24,12 @@ public class FreeController {
 	public String list(Model model, Criteria criteria) {
 		model.addAttribute("list", boardService.getList(criteria));
 		model.addAttribute("p",new Pagination(criteria, boardService.totalCount(criteria)));
+		model.addAttribute("category", boardService.category());
 		return "/board/free/free_list";
 	}
 	
 	@GetMapping("/get")
-	public String get(Long bno, Model model) {
+	public String get(Long bno, Model model, Criteria criteria) {
 		model.addAttribute("board", boardService.get(bno));
 		return "/board/free/free_get";
 	}
@@ -42,7 +43,7 @@ public class FreeController {
 	}
 
 	@GetMapping("/modify")
-	public String modify(Long bno, Model model) {
+	public String modify(Long bno, Model model, Criteria criteria) {
 		model.addAttribute("board", boardService.get(bno));
 		return "/board/free/free_modify";
 	}
@@ -50,7 +51,7 @@ public class FreeController {
 	@PostMapping("/modify")
 	public String modify(FreeBoardVO vo, RedirectAttributes rttr) {
 		if(boardService.modify(vo)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", vo.getBno());
 			rttr.addFlashAttribute("operation", "modify");
 		}
 		return "redirect:/board/free/free_list";
@@ -59,7 +60,7 @@ public class FreeController {
 	@PostMapping("/remove")
 	public String remove(Long bno, RedirectAttributes rttr) {
 		if(boardService.remove(bno)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", bno);
 			rttr.addFlashAttribute("operation", "remove");
 		}
 		return "redirect:/board/free/free_list";

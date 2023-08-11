@@ -1,21 +1,27 @@
 package com.petti.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @Setter
 @Getter
-public class Criteria {
+public class Criteria{
 	private int pageNum; // 현재 페이지 
 	private int amount; // 한 페이지당 게시물 수
 	
 	private String type;
 	private String keyword;
+	private String kind;
 	
 	public Criteria() {
 		this(1,10); // 1페이지, 한 페이지당 게시물 수는 10개 
+	}
+
+	public Criteria (String kind) {
+		this.kind= kind;
 	}
 	
 	public Criteria(int pageNum, int amount) {
@@ -34,4 +40,5 @@ public class Criteria {
 	public String[] getTypes() { // collection="types"
 		return type == null ? new String[] {} : type.split("");
 	}
+	
 }

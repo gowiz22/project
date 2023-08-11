@@ -45,4 +45,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return boardRepository.getTotalCount(criteria);
 	}
 
+	@Override
+	public List<String> category() {
+		return boardRepository.category();
+	}
+
 }

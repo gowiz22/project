@@ -93,6 +93,7 @@ $(function(){
 					.append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))	
 
 		if(operation=='list'){ // 목록으로
+			$('.form-group').remove()
 			modifyForm.attr('action','${ctxPath}/announce/list')
 						.attr('method','get');
 		} else if(operation=='modify'){ // 수정처리

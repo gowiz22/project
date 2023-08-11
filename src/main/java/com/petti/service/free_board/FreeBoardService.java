@@ -18,4 +18,6 @@ public interface FreeBoardService {
 	boolean remove(Long bno); // 삭제
 	
 	int totalCount(Criteria criteria);
+	
+	List<String> category();
 }
