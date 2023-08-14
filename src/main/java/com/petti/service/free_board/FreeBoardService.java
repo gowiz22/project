@@ -3,6 +3,7 @@ package com.petti.service.free_board;
 import java.util.List;
 
 import com.petti.domain.Criteria;
+import com.petti.domain.free_board.CategoryVO;
 import com.petti.domain.free_board.FreeBoardVO;
 
 public interface FreeBoardService {
@@ -19,5 +20,5 @@ public interface FreeBoardService {
 	
 	int totalCount(Criteria criteria);
 	
-	List<String> category();
+	List<CategoryVO> category();
 }

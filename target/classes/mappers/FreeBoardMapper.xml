@@ -23,23 +23,23 @@
  		</trim>
  	</sql>
  
-<!--  	<sql id="category"> -->
-<!--  		<if test='category.kind !=null and category.kind !="전체"'> -->
-<!-- 	 		<trim prefix="(" suffix=") AND"> -->
-<!-- 	 			category = #{kind} -->
-<!-- 	 		</trim> -->
-<!--  		</if> -->
-<!--  	</sql> -->
+ 	<sql id="category">
+ 		<if test='cno >0'>
+	 		<trim prefix="(" suffix=") AND">
+	 			cno = #{cno}
+	 		</trim>
+ 		</if>
+ 	</sql>
  
 	<select id="getList" resultType="freeVO">
 	    	 <![CDATA[ 
 	    	select * from 
-			(select /*+ INDEX_DESC(tbl_FreeBoard pk_Free_board) */  
-	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, category, regDate, updateDate 
+			(select /*+ INDEX_DESC(tbl_FreeBoard pk_free_board) */  
+	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, cno, regDate, updateDate 
 	    		FROM tbl_freeBoard where
 	    ]]>		
 	    <include refid="criteria"/>
-<!-- 	    <include refid="category"/> -->
+	    <include refid="category"/>
    	    <![CDATA[ 		
    		 rownum <= #{maxRow}) 
 			where rn > #{minRow}
@@ -53,13 +53,13 @@
     </select>
 
 	<insert id="insert">
-		insert into tbl_freeBoard(bno,title,content,writer,category)
-    	values (seq_free_board.nextval,#{title},#{content},#{writer},#{category})
+		insert into tbl_freeBoard(bno,title,content,writer,cno)
+    	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno})
 	</insert>
 
    	<insert id="insertSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
   	    insert into tbl_freeBoard(bno,title,content,writer,category)
-    	values (seq_free_board.nextval,#{title},#{content},#{writer},#{category})
+    	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{category})
     </insert>
 
 	<select id="read" resultType="freeVO">
@@ -77,6 +77,10 @@
 		category=#{category},
 		updateDate = sysdate
 		where bno=#{bno}
+	</update>
+	
+	<update id="updatedReplyCnt">
+		update tbl_freeBoard set replyCnt = replyCnt + #{amount} where bno = #{bno}
 	</update>
 	
 	<select id="category" resultType="string">

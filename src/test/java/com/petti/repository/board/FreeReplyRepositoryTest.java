@@ -10,21 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
 import com.petti.domain.Criteria;
-import com.petti.domain.board.AnnoReplyVO;
+import com.petti.domain.free_board.FreeReplyVO;
+import com.petti.repository.free_board.FreeReplyRepository;
 
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class AnnoReplyRepositoryTest extends AppTest{
+public class FreeReplyRepositoryTest extends AppTest{
 
 	@Autowired
-	AnnoReplyRepository replyRepository;
+	FreeReplyRepository replyRepository;
 	
 	@Test
 	@Ignore
 	public void insertTest() {
 		IntStream.rangeClosed(1, 10).forEach(i->{			
-			AnnoReplyVO vo = AnnoReplyVO.builder()
+			FreeReplyVO vo = FreeReplyVO.builder()
 					.bno(1L)
 					.reply("댓글 테스트"+i)
 					.replyer("사용자"+i)
@@ -36,14 +37,14 @@ public class AnnoReplyRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void readTest() {
-		AnnoReplyVO vo = replyRepository.read(1L);
+		FreeReplyVO vo = replyRepository.read(1L);
 		log.info(vo);
 	}
 	
 	@Test
 	@Ignore
 	public void updateTest() {
-		AnnoReplyVO vo = new AnnoReplyVO();
+		FreeReplyVO vo = new FreeReplyVO();
 		vo.setReply("댓글 테스트 -- 수정");
 		vo.setRno(2L);
 		replyRepository.update(vo);

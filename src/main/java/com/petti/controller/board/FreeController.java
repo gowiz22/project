@@ -34,12 +34,19 @@ public class FreeController {
 		return "/board/free/free_get";
 	}
 
+	@GetMapping("/register")
+	public String register(Model model) {
+		model.addAttribute("category", boardService.category());
+		return "/board/free/free_register";
+	}
+	
+	
 	@PostMapping("/register")
 	public String register(FreeBoardVO vo, RedirectAttributes rttr) {
 		boardService.register(vo);
 		rttr.addFlashAttribute("result", vo.getBno());
 		rttr.addFlashAttribute("operation", "register");
-		return "redirect:/board/free/free_list";
+		return "redirect:/free/list";
 	}
 
 	@GetMapping("/modify")
@@ -54,7 +61,7 @@ public class FreeController {
 			rttr.addFlashAttribute("result", vo.getBno());
 			rttr.addFlashAttribute("operation", "modify");
 		}
-		return "redirect:/board/free/free_list";
+		return "redirect:/free/list";
 	}
 	
 	@PostMapping("/remove")
@@ -63,7 +70,7 @@ public class FreeController {
 			rttr.addFlashAttribute("result", bno);
 			rttr.addFlashAttribute("operation", "remove");
 		}
-		return "redirect:/board/free/free_list";
+		return "redirect:/free/list";
 	}
 	
 }

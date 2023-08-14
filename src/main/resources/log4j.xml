@@ -16,7 +16,7 @@
     
  	<!-- 마이바티스 로그 레벨 설정 -->
  	<logger name="jdbc.sqlonly">
- 		<level value="warn"/>
+ 		<level value="info"/>
  	</logger>	
  	<logger name="jdbc.resultsettable">
  		<level value="warn"/>

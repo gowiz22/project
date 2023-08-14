@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ include file="../../includes/header.jsp"%>
 <div class="container">
 	<div class="row">
@@ -7,16 +7,16 @@
 			<h1 class="page-header">자유 게시판</h1>
 		</div>
 	</div>
-	
+
 	<div class="row mb-3">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
 					<select class="amount form-control" id="category">
 						<option value="">전체</option>
-						<c:forEach items="${category}"  var="category">
-							<option value="${category}" >${category}</option>
-						</c:forEach>					
+						<c:forEach items="${category}" var="c">
+								<option value="${c}">${c}</option>
+						</c:forEach>
 					</select>
 					<div>
 						<button>추천글</button>
@@ -26,7 +26,7 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>#번호</th> 
+								<th>#번호</th>
 								<th>제목</th>
 								<th>작성자</th>
 								<th>분류</th>
@@ -35,18 +35,19 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${list}" var="board">
-							<tr>
-								<td>${board.bno}</td>
-								<td>
-									<a class="move" href="${board.bno}">${board.title}</a>
-								</td>
-								<td>${board.writer}</td>
-								<td>${board.category}</td>
-								<td><tf:formatDateTime value="${board.regDate}" pattern="yyyy-MM-dd HH:mm"/></td>
-								<td><tf:formatDateTime value="${board.updateDate}" pattern="yyyy-MM-dd HH:mm"/></td>
-							</tr>
-						</c:forEach>
+							<c:forEach items="${list}" var="board">
+								<tr>
+									<td>${board.bno}</td>
+									<td><a class="move" href="${board.bno}">${board.title}
+											${board.replyCnt == 0 ? '': [board.replyCnt]}</a></td>
+									<td>${board.writer}</td>
+									<td>${board.cno}</td>
+									<td><tf:formatDateTime value="${board.regDate}"
+											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td><tf:formatDateTime value="${board.updateDate}"
+											pattern="yyyy-MM-dd HH:mm" /></td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<form class="my-3" id="searchForm" action="${ctxPath}/free/list">
@@ -58,11 +59,13 @@
 								<option value="W" ${p.criteria.type eq 'W' ? 'selected' : '' }>작성자</option>
 								<option value="TC" ${p.criteria.type eq 'TC' ? 'selected' : '' }>제목+내용</option>
 								<option value="TW" ${p.criteria.type eq 'TW' ? 'selected' : '' }>제목+작성자</option>
-								<option value="TCW" ${p.criteria.type eq 'TCW' ? 'selected' : '' }>제목+내용+작성자</option>
+								<option value="TCW"
+									${p.criteria.type eq 'TCW' ? 'selected' : '' }>제목+내용+작성자</option>
 							</select>
 						</div>
 						<div class="d-inline-block col-4">
-							<input type="text" name="keyword" value="${p.criteria.keyword}" class="form-control">
+							<input type="text" name="keyword" value="${p.criteria.keyword}"
+								class="form-control">
 						</div>
 						<div class="d-inline-block">
 							<button class="btn btn-primary">검색</button>
@@ -72,35 +75,39 @@
 						</div>
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
-						<input type="hidden" name="category" value="${p.criteria.kind}">
+						<input type="hidden" name="cno" value="${p.criteria.cno}">
 					</form>
 					<div class="float-right d-flex">
 						<button id="regBtn" class="btn btn-xs btn-primary">게시물 등록</button>
 					</div>
 					<ul class="pagination justify-content-center">
 						<c:if test="${p.prev}">
-							<li class="page-item">
-								<a class="page-link" href="${p.startPage-p.displayPageNum}">이전페이지</a>
-							</li>
+							<li class="page-item"><a class="page-link"
+								href="${p.startPage-p.displayPageNum}">이전페이지</a></li>
 						</c:if>
-						<c:forEach begin="${p.startPage}" end="${p.endPage }" var="pagelink">
-							<li class="page-item ${pagelink == p.criteria.pageNum ? 'active':''}">
+						<c:forEach begin="${p.startPage}" end="${p.endPage }"
+							var="pagelink">
+							<li
+								class="page-item ${pagelink == p.criteria.pageNum ? 'active':''}">
 								<a href="${pagelink}" class="page-link ">${pagelink}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${p.next }">
-							<li class="page-item">
-								<a class="page-link" href="${p.endPage+1}">다음페이지</a>
-							</li>
+							<li class="page-item"><a class="page-link"
+								href="${p.endPage+1}">다음페이지</a></li>
 						</c:if>
 					</ul>
 					<form id="listForm" action="${ctxPath}/free/list" method="get">
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
+						<input type="hidden" name="cno" value="${p.criteria.cno}">
 					</form>
-				</div> <!-- card body end -->
-			</div> <!-- card end -->
-		</div> <!-- col end -->
+				</div>
+				<!-- card body end -->
+			</div>
+			<!-- card end -->
+		</div>
+		<!-- col end -->
 	</div>
 </div>
 
@@ -111,24 +118,23 @@
 
 <!-- Modal -->
 <div class="modal fade" id="listModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">처리 결과</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                처리가 완료되었습니다.
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Save Changes</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">처리 결과</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">처리가 완료되었습니다.</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light" data-dismiss="modal">Save
+					Changes</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -200,10 +206,10 @@ $(function(){
 		
 	//카테고리 처리
 	$('#category').change(function(){
-		let category = $(this).val()
-		searchForm.find('[name="category"]').val(category)
+		let cno = $(this).val()
 		$(this).attr('selected');
-		searchForm.submit()
+		listForm.find('[name="cno"]').val(cno)
+		listForm.submit()
 	})
 })
 </script>

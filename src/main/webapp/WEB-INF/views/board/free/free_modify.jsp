@@ -12,7 +12,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					[${board.category}]
+					[${board.cno}]
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/free/modify" method="post">

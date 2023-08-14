@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.petti.domain.Criteria;
+import com.petti.domain.free_board.CategoryVO;
 import com.petti.domain.free_board.FreeBoardVO;
 
 public interface FreeBoardRepository {
@@ -23,11 +24,12 @@ public interface FreeBoardRepository {
 	
 	List<FreeBoardVO> getList(
 			@Param("pageNum") int pageNum,
-			@Param("amount") int amount);
+			@Param("amount") int amount,
+			@Param("cno") int cno);
 	
 	int getTotalCount(Criteria criteria);
 	
-	List<String> category();
+	List<CategoryVO> category();
 	
-	
+	void updatedReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

@@ -14,14 +14,14 @@ public class Criteria{
 	
 	private String type;
 	private String keyword;
-	private String kind;
+	private int cno =1;
 	
 	public Criteria() {
 		this(1,10); // 1페이지, 한 페이지당 게시물 수는 10개 
 	}
 
-	public Criteria (String kind) {
-		this.kind= kind;
+	public Criteria (int cno) {
+		this.cno= cno;
 	}
 	
 	public Criteria(int pageNum, int amount) {

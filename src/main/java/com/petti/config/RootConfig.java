@@ -15,6 +15,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -22,6 +24,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @MapperScan("com.petti.repository") // 매퍼를 찾아 스프링빈으로 등록함
 @PropertySource(value = "classpath:database/db.properties")
+@EnableTransactionManagement
 public class RootConfig {
 	
 	@Value("${db.driver}")
@@ -73,5 +76,9 @@ public class RootConfig {
 	public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer(); 
 	}
-	
+
+	@Bean
+	public DataSourceTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
+	}
 }

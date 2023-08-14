@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
 import com.petti.domain.Criteria;
+import com.petti.domain.free_board.CategoryVO;
 import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.repository.free_board.FreeBoardRepository;
 
@@ -25,7 +26,7 @@ public class FreeBoardRepositoryTest extends AppTest{
 		Criteria criteria = new Criteria();
 //		criteria.setType("C");
 //		criteria.setKeyword("자바");
-		criteria.setKind("일상");
+		criteria.setCno(1);
 		List<FreeBoardVO> list = boardRepository.getList(criteria);
 		log.info(list);
 	}
@@ -45,7 +46,7 @@ public class FreeBoardRepositoryTest extends AppTest{
 				.title("새로 작성하는 글...")
 				.content("새로 작성하는 글 내용")
 				.writer("관리자")
-				.category("질문")
+				.cno(2L)
 				.build();
 		boardRepository.insert(vo);
 		log.info(vo);
@@ -65,7 +66,7 @@ public class FreeBoardRepositoryTest extends AppTest{
 				.bno(3L)
 				.title("수정제목")
 				.content("수정 내용")
-				.category("질문")
+				.cno(3L)
 				.build();
 		int update = boardRepository.update(vo);
 		log.info(update);
@@ -74,7 +75,7 @@ public class FreeBoardRepositoryTest extends AppTest{
 	@Test
 	@Ignore
 	public void category() {
-		List<String> count = boardRepository.category();
+		List<CategoryVO> count = boardRepository.category();
 		log.info(count);
 		
 	}
