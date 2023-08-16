@@ -24,9 +24,11 @@
 						</div>
 						<div class="form-group">
 							<label>Writer </label>
-							<input class="form-control" name="writer"/>
+							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
-						<button class="btn btn-light">Submit Button</button>						
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<button class="btn btn-light register">Submit Button</button>						
+						<button class="btn btn-light list">List</button>						
 					</form>
 				</div>
 			</div>
@@ -35,3 +37,23 @@
 	
 </div>
 <%@ include file="../../includes/footer.jsp" %>
+
+<script>
+$(function(){
+	$('.register').click(function(){
+		let form = $('form');
+		form.submit();	
+	});
+	
+	// 게시물 목록
+	$('.list').click(function(){
+		let form = $('form');
+		form.attr('action','${ctxPath}/announce/list')
+			.attr('method', 'get')
+			.append($('[name="pageNum"]'))
+			.append($('[name="amount"]'))
+			.appendTo('body')
+			.submit();
+	})
+})
+</script>

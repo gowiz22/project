@@ -46,7 +46,7 @@ public class FreeBoardRepositoryTest extends AppTest{
 				.title("새로 작성하는 글...")
 				.content("새로 작성하는 글 내용")
 				.writer("관리자")
-				.cno(2L)
+				.cno(2)
 				.build();
 		boardRepository.insert(vo);
 		log.info(vo);
@@ -66,7 +66,7 @@ public class FreeBoardRepositoryTest extends AppTest{
 				.bno(3L)
 				.title("수정제목")
 				.content("수정 내용")
-				.cno(3L)
+				.cno(3)
 				.build();
 		int update = boardRepository.update(vo);
 		log.info(update);

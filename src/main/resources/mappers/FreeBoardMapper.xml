@@ -74,7 +74,7 @@
 		update tbl_freeBoard set
 		title=#{title},
 		content=#{content},
-		category=#{category},
+		cno=#{cno},
 		updateDate = sysdate
 		where bno=#{bno}
 	</update>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -25,6 +26,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @MapperScan("com.petti.repository") // 매퍼를 찾아 스프링빈으로 등록함
 @PropertySource(value = "classpath:database/db.properties")
 @EnableTransactionManagement
+@Import({SecurityConfig.class})
 public class RootConfig {
 	
 	@Value("${db.driver}")

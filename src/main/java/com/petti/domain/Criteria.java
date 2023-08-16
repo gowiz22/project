@@ -14,7 +14,8 @@ public class Criteria{
 	
 	private String type;
 	private String keyword;
-	private int cno =1;
+	private int cno;
+	private String kind;
 	
 	public Criteria() {
 		this(1,10); // 1페이지, 한 페이지당 게시물 수는 10개 
@@ -23,6 +24,11 @@ public class Criteria{
 	public Criteria (int cno) {
 		this.cno= cno;
 	}
+	
+	public Criteria (int cno, String kind) {
+		this.cno= cno;
+		this.kind= kind;
+	}	
 	
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;

@@ -1,6 +1,11 @@
 package com.petti.controller.board;
 
+import java.nio.file.AccessDeniedException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +41,13 @@ public class AnnounceController {
 		return "/board/announce/get";
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/register")
 	public String register() {
 		return "/board/announce/register";
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
 	@PostMapping("/register")
 	public String register(AnnounceVO vo, RedirectAttributes rttr) {
 		boardService.register(vo);
@@ -49,13 +56,20 @@ public class AnnounceController {
 		return "redirect:/announce/list";
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/modify")
-	public String modify(Long bno, Model model, Criteria criteria) {
+	public String modify(Long bno, Model model, Criteria criteria, Authentication auth) throws AccessDeniedException {
+		AnnounceVO vo = boardService.get(bno);
+		String username  = auth.getName(); // 인증된 사용자 계정
+		if(!vo.getWriter().equals(username) && // 글 작성자
+			!auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {  // 관리자
+			throw new AccessDeniedException("Access denied");
+		}
 		model.addAttribute("board", boardService.get(bno));
 		return "/board/announce/modify";
 	}
 
-	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/modify")
 	public String modify(AnnounceVO vo, RedirectAttributes rttr) {
 		if(boardService.modify(vo)) {
@@ -65,7 +79,7 @@ public class AnnounceController {
 		return "redirect:/announce/list";
 	}
 	
-	
+	@PreAuthorize("isAuthenticated() and principal.username== #writer or hasRole('ROLE_ADMIN')")	
 	@PostMapping("/remove")
 	public String remove(Long bno, RedirectAttributes rttr) {
 		if(boardService.remove(bno)) {

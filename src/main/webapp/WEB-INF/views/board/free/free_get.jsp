@@ -32,7 +32,9 @@
 						<input class="form-control" name="writer" value="${board.writer}" readonly="readonly"/>
 					</div>
 					<div class="getBtns">
+					<sec:authorize access="isAuthenticated() and principal.username== #board.writer or hasRole('ROLE_ADMIN')">
 						<button data-oper='modify' class="btn btn-light modify">수정페이지</button>
+					</sec:authorize>	
 						<button data-oper='list' class="btn btn-info list">목록으로</button>		
 					</div>				
 				</div>

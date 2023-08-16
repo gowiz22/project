@@ -16,6 +16,7 @@
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/announce/modify" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class="form-group">
 							<label>Bno</label>	
 							<input class="form-control" name="bno" value="${board.bno}" readonly="readonly"/>

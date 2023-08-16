@@ -18,4 +18,12 @@ public class CommonExceptionAdvice {
 	public String handle404(NoHandlerFoundException ex) {
 		return "custom404";
 	}
+	
+//	@ExceptionHandler(Exception.class)
+	public String exception(Exception ex, Model model) {
+		log.error("Exception.............." + ex.getMessage());
+		model.addAttribute("exception", ex);
+		log.error(model);
+		return "error_page";
+	}
 }

@@ -25,7 +25,7 @@ public class FreeBoardVO {
 	private String title;
 	private String content;
 	private String writer;
-	private Long cno;
+	private int cno;
 	private int replyCnt;
 
 	@DateTimeFormat(pattern = "yyyy년MM월dd일 HH시mm분")
@@ -35,4 +35,6 @@ public class FreeBoardVO {
 	private LocalDateTime updateDate;
 	
 	private List<FreeBoardAttachVO> attachList;
+	
+	private List<CategoryVO> categoryList;
 }

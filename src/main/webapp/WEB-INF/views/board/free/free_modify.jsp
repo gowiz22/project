@@ -16,29 +16,34 @@
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/free/modify" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class="form-group">
-							<label>Bno</label>	
+							<label>글 번호</label>	
 							<input class="form-control" name="bno" value="${board.bno}" readonly="readonly"/>
 						</div>
 						<div class="form-group">
-							<label>Title</label>
+							<label>글 분류</label>	
+							<input class="form-control" name="cno" value="${board.cno}" readonly="readonly"/>
+						</div>
+						<div class="form-group">
+							<label>제 목</label>
 							<input class="form-control" name="title" value="${board.title}" />
 						</div>
 						<div class="form-group">
-							<label>Text area </label>
+							<label>내 용</label>
 							<textarea class="form-control" rows="10" name="content">${board.content}</textarea>
 						</div>
 						<div class="form-group">
-							<label>Writer </label>
+							<label>작성자</label>
 							<input class="form-control" name="writer" value="${board.writer}" readonly="readonly"/>
 						</div>
 						<div class="form-group">
-							<label>Register Date</label>
+							<label>글 등록일</label>
 							<input class="form-control" readonly="readonly"  name="regDate"
 								value="<tf:formatDateTime value="${board.regDate}" pattern="yyyy년MM월dd일 HH시mm분"/>">
 						</div>
 						<div class="form-group">
-							<label>Update Date</label>
+							<label>글 수정일</label>
 							<input class="form-control" readonly="readonly" name="updateDate"  
 								value="<tf:formatDateTime value="${board.updateDate}" pattern="yyyy년MM월dd일 HH시mm분"/>">
 						</div>

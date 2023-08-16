@@ -3,7 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="ctxPath" value="${pageContext.request.contextPath}"/>
+
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.memberVO" var="authInfo"/>
+</sec:authorize>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +20,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>var ctxPath = '${ctxPath}'</script>
+<script>
+	var ctxPath = '${ctxPath}'
+	let duplicateLogin = '${duplicateLogin}'
+	
+	if(duplicateLogin) {
+		alert(duplicateLogin)
+	}
+</script>
 </head>
 <body>
 	<div align="center">
@@ -55,15 +68,31 @@
             <a class="nav-link" href="${ctxPath}/review/list">제품 리뷰</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="${ctxPath}/member/mypage">마이페이지</a>
+            <a class="nav-link" href="${ctxPath}/mypage">마이페이지</a>
         </li>
     </ul>
 </nav>
-<div align="right">
-<button class="btn btn-primary" id="login">로그인</button>
-<button class="btn btn-primary" id="join">회원가입</button>
-</div>
-
+<nav>
+	<div align="right">
+	  <ul class="navbar-nav">
+		<sec:authorize access="isAnonymous()">
+		  	<li class="nav-item">
+		          <a class="nav-link" href="${ctxPath}/login">로그인</a>
+		    </li>
+	    </sec:authorize>
+		<sec:authorize access="isAuthenticated()">
+		    <li class="nav-item">
+		       <a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
+		    </li>
+	    </sec:authorize> 
+  		<sec:authorize access="isAnonymous()"> 
+		  	<li class="nav-item">
+		          <a class="nav-link" href="${ctxPath}/member/join">회원가입</a>
+		    </li>
+   	    </sec:authorize>
+	  </ul>
+	</div>
+</nav>
 
 <script>
 //검색 이벤트 처리 
@@ -81,4 +110,14 @@ $('#mainSearch button').click(function(e){
 	mainSearch.find('[name="pageNum"]').val(1);
 	mainSearch.submit();
 });
+
+$(function(){
+	$('.logout').click(function(e){
+		e.preventDefault();
+		let form = $('<form>',{action:$(this).attr('href'), method:'post'});
+		form.append($('<input>',{type:'hidden',name:'${_csrf.parameterName}', value:'${_csrf.token}'}))
+			.appendTo('body')
+			.submit();
+	});
+})
 </script>

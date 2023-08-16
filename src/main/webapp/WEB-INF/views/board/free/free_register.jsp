@@ -23,7 +23,7 @@
 				</div>
 				<div class="card-body">
 					<form class="register" action="${ctxPath}/free/register" method="post">
-						<input type="hidden" name="cno" value="${p.criteria.kind}">
+						<input type="hidden" name="cno" value="${catecory}">
 						<div class="form-group">
 							<label>Title </label>
 							<input class="form-control" name="title"/>
@@ -34,8 +34,9 @@
 						</div>
 						<div class="form-group">
 							<label>Writer </label>
-							<input class="form-control" name="writer"/>
+							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<button type="button" class="btn btn-outline-primary register">Submit Button</button>
 						<button type="button" class="btn btn-outline-info list">List</button>					
 					</form>
