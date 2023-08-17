@@ -13,9 +13,9 @@
 			<div class="card">
 				<div class="card-header">
 					<select class="amount form-control" id="category">
-						<option value="">전체</option>
+						<option value="0">전체</option>
 						<c:forEach items="${category}" var="c">
-								<option value="${c}">${c}</option>
+								<option value="${c.cno}" ${criteria.cno eq c.cno ? 'selected':''}>${c.kind}</option>
 						</c:forEach>
 					</select>
 					<div>
@@ -41,7 +41,7 @@
 									<td><a class="move" href="${board.bno}">${board.title}
 											${board.replyCnt == 0 ? '': [board.replyCnt]}</a></td>
 									<td>${board.writer}</td>
-									<td>${board.cno}</td>
+									<td>{board.cno}</td>
 									<td><tf:formatDateTime value="${board.regDate}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td><tf:formatDateTime value="${board.updateDate}"

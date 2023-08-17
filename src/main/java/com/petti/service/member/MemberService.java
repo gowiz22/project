@@ -12,5 +12,5 @@ public interface MemberService {
 	
 	MemberVO read(String memberId);
 	
-	void chagePassword(Map<String, String> memberMap);
+	void changePassword(Map<String, String> memberMap);
 }

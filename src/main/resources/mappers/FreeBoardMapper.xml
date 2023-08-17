@@ -83,7 +83,7 @@
 		update tbl_freeBoard set replyCnt = replyCnt + #{amount} where bno = #{bno}
 	</update>
 	
-	<select id="category" resultType="string">
+	<select id="category" resultType="categoryVO">
 		select * from tbl_category
 	</select>
 	

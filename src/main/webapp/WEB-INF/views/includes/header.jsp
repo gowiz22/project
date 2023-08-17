@@ -21,12 +21,33 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-	var ctxPath = '${ctxPath}'
-	let duplicateLogin = '${duplicateLogin}'
-	
-	if(duplicateLogin) {
-		alert(duplicateLogin)
+let ctxPath = '${ctxPath}'
+let duplicateLogin = '${duplicateLogin}'
+let csrfHeaderName = "${_csrf.headerName}"; 
+let csrfTokenValue = "${_csrf.token}"
+
+if(duplicateLogin) {
+	alert(duplicateLogin)
+}
+
+$(document).ajaxSend(function(e, xhr, options){
+	xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+})
+
+function checkExtension(fileName, fileSize){
+	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");	
+	let maxSize = 10485760; // 10MB
+	if(fileSize > maxSize) {
+		alert('파일크기는 최대 10MB까지 업로드 가능합니다.');
+		return false; 
 	}
+	
+	if(regex.test(fileName)) {
+		alert('해당 종류의 파일은 업로드 할 수 없습니다.');
+		return false; 
+	}
+	return true;
+}	
 </script>
 </head>
 <body>
@@ -87,7 +108,7 @@
 	    </sec:authorize> 
   		<sec:authorize access="isAnonymous()"> 
 		  	<li class="nav-item">
-		          <a class="nav-link" href="${ctxPath}/member/join">회원가입</a>
+		          <a class="nav-link" href="${ctxPath}/join/step1">회원가입</a>
 		    </li>
    	    </sec:authorize>
 	  </ul>
@@ -118,6 +139,6 @@ $(function(){
 		form.append($('<input>',{type:'hidden',name:'${_csrf.parameterName}', value:'${_csrf.token}'}))
 			.appendTo('body')
 			.submit();
-	});
+	})
 })
 </script>

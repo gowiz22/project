@@ -19,8 +19,7 @@
 		<li class="list-group-item">
 			<a href="${ctxPath}/mypage/commentLike">좋아요 한 댓글</a>
 		</li>
-	</ul>	
-	
+	</ul>
 	<div class="d-flex justify-content-center">
 		<div class="w-50 my-5">
 			<div class="jumbotron">
@@ -51,9 +50,8 @@
 				</div>
 			</form>
 		</div>
-	</div>
-	
-</div> <!--  container end -->
+	</div>	
+</div>
 
 <!-- 비밀번호 변경창 -->
 <div class="modal" id="changePwdModal">
@@ -62,8 +60,8 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">비밀번호 변경</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+	            <h4 class="modal-title">비밀번호 변경</h4>
+	            <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
             	<form>
@@ -87,17 +85,15 @@
 <%@ include file="../includes/footer.jsp"%>
 
 <script>
-let result = "${result}";
+let result = "${result}"
 $(function(){
+	if(result=='modify') alert('회원정보를 수정하였습니다.')
 	
-	console.log(result);
-	if(result=='modify'){
-		alert('회원정보를 수정하였습니다.')
-	}
 	$('.changePwdForm').click(function(){
-		$('#changePwdModal').find('input').val('');
-		$('#changePwdModal').modal();
-	});
+		$('#changePwdModal').find('input').val('')
+		$('#changePwdModal').modal()
+	})
+	
 	$('.changePwd').click(function(){
 		$.ajax({
 			type : 'post',
@@ -105,7 +101,7 @@ $(function(){
 			data : {
 				memberId : $('[name="memberId"]').val(),
 				currentPwd : $('.currentPwd').val(),
-				newPwd: $('.newPwd').val()
+				newPwd : $('.newPwd').val()
 			},
 			success : function(result){
 				alert(result)
@@ -113,6 +109,7 @@ $(function(){
 			},
 			error : function(xhr, status, er){
 				alert(xhr.responseText)
+				$('#changePwdModal').find('input').val('')
 			}
 		})
 	})

@@ -18,11 +18,8 @@ import com.petti.domain.Pagination;
 import com.petti.domain.board.AnnounceVO;
 import com.petti.service.board.AnnoBoardService;
 
-import lombok.extern.log4j.Log4j;
-
 @Controller
 @RequestMapping("/announce")
-@Log4j
 public class AnnounceController {
 	
 	@Autowired

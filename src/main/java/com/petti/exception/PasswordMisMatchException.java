@@ -1,4 +1,4 @@
-package com.petti.service.member;
+package com.petti.exception;
 
 public class PasswordMisMatchException extends RuntimeException{
 

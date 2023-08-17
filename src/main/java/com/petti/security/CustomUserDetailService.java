@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.petti.domain.member.MemberVO;
 import com.petti.repository.member.MemberRepository;
 
-@Component
+@Service
 public class CustomUserDetailService implements UserDetailsService{
 
 	@Autowired

@@ -11,7 +11,6 @@ import com.petti.domain.free_board.CategoryVO;
 import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.repository.free_board.FreeBoardAttachRepository;
 import com.petti.repository.free_board.FreeBoardRepository;
-import com.petti.repository.free_board.FreeReplyRepository;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService {

@@ -45,28 +45,23 @@ public class FileUploadController {
 			String uuid = UUID.randomUUID().toString();
 			File saveFile = new File(uploadPath,uuid + "_" + filName);
 			
-			log.info("filName : "+filName);
-			log.info("savFile : "+saveFile);
-			
 			attachVO.setFileName(filName); 
 			attachVO.setUuid(uuid);
 			attachVO.setUploadPath(getFolder());
 			
 			try {
-				if(checkImageType(saveFile)) {
+				if(checkImageType(saveFile)) { // 썸네일 이미지 업로드
 					attachVO.setFileType(true);
 					FileOutputStream tumbnail = new FileOutputStream(new File(uploadPath,"s_"+uuid+"_"+filName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), tumbnail,40,40);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), tumbnail,50,50);
 				}
-					multipartFile.transferTo(saveFile); // 파일 저장
+				multipartFile.transferTo(saveFile); // 파일 저장
 				list.add(attachVO);
-			} catch (IllegalStateException e) {
+			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-		} // for end
-		return new ResponseEntity<List<FreeBoardAttachVO>>(list, HttpStatus.OK); 
+			}
+		}
+		return new ResponseEntity<>(list, HttpStatus.OK); 
 	}
 
 	// 이미지 파일 체크 여부
@@ -84,10 +79,9 @@ public class FileUploadController {
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getFile(String fileName){
 		File file = new File("C:/storage/"+fileName);
-		log.info(file);
+		HttpHeaders headers = new HttpHeaders();
 		ResponseEntity<byte[]> result = null; 
 		
-		HttpHeaders headers = new HttpHeaders();
 		try {
 			headers.add("Content-Type", Files.probeContentType(file.toPath()));
 			result = new ResponseEntity<>(

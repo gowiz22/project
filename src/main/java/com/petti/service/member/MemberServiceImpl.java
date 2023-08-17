@@ -9,10 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.petti.domain.member.AuthVO;
 import com.petti.domain.member.MemberVO;
+import com.petti.exception.PasswordMisMatchException;
 import com.petti.repository.member.AuthRepository;
 import com.petti.repository.member.MemberRepository;
 
+import lombok.extern.log4j.Log4j;
+
 @Service
+@Log4j
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
@@ -43,12 +47,15 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.selectById(memberId);
 	}
 
+	@Transactional
 	@Override
-	public void chagePassword(Map<String, String> memberMap) {
+	public void changePassword(Map<String, String> memberMap) {
 		String memberId = memberMap.get("memberId");
 		String newPwd = memberMap.get("newPwd");
 		String currentPwd = memberMap.get("currentPwd");
 		MemberVO vo = memberRepository.selectById(memberId);
+		
+		log.info(currentPwd);
 		if(!passwordEncoder.matches(currentPwd, vo.getMemberPwd())) {
 			throw new PasswordMisMatchException();
 		}

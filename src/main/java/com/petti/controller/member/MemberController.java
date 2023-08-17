@@ -1,6 +1,7 @@
 package com.petti.controller.member;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,108 +22,142 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petti.domain.member.MemberVO;
+import com.petti.exception.PasswordMisMatchException;
+import com.petti.service.member.MailSendService;
 import com.petti.service.member.MemberService;
-import com.petti.service.member.PasswordMisMatchException;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 public class MemberController {
-
-	@Autowired
-	private MemberService memberService;
 	
-	// 회원 페이지
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	private MailSendService mailSendService; 
+
+	@GetMapping("/guest/gusetpage")
+	public String guestPage() {
+		return "guest/guestpage";
+	}
+	
+	// 회원페이지
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
-	@GetMapping({"/mypage","/mypage/{path}"})
+	@GetMapping({"/mypage", "/mypage/{path}"})
 	public String myPage(Model model,Principal principal,
-			@PathVariable(required = false) String path) {
+			@PathVariable(required = false) String path ) {
 		String memberId = principal.getName();
 		if(path==null) {
 			MemberVO memberVO = memberService.read(memberId);
 			model.addAttribute("vo", memberVO);
 			return "member/mypage";
-		}
+		} 
 		return "member/"+path;
 	}
 	
-	// 관리자 페이지
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/admin/adminPage")
-	public String adminPage() {
-		return "member/adminPage";
-	}
-	
-	@GetMapping("/accessDenied")
-	public String accessDenied() {
-		return "accessError";
-	}
-	
-	@RequestMapping("/login")
-	public String loginPage(HttpServletRequest request, 
-			Authentication authentication, RedirectAttributes rttr,
-			String error, String logout, Model model) {
-			String uri = request.getHeader("Referer");
-			if(uri!=null && !uri.contains("/login") && !uri.contains("/accessDenied")) {
-				request.getSession().setAttribute("prevPage", uri);
-			}
-			
-			if(authentication!=null) {
-				rttr.addFlashAttribute("duplicateLogin","이미 로그인 중 입니다.");
-				if(uri==null) uri="/";
-				return "redirect:"+uri;
-			}
-			
-			if(error!=null) model.addAttribute("error", "로그인 에러");
-			if(logout!=null) model.addAttribute("logout", "로그아웃");
-			return "member/login";
-	}
-	
-
-	// 회원 정보수정 처리
+	//회원 정보수정 처리
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
-	@PostMapping("/member/modify")
+	@PostMapping("member/modify")
 	public String modify(MemberVO memberVO, RedirectAttributes rttr) {
 		log.info(memberVO);
 		memberService.modify(memberVO);
-		rttr.addFlashAttribute("result","modify");
+		rttr.addFlashAttribute("result", "modify");
 		return "redirect:/mypage";
 	}
 	
-	// 비밀번호 변경 처리
+	// 비밀변호 변경 처리  
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
-	@PostMapping(value = "/mypage/changePwd", produces = "application/text; charset=utf-8")
+	@PostMapping(value = "/mypage/changePwd", produces = "application/text; charset=utf-8") // 한글깨짐 발생
 	@ResponseBody
-	public ResponseEntity<String> changePwd(@RequestParam Map<String, String> memberMap) {
+	public ResponseEntity<String> changePwd(@RequestParam Map<String, String> memberMap){
 		try {
-			memberService.chagePassword(memberMap);
+			memberService.changePassword(memberMap);
 		} catch (PasswordMisMatchException e) {
-			return new ResponseEntity<String>("비밀번호가 일지하지 않습니다.",HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<String>("비밀번호가 일치하지 않음",HttpStatus.UNAUTHORIZED);
 		}
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
+	
+	// 약관동의 
+	@GetMapping("/join/step1")
+	public String step1() {
+		return "member/step1";
+	}
 
-	// 회원 가입
-	@GetMapping("/member/join")
-	public String joinForm(MemberVO memberVO) {
+	// 이메일 인증
+	@PostMapping("/join/step2")
+	public String step2(@RequestParam(defaultValue = "false") List<Boolean> agreement) {
+		if(agreement.size()>=2 && agreement.stream().allMatch(v->v) ) {
+			return "member/step2";
+		}
+		return "member/step1";
+	}
+	
+	// 회원가입작성
+	@PostMapping("/join/step3")
+	public String step3(MemberVO memberVO) {
 		return "member/join";
 	}
 	
-	// 회원가입 처리
+	// 회원가입 처리 
 	@PostMapping("/member/join")
 	public String join(MemberVO memberVO, RedirectAttributes rttr) {
 		memberService.join(memberVO);
 		return "redirect:/";
 	}
 	
-	// 아이디 중복 체크
+	@GetMapping({"/join/step2","/join/step3"})
+	public String joinForm() {
+		return "member/step1";
+	} 
+	
+	// 아이디중복 체크 
 	@PostMapping("/member/idCheck")
 	@ResponseBody
-	public ResponseEntity<Boolean> idDuplicateCheck(String memberId) {
+	public ResponseEntity<Boolean> idDuplicateCheck(String memberId){
 		MemberVO vo = memberService.read(memberId);
-		return vo == null ?
-			new	ResponseEntity<>(Boolean.TRUE,HttpStatus.OK)
+		return vo == null ? 
+			new ResponseEntity<>(Boolean.TRUE,HttpStatus.OK) 
 			: new ResponseEntity<>(Boolean.FALSE,HttpStatus.OK);
+	} 
+	
+	@GetMapping("/mailCheck")
+	@ResponseBody
+	public String mailCheck(String email) {
+		return mailSendService.joinEmail(email);
+	}
+	
+
+	// 관리자 페이지 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/admin/adminPage")
+	public String adminPage(HttpServletRequest request) {
+		return "admin/adminPage";
+	}
+	
+	@GetMapping("/accessDenied")
+	public String accessDenided() {
+		return "accessError";
+	}
+	
+	@RequestMapping("/login")
+	public String loginPage(HttpServletRequest request, 
+			Authentication authentication, RedirectAttributes rttr, 
+			String error, String logout, Model model) {
+		String uri = request.getHeader("Referer"); // 로그인 전 사용자가 보던 페이지 
+		if(uri!=null && !uri.contains("/login")) {
+			request.getSession().setAttribute("prevPage", uri);
+		} 
+		
+		if(authentication!=null) {
+			rttr.addFlashAttribute("duplicateLogin", "이미 로그인 중 입니다.");
+			if(uri==null)  uri = "/";
+			return "redirect:"+uri;
+		}
+		
+		if(logout!=null) model.addAttribute("logout", "로그아웃");
+		return "member/login";
 	}
 }

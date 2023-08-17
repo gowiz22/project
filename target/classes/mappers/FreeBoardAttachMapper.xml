@@ -14,6 +14,6 @@
 	</delete>
 
 	<select id="selectByBno" resultType="freeBoardAttachVO">
-		select * from tbl_freeAttach where bno = ${bno}
+		select * from tbl_freeAttach where bno = #{bno}
 	</select>
 </mapper>

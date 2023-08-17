@@ -1,3 +1,4 @@
+console.log('register.js');
 $(function(){
 	let uploadResultList = [];
 	let showUploadResult = function(attachList){
@@ -41,7 +42,7 @@ $(function(){
 		if(type.val()&&keyword.val()){
 			form.append(type).append(keyword);				
 		}
-		form.attr('action',`${ctxPath}/free/list`)
+		form.attr('action','${ctxPath}/board/list')
 			.append($('[name="pageNum"]'))
 			.append($('[name="amount"]'))
 			.appendTo('body')
@@ -54,6 +55,10 @@ $(function(){
 		let files = this.files;
 		
 		for(let f of files){
+			if(!checkExtension(f.name, f.size)) {
+				$(this).val('');
+				return;
+			} 
 			formData.append('uploadFile', f);
 		}
 		
@@ -78,7 +83,7 @@ $(function(){
 	$('.register').click(function(){
 		let form = $('form');
 		console.log(uploadResultList);
-		if(uploadResultList){ // 첨부파일이 있으면 
+		if(uploadResultList.length>0){ // 첨부파일이 있으면 
 			$.each(uploadResultList, function(i,e){
 				let uuid = $('<input/>',{type:'hidden', name:`attachList[${i}].uuid`, value:`${e.uuid}`})
 				let fileName = $('<input/>',{type:'hidden', name:`attachList[${i}].fileName`, value:`${e.fileName}`})
@@ -124,6 +129,6 @@ $(function(){
 		});
 		
 		$(this).closest('li').remove();
-	})
+	});
 	
 })
