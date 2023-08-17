@@ -36,8 +36,8 @@
 	</insert>
 	
 	<select id="selectById" resultType="memberVO">
-		select memberId, memberName, email
-			from tbl_member where memberId=#{memberId}
+		select memberId, memberPwd, memberName, email
+		from tbl_member where memberId=#{memberId}
 	</select>
 	
 	<update id="update">

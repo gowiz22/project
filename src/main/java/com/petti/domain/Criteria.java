@@ -25,11 +25,6 @@ public class Criteria{
 		this.cno= cno;
 	}
 	
-	public Criteria (int cno, String kind) {
-		this.cno= cno;
-		this.kind= kind;
-	}	
-	
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;

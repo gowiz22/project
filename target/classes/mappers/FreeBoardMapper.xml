@@ -26,17 +26,35 @@
  	<sql id="category">
  		<if test='cno >0'>
 	 		<trim prefix="(" suffix=") AND">
-	 			cno = #{cno}
+	 			m.cno = #{cno}
 	 		</trim>
  		</if>
  	</sql>
+
+  	<resultMap type="freeVO" id="freeMap">
+  		<id property="cno" column="cno"/>
+  		<result property="bno" column="bno"/>
+  		<result property="title" column="title"/>
+  		<result property="content" column="content"/>
+  		<result property="writer" column="writer"/>
+  		<result property="replyCnt" column="replyCnt"/>
+  		<result property="cno" column="cno"/>
+  		<result property="regDate" column="regDate"/>
+  		<result property="updateDate" column="updateDate"/>
+  		<collection property="categoryList" resultMap="categoryMap"></collection>
+  	</resultMap>
+
+  	<resultMap type="categoryVO" id="categoryMap">
+  		<result property="cno" column="cno"/>
+  		<result property="kind" column="category"/>
+  	</resultMap> 
  
-	<select id="getList" resultType="freeVO">
+	<select id="getList" resultMap="freeMap">
 	    	 <![CDATA[ 
 	    	select * from 
 			(select /*+ INDEX_DESC(tbl_FreeBoard pk_free_board) */  
-	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, cno, regDate, updateDate 
-	    		FROM tbl_freeBoard where
+	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, m.cno, regDate, updateDate, a.category 
+	    		FROM tbl_freeBoard m left outer join tbl_category a on m.cno = a.cno where
 	    ]]>		
 	    <include refid="criteria"/>
 	    <include refid="category"/>

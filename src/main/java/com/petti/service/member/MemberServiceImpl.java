@@ -53,6 +53,8 @@ public class MemberServiceImpl implements MemberService {
 		String memberId = memberMap.get("memberId");
 		String newPwd = memberMap.get("newPwd");
 		String currentPwd = memberMap.get("currentPwd");
+		log.info(currentPwd);
+		log.info(newPwd);
 		MemberVO vo = memberRepository.selectById(memberId);
 		
 		log.info(currentPwd);

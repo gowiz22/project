@@ -25,7 +25,7 @@ public class FreeController {
 	@Autowired
 	private FreeBoardService boardService; 
 	
-	@GetMapping("/list")
+	@GetMapping("/list") 
 	public String list(Model model, Criteria criteria) {
 		model.addAttribute("list", boardService.getList(criteria));
 		model.addAttribute("p",new Pagination(criteria, boardService.totalCount(criteria)));

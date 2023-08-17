@@ -41,7 +41,9 @@
 									<td><a class="move" href="${board.bno}">${board.title}
 											${board.replyCnt == 0 ? '': [board.replyCnt]}</a></td>
 									<td>${board.writer}</td>
-									<td>{board.cno}</td>
+									<td><c:forEach items="${board.categoryList}" var="category">
+											<p>${category.kind}</p>
+										</c:forEach></td>
 									<td><tf:formatDateTime value="${board.regDate}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td><tf:formatDateTime value="${board.updateDate}"
