@@ -3,6 +3,8 @@ package com.petti.controller.board;
 import java.nio.file.AccessDeniedException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.petti.domain.Criteria;
 import com.petti.domain.Pagination;
 import com.petti.domain.free_board.FreeBoardVO;
+import com.petti.domain.free_board.FreeLikeDTO;
 import com.petti.service.free_board.FreeBoardService;
+import com.petti.service.free_board.FreeLikeService;
 
 @Controller
 @RequestMapping("/free")
@@ -24,6 +28,9 @@ public class FreeController {
 	
 	@Autowired
 	private FreeBoardService boardService; 
+	
+	@Autowired
+	private FreeLikeService likeService;
 	
 	@GetMapping("/list") 
 	public String list(Model model, Criteria criteria) {
@@ -36,6 +43,8 @@ public class FreeController {
 	@GetMapping("/get")
 	public String get(Long bno, Model model, Criteria criteria) {
 		model.addAttribute("board", boardService.get(bno));
+		model.addAttribute("category", boardService.category());
+		model.addAttribute("likeUser", likeService.confimLike(bno));
 		return "/board/free/free_get";
 	}
 
@@ -65,6 +74,7 @@ public class FreeController {
 			throw new AccessDeniedException("Access denied");
 		}
 		model.addAttribute("board", boardService.get(bno));
+		model.addAttribute("category", boardService.category());
 		return "/board/free/free_modify";
 	}
 	
@@ -78,6 +88,7 @@ public class FreeController {
 		return "redirect:/free/list";
 	}
 	
+	// 게시물 삭제 처리
 	@PostMapping("/remove")
 	public String remove(Long bno, RedirectAttributes rttr) {
 		if(boardService.remove(bno)) {
@@ -87,4 +98,16 @@ public class FreeController {
 		return "redirect:/free/list";
 	}
 	
+	// 게시물 추천
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value = "/like", produces = "plain/text; charset=utf-8")
+	public ResponseEntity<String> hitLike(FreeLikeDTO likeDTO) {
+		String message = likeDTO.getBno() +"번";
+		if(boardService.hitLike(likeDTO)) {
+			message += "게시글을 추천하였습니다.";
+		} else {
+			message += "게시글 추천을 취소하였습니다.";
+		}
+		return new ResponseEntity<String>(message, HttpStatus.OK);
+	}
 }

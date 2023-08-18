@@ -56,21 +56,26 @@ $(function(){
 					    </div>
 					    <div class="comment_wrap">
 					      <div class="comment_info">
-					        <span class="userName badge badge-pill badge-info mr-2">홍길동</span>
+					        <span class="userName badge badge-pill badge-info mr-2">${elem.replyer}</span>
 					        <span class="badge badge-dark">${elem.replyDate}</span>
 					      </div>
 					      <div class="comment_content py-2">${elem.reply}</div>
 					    </div>
-					  </div>
-					  <div class="reply_modify">
+					  </div>`
+					  
+				if(memberId==elem.replyer || auth.includes('ROLE_ADMIN')){
+				replyList +=					  
+					  `<div class="reply_modify">
 					    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">변경</button>
 					    <div class="dropdown-menu">						   
 					      <a class="dropdown-item" href="modify">수정</a>
 					      <a class="dropdown-item" href="delete">삭제</a>
 					    </div>
-					  </div>
-					 </div>
-					</li>`				
+					  </div>`
+					  }
+				replyList += 
+					 `</div>
+					</li>`
 			});
 			replyContainer.html(replyList);
 			showReplyPage(replyCount);
@@ -108,6 +113,13 @@ $(function(){
 	// 댓글 수정 및 삭제 처리 
 	$('.chat').on('click','.reply_modify a',function(e){
 		e.preventDefault();// a태그  기본동작 금지
+		
+		let replyer = $(this).closest('li').find('.userName').text();
+		// 작성자가 일치하지 않거나 관리자가 아니면
+		if(replyer!=memberId && !auth.includes('ROLE_ADMIN')){
+			return;
+		}
+		
 		let rno = $(this).closest('li').data('rno'); // 댓글 번호 가져오기
 		let operation = $(this).attr('href');// 수정/삭제 동작 결정
 		
@@ -163,5 +175,4 @@ $(function(){
 		}
 		
 	});
-	
 });

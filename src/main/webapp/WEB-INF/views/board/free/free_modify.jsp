@@ -12,7 +12,11 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					[${board.cno}]
+						<select class="amount form-control" id="category">
+							<c:forEach items="${category}" var="c">
+								<option value="${c.cno}" ${board.cno eq c.cno ? 'selected':''}>${c.kind}</option>
+							</c:forEach>
+						</select>
 				</div>
 				<div class="card-body">
 					<form action="${ctxPath}/free/modify" method="post">
@@ -20,10 +24,6 @@
 						<div class="form-group">
 							<label>글 번호</label>	
 							<input class="form-control" name="bno" value="${board.bno}" readonly="readonly"/>
-						</div>
-						<div class="form-group">
-							<label>글 분류</label>	
-							<input class="form-control" name="cno" value="${board.cno}" readonly="readonly"/>
 						</div>
 						<div class="form-group">
 							<label>제 목</label>
@@ -47,6 +47,7 @@
 							<input class="form-control" readonly="readonly" name="updateDate"  
 								value="<tf:formatDateTime value="${board.updateDate}" pattern="yyyy년MM월dd일 HH시mm분"/>">
 						</div>
+						<input type="hidden" name="cno" value="${board.cno}"/>
 						<button type="button" data-oper='modify' class="btn btn-light">수정</button>
 						<button type="button" data-oper='remove' class="btn btn-danger">삭제</button>
 						<button type="button" data-oper='list' class="btn btn-info">목록</button>
@@ -108,5 +109,10 @@ $(function(){
 		}
 		modifyForm.submit();
 	});	
+	
+	$('#category').change(function(){
+		let cno = $(this).val()
+		modifyForm.find('[name="cno"]').val(cno)
+	})
 })
 </script>

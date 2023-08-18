@@ -25,9 +25,13 @@
  
  	<sql id="category">
  		<if test='cno >0'>
-	 		<trim prefix="(" suffix=") AND">
-	 			m.cno = #{cno}
-	 		</trim>
+	 			m.cno = #{cno} AND
+ 		</if>
+ 	</sql>
+
+ 	<sql id="category2">
+ 		<if test='cno >0'>
+	 			cno = #{cno} AND
  		</if>
  	</sql>
 
@@ -39,6 +43,7 @@
   		<result property="writer" column="writer"/>
   		<result property="replyCnt" column="replyCnt"/>
   		<result property="cno" column="cno"/>
+  		<result property="likeCount" column="likeCount"/>
   		<result property="regDate" column="regDate"/>
   		<result property="updateDate" column="updateDate"/>
   		<collection property="categoryList" resultMap="categoryMap"></collection>
@@ -52,9 +57,9 @@
 	<select id="getList" resultMap="freeMap">
 	    	 <![CDATA[ 
 	    	select * from 
-			(select /*+ INDEX_DESC(tbl_FreeBoard pk_free_board) */  
-	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, m.cno, regDate, updateDate, a.category 
-	    		FROM tbl_freeBoard m left outer join tbl_category a on m.cno = a.cno where
+			(select /*+ INDEX_DESC(tbl_freeBoard pk_free_board) */  
+	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, m.cno, regDate, updateDate, a.category, likeCount
+	    		FROM tbl_freeBoard m inner join tbl_category a on m.cno = a.cno where
 	    ]]>		
 	    <include refid="criteria"/>
 	    <include refid="category"/>
@@ -67,6 +72,7 @@
     <select id="getTotalCount" resultType="int">
     	select count(bno) from tbl_freeBoard where
 	   	<include refid="criteria"/>
+	   	<include refid="category2"/>
     	bno > 0
     </select>
 
@@ -76,8 +82,8 @@
 	</insert>
 
    	<insert id="insertSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
-  	    insert into tbl_freeBoard(bno,title,content,writer,category)
-    	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{category})
+  	    insert into tbl_freeBoard(bno,title,content,writer,cno)
+    	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno})
     </insert>
 
 	<select id="read" resultType="freeVO">
@@ -99,6 +105,10 @@
 	
 	<update id="updatedReplyCnt">
 		update tbl_freeBoard set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
+
+	<update id="updateLikeCnt">
+		update tbl_freeBoard set likeCount = likeCount + #{amount} where bno = #{bno}
 	</update>
 	
 	<select id="category" resultType="categoryVO">

@@ -9,10 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.petti.domain.Criteria;
 import com.petti.domain.free_board.CategoryVO;
 import com.petti.domain.free_board.FreeBoardVO;
+import com.petti.domain.free_board.FreeLikeDTO;
 import com.petti.repository.free_board.FreeBoardAttachRepository;
+import com.petti.repository.free_board.FreeBoardLikeRepository;
 import com.petti.repository.free_board.FreeBoardRepository;
 
+import lombok.extern.log4j.Log4j;
+
 @Service
+@Log4j
 public class FreeBoardServiceImpl implements FreeBoardService {
 
 	@Autowired
@@ -20,6 +25,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	
 	@Autowired
 	private FreeBoardAttachRepository attachRepository;
+	
+	@Autowired
+	private FreeBoardLikeRepository likeRepository;
 	
 	@Override
 	public List<FreeBoardVO> getList(Criteria criteria) {
@@ -62,6 +70,22 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	@Override
 	public List<CategoryVO> category() {
 		return boardRepository.category();
+	}
+
+	// 게시물 추천
+	@Transactional
+	@Override
+	public boolean hitLike(FreeLikeDTO likeDTO) {
+		FreeLikeDTO result = likeRepository.get(likeDTO);
+		if(result==null) { // 추천
+			likeRepository.insert(likeDTO);
+			boardRepository.updateLikeCnt(likeDTO.getBno(), 1);
+			return true;
+		} else { // 추천 취소
+			likeRepository.delete(likeDTO);
+			boardRepository.updateLikeCnt(likeDTO.getBno(), -1);
+			return false;
+		}
 	}
 
 }

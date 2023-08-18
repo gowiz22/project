@@ -53,4 +53,8 @@
 			where memberId = #{memberId}
 	</update>
 	
+	<select id="selectByEmail" resultType="string">
+		select memberId from tbl_member where email=#{email}
+	</select>
+	
 </mapper>

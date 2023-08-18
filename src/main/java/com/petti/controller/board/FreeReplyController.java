@@ -3,6 +3,7 @@ package com.petti.controller.board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,8 @@ public class FreeReplyController {
 
 	@Autowired
 	private FreeReplyService replyService;
-	
+
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/new")
 	public ResponseEntity<String> create(@RequestBody FreeReplyVO vo) {
 		int result = replyService.register(vo);
@@ -39,12 +41,14 @@ public class FreeReplyController {
 			Criteria criteria = new Criteria(page,10);
 			return new ResponseEntity<>(replyService.getList(criteria, bno),HttpStatus.OK); 
 		}
-		
+
+		@PreAuthorize("isAuthenticated()")
 		@GetMapping("/{rno}")
 		public ResponseEntity<FreeReplyVO> get(@PathVariable Long rno){
 			return new ResponseEntity<FreeReplyVO>(replyService.get(rno),HttpStatus.OK);
 		}
 		
+		@PreAuthorize("isAuthenticated()")
 		@DeleteMapping("/{rno}")
 		public ResponseEntity<String> remove(@PathVariable Long rno){
 			int result = replyService.remove(rno);

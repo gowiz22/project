@@ -25,6 +25,7 @@ import com.petti.domain.member.MemberVO;
 import com.petti.exception.PasswordMisMatchException;
 import com.petti.service.member.MailSendService;
 import com.petti.service.member.MemberService;
+import com.petti.service.member.NotFoundMemberException;
 
 import lombok.extern.log4j.Log4j;
 
@@ -56,6 +57,13 @@ public class MemberController {
 		} 
 		return "member/"+path;
 	}
+
+	// 관리자 페이지 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/admin/adminPage")
+	public String adminPage(HttpServletRequest request) {
+		return "admin/adminPage";
+	}	
 	
 	//회원 정보수정 처리
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
@@ -129,14 +137,6 @@ public class MemberController {
 		return mailSendService.joinEmail(email);
 	}
 	
-
-	// 관리자 페이지 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/admin/adminPage")
-	public String adminPage(HttpServletRequest request) {
-		return "admin/adminPage";
-	}
-	
 	@GetMapping("/accessDenied")
 	public String accessDenided() {
 		return "accessError";
@@ -159,5 +159,41 @@ public class MemberController {
 		
 		if(logout!=null) model.addAttribute("logout", "로그아웃");
 		return "member/login";
+	}
+	
+	// 아이디 찾기 or 임시Pwd 발급 페이지
+	@GetMapping("/findMemberInfo")
+	public String findMemberInfo() {
+		return "member/findMemberInfo";
+	}
+	
+	// 아이디 찾기 메일 전송
+	@PostMapping(value = "/findMemberId", produces = "plain/text; charset=utf-8")
+	@ResponseBody
+	public ResponseEntity<String> findMemberId(String email) {
+		String message = null;
+		try {
+			mailSendService.findIdEmail(email);
+			message = "가입하신 이메일로 전송되었습니다.";
+		} catch (NotFoundMemberException e) {
+			message = "회원 정보를 찾을 수 없습니다.";
+			return new ResponseEntity<String>(message,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(message,HttpStatus.OK);
+	}
+	
+	// 임시 비밀번호 메일 전송
+	@PostMapping(value = "/findMemberPwd", produces = "plain/text; charset=utf-8")
+	@ResponseBody
+	public ResponseEntity<String> findMemberPwd(String email) {
+		String message = null;
+		try {
+			mailSendService.tempPwdEmail(email);
+			message = "가입하신 이메일로 전송되었습니다.";
+		} catch (NotFoundMemberException e) {
+			message = "회원 정보를 찾을 수 없습니다.";
+			return new ResponseEntity<String>(message,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(message,HttpStatus.OK);
 	}
 }

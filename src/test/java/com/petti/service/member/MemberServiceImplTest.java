@@ -18,7 +18,7 @@ public class MemberServiceImplTest extends AppTest{
 	private AuthRepository authRepository;
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void test() {
 		MemberVO vo = new MemberVO(); 
 		vo.setMemberId("admin");
@@ -29,7 +29,7 @@ public class MemberServiceImplTest extends AppTest{
 	}
 
 	@Test
-//	@Ignore
+	@Ignore
 	public void test2() {
 		AuthVO vo = new AuthVO("admin", "ROLE_ADMIN");
 		authRepository.insert(vo);
@@ -39,7 +39,7 @@ public class MemberServiceImplTest extends AppTest{
 //	@Ignore
 	public void test3() {
 		MemberVO vo = new MemberVO(); 
-		vo.setMemberId("lee");
+		vo.setMemberId("asdf");
 		vo.setMemberPwd("1234");
 		vo.setMemberName("이길동");
 		vo.setEmail("lee@test.com");

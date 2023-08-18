@@ -13,6 +13,7 @@ import java.util.UUID;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @RequestMapping("/files")
 public class FileUploadController {
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/upload")
 	public ResponseEntity<List<FreeBoardAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
 		List<FreeBoardAttachVO> list = new ArrayList<FreeBoardAttachVO>(); 

@@ -17,4 +17,6 @@ public interface MemberRepository {
 	void updatePassword(
 			@Param("memberId") String memberId,
 			@Param("memberPwd") String memberPwd);
+	
+	String selectByEmail(String email);
 }

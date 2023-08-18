@@ -12,9 +12,15 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">Board Register</div>
-				<div class="card-body">
-					<form action="${ctxPath}/free/register" method="post">
+					<div class="card-header">
+						<select class="amount form-control" id="category">
+							<c:forEach items="${category}" var="c">
+									<option value="${c.cno}">${c.kind}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="card-body">
+					<form class="regForm" action="${ctxPath}/free/register" method="post">
 						<div class="form-group">
 							<label>Title </label>
 							<input class="form-control" name="title"/>
@@ -28,6 +34,7 @@
 							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input type="hidden" name="cno" value="1"/>
 						<button type="button" class="btn btn-outline-primary register">Submit Button</button>
 						<button type="button" class="btn btn-outline-info list">List</button>					
 					</form>
@@ -61,5 +68,13 @@
 <input type="hidden" name="keyword" value="${param.keyword }" >
 
 <script src="${ctxPath}/resources/js/free_register.js"></script>
-
+<script>
+$(function(){
+	let registerForm = $('.regForm')
+	$('#category').change(function(){
+		let cno = $(this).val()
+		registerForm.find('[name="cno"]').val(cno)
+	})
+})
+</script>
 <%@ include file="../../includes/footer.jsp" %>

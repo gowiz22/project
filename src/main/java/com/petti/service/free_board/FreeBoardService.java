@@ -5,6 +5,7 @@ import java.util.List;
 import com.petti.domain.Criteria;
 import com.petti.domain.free_board.CategoryVO;
 import com.petti.domain.free_board.FreeBoardVO;
+import com.petti.domain.free_board.FreeLikeDTO;
 
 public interface FreeBoardService {
 
@@ -21,4 +22,6 @@ public interface FreeBoardService {
 	int totalCount(Criteria criteria);
 	
 	List<CategoryVO> category();
+	
+	boolean hitLike(FreeLikeDTO likeDTO);
 }

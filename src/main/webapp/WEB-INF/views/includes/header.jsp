@@ -9,8 +9,8 @@
 
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.memberVO" var="authInfo"/>
+	<sec:authentication property="principal.memberVO.authList" var="authList"/>
 </sec:authorize>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +19,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script><script>
 let ctxPath = '${ctxPath}'
 let duplicateLogin = '${duplicateLogin}'
+
+let memberId = "${authInfo.memberId}"
+let auth = "${authList}"
+
 let csrfHeaderName = "${_csrf.headerName}"; 
 let csrfTokenValue = "${_csrf.token}"
 

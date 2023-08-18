@@ -22,14 +22,15 @@ public interface FreeBoardRepository {
 	
 	int update(FreeBoardVO vo);
 	
-	List<FreeBoardVO> getList(
-			@Param("pageNum") int pageNum,
-			@Param("amount") int amount,
-			@Param("cno") int cno);
-	
+	// 전체 게시물 수 
 	int getTotalCount(Criteria criteria);
 	
+	// 카테고리 리스트 
 	List<CategoryVO> category();
 	
+	// 댓글 수 변화
 	void updatedReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
+	
+	// 추천수 업데이트
+	void updateLikeCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

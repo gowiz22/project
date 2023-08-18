@@ -19,6 +19,7 @@
 				<input type="checkbox" name="remember-me" class="mr-2">자동 로그인
 			</label>
 			<button class="form-control btn btn-outline-primary" >로그인</button>
+			<a href="${ctxPath}/findMemberInfo" class="py-3">아이디 찾기 또는 비밀번호 재발급</a>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form>
 	</div>

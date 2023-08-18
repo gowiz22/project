@@ -7,12 +7,15 @@
 			<h1 class="page-header">자유 게시판</h1>
 		</div>
 	</div>
-	
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					[${board.cno}]
+					<c:forEach items="${category}" var="c">
+						<c:if test="${board.cno eq c.cno}">
+						[${c.kind}]		
+						</c:if>
+					</c:forEach>
 				</div>
 				<div class="card-body">
 					<div class="form-group">
@@ -35,7 +38,19 @@
 					<sec:authorize access="isAuthenticated() and principal.username== #board.writer or hasRole('ROLE_ADMIN')">
 						<button data-oper='modify' class="btn btn-light modify">수정페이지</button>
 					</sec:authorize>	
-						<button data-oper='list' class="btn btn-info list">목록으로</button>		
+						<button data-oper='list' class="btn btn-info list">목록으로</button>
+						<div class="text-center">
+							<sec:authorize access="isAuthenticated()">
+							    <c:choose>
+						            <c:when test="${authInfo.memberId == likeUser}">
+						                <a class="btn btn-outline-danger like">추천 취소</a>
+						            </c:when>
+						            <c:otherwise>
+						                <a class="btn btn-outline-primary like">추천</a>
+						            </c:otherwise>
+							    </c:choose>
+							</sec:authorize>						
+						</div>
 					</div>				
 				</div>
 			</div>
@@ -54,7 +69,7 @@
 					    </div>
 					    <div class="comment_wrap">
 					      <div class="comment_info">
-					        <span class="userName badge badge-pill badge-info mr-2">홍길동</span>
+					        <span class="userName badge badge-pill badge-info mr-2"></span>
 					        <span class="badge badge-dark">2023-06-20 09:30</span>
 					      </div>
 					      <div class="comment_content py-2">댓글 내용입니다. </div>
@@ -79,14 +94,20 @@
 		
 	<!-- 댓글작성 -->	
 	<div class="my-3 replyWriterForm">
-		<textarea  rows="6" placeholder="댓글을 작성해주세요" 
-			maxlength="400" class="replyContent form-control"></textarea>
-		<div class="text-right">
-			<div class="submit p-2">
-				<span class="btn btn-outline-info col-2 replyer">홍길동</span>
-				<button class="btn btn-outline-primary col-3">등록</button>
+		<sec:authorize access="isAnonymous()">
+			<textarea  rows="6" placeholder="로그인한 사용자만 댓글을 쓸 수 있습니다." readonly="readonly" 
+				maxlength="400" class="replyContent form-control"></textarea>		
+		</sec:authorize>
+		<sec:authorize access="isAuthenticated()">
+			<textarea  rows="6" placeholder="댓글을 작성해주세요" 
+				maxlength="400" class="replyContent form-control"></textarea>
+			<div class="text-right">
+				<div class="submit p-2">
+					<span class="btn btn-outline-info col-2 replyer">${authInfo.memberId}</span>
+					<button class="btn btn-outline-primary col-3">등록</button>
+				</div>
 			</div>
-		</div>
+		</sec:authorize>
 	</div>	
 </div>
 
@@ -124,7 +145,22 @@ $(function(){
 		getForm.submit();
 	})
 
-});
+	$('.like').click(function(e){
+		e.preventDefault()
+		let bno = $('[name="bno"]').val()
+		$.ajax({
+			type : 'post',
+			url : '${ctxPath}/free/like',
+			data : { memberId : memberId,
+					 bno : bno
+					},
+			success : function(message) {
+				alert(message)
+			}
+		})
+	})
+	
+})
 </script>
 
 <script src="${ctxPath}/resources/js/free_replyService.js"></script>

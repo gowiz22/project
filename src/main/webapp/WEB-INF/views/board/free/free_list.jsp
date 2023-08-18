@@ -7,7 +7,6 @@
 			<h1 class="page-header">자유 게시판</h1>
 		</div>
 	</div>
-
 	<div class="row mb-3">
 		<div class="col-12">
 			<div class="card">
@@ -30,6 +29,7 @@
 								<th>제목</th>
 								<th>작성자</th>
 								<th>분류</th>
+								<th>추천</th>
 								<th>작성일</th>
 								<th>수정일</th>
 							</tr>
@@ -41,9 +41,12 @@
 									<td><a class="move" href="${board.bno}">${board.title}
 											${board.replyCnt == 0 ? '': [board.replyCnt]}</a></td>
 									<td>${board.writer}</td>
-									<td><c:forEach items="${board.categoryList}" var="category">
-											<p>${category.kind}</p>
-										</c:forEach></td>
+									<td>
+										<c:forEach items="${board.categoryList}" var="category">
+												<p>${category.kind}</p>
+										</c:forEach>
+									</td>
+									<td>${board.likeCount}</td>
 									<td><tf:formatDateTime value="${board.regDate}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td><tf:formatDateTime value="${board.updateDate}"
@@ -209,7 +212,6 @@ $(function(){
 	//카테고리 처리
 	$('#category').change(function(){
 		let cno = $(this).val()
-		$(this).attr('selected');
 		listForm.find('[name="cno"]').val(cno)
 		listForm.submit()
 	})
