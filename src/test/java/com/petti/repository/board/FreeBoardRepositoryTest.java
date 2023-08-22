@@ -21,14 +21,15 @@ public class FreeBoardRepositoryTest extends AppTest{
 	private FreeBoardRepository boardRepository;
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testGetList() {
 		Criteria criteria = new Criteria();
 //		criteria.setType("C");
 //		criteria.setKeyword("자바");
-		criteria.setCno(1);
+//		criteria.setCno(1);
 		List<FreeBoardVO> list = boardRepository.getList(criteria);
 		log.info(list);
+		
 	}
 	
 	@Test

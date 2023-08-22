@@ -35,34 +35,23 @@
  		</if>
  	</sql>
 
-  	<resultMap type="freeVO" id="freeMap">
-  		<id property="cno" column="cno"/>
-  		<result property="bno" column="bno"/>
-  		<result property="title" column="title"/>
-  		<result property="content" column="content"/>
-  		<result property="writer" column="writer"/>
-  		<result property="replyCnt" column="replyCnt"/>
-  		<result property="cno" column="cno"/>
-  		<result property="likeCount" column="likeCount"/>
-  		<result property="regDate" column="regDate"/>
-  		<result property="updateDate" column="updateDate"/>
-  		<collection property="categoryList" resultMap="categoryMap"></collection>
-  	</resultMap>
+ 	<sql id="recommended">
+ 		<if test='recommend == "T"'>
+	 			likeCount >= 9 AND
+ 		</if>
+ 	</sql>
 
-  	<resultMap type="categoryVO" id="categoryMap">
-  		<result property="cno" column="cno"/>
-  		<result property="kind" column="category"/>
-  	</resultMap> 
- 
-	<select id="getList" resultMap="freeMap">
+	<select id="getList" resultType="freeVO">
 	    	 <![CDATA[ 
 	    	select * from 
-			(select /*+ INDEX_DESC(tbl_freeBoard pk_free_board) */  
+			(select /*+ INDEX_DESC(m pk_freeboard) */  
 	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, m.cno, regDate, updateDate, a.category, likeCount
 	    		FROM tbl_freeBoard m inner join tbl_category a on m.cno = a.cno where
 	    ]]>		
+	     
 	    <include refid="criteria"/>
 	    <include refid="category"/>
+	    <include refid="recommended"/>
    	    <![CDATA[ 		
    		 rownum <= #{maxRow}) 
 			where rn > #{minRow}
@@ -73,6 +62,7 @@
     	select count(bno) from tbl_freeBoard where
 	   	<include refid="criteria"/>
 	   	<include refid="category2"/>
+ 		<include refid="recommended"/>
     	bno > 0
     </select>
 
@@ -80,6 +70,11 @@
 		insert into tbl_freeBoard(bno,title,content,writer,cno)
     	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno})
 	</insert>
+
+<!-- 	<insert id="testinsert"> -->
+<!-- 		insert into tbl_freeBoard(bno,title,content,writer,cno,likeCount) -->
+<!--     	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno},#{likeCount}) -->
+<!-- 	</insert> -->
 
    	<insert id="insertSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
   	    insert into tbl_freeBoard(bno,title,content,writer,cno)

@@ -62,10 +62,10 @@
 	
 </div>
 
-<input type="hidden" name="pageNum" value="${param.pageNum }" >
-<input type="hidden" name="amount" value="${param.amount }" >
-<input type="hidden" name="type" value="${param.type }" >
-<input type="hidden" name="keyword" value="${param.keyword }" >
+<input type="hidden" name="pageNum" value="${param.pageNum}" >
+<input type="hidden" name="amount" value="${param.amount}" >
+<input type="hidden" name="type" value="${param.type}" >
+<input type="hidden" name="keyword" value="${param.keyword}" >
 
 <script src="${ctxPath}/resources/js/free_register.js"></script>
 <script>

@@ -1,7 +1,5 @@
 package com.petti.repository.board;
 
-import static org.junit.Assert.*;
-
 import java.util.stream.IntStream;
 
 import org.junit.Ignore;

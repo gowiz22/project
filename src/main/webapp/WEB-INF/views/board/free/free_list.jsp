@@ -11,14 +11,23 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					<select class="amount form-control" id="category">
-						<option value="0">전체</option>
-						<c:forEach items="${category}" var="c">
-								<option value="${c.cno}" ${criteria.cno eq c.cno ? 'selected':''}>${c.kind}</option>
-						</c:forEach>
-					</select>
-					<div>
-						<button>추천글</button>
+					<div class="d-inline-block" style="width: 120px;">
+						<select class="amount form-control" id="category">
+							<option value="0">전체</option>
+							<c:forEach items="${category}" var="c">
+									<option value="${c.cno}" ${criteria.cno eq c.cno ? 'selected':''}>${c.kind}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="d-inline-block ml-2">
+						<c:choose>
+							<c:when test="${criteria.recommend == 'T'}">
+								<button class="recommend btn btn-danger">5추천 글</button>
+							</c:when>
+							<c:when test="${criteria.recommend == 'F'}">
+								<button class="recommend btn btn-outline-danger">5추천 글</button>
+							</c:when>
+						</c:choose>
 					</div>
 				</div>
 				<div class="card-body">
@@ -42,9 +51,7 @@
 											${board.replyCnt == 0 ? '': [board.replyCnt]}</a></td>
 									<td>${board.writer}</td>
 									<td>
-										<c:forEach items="${board.categoryList}" var="category">
-												<p>${category.kind}</p>
-										</c:forEach>
+										<p>${board.category}</p>
 									</td>
 									<td>${board.likeCount}</td>
 									<td><tf:formatDateTime value="${board.regDate}"
@@ -81,6 +88,7 @@
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
 						<input type="hidden" name="cno" value="${p.criteria.cno}">
+						<input type="hidden" name="recommend" value="${p.criteria.recommend}">
 					</form>
 					<div class="float-right d-flex">
 						<button id="regBtn" class="btn btn-xs btn-primary">게시물 등록</button>
@@ -106,6 +114,7 @@
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
 						<input type="hidden" name="cno" value="${p.criteria.cno}">
+						<input type="hidden" name="recommend" value="${p.criteria.recommend}">
 					</form>
 				</div>
 				<!-- card body end -->
@@ -209,11 +218,24 @@ $(function(){
 		searchForm.submit()
 	})
 		
-	//카테고리 처리
+	// 카테고리 처리
 	$('#category').change(function(){
 		let cno = $(this).val()
 		listForm.find('[name="cno"]').val(cno)
 		listForm.submit()
+	})
+	
+	// 추천 글 조회
+	$('.recommend').click(function(e){
+		e.preventDefault()
+		recommendOnOff=searchForm.find('input[name="recommend"]')
+		if(recommendOnOff.val() == "F") {
+			recommendOnOff.val("T")
+		}
+		else {
+			recommendOnOff.val("F")
+		}
+		searchForm.submit()
 	})
 })
 </script>

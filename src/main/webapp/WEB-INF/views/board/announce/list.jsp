@@ -61,9 +61,11 @@
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
 					</form>
-					<div class="float-right d-flex">
-						<button id="regBtn" class="btn btn-xs btn-primary">공지사항 등록</button>
-					</div>
+			        <sec:authorize access="hasRole('ROLE_ADMIN')">
+						<div class="float-right d-flex">
+							<button id="regBtn" class="btn btn-xs btn-primary">공지사항 등록</button>
+						</div>
+					</sec:authorize>	
 					<ul class="pagination justify-content-center">
 						<c:if test="${p.prev }">
 							<li class="page-item">

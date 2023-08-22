@@ -91,9 +91,16 @@ function checkExtension(fileName, fileSize){
         <li class="nav-item">
             <a class="nav-link" href="${ctxPath}/review/list">제품 리뷰</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="${ctxPath}/mypage">마이페이지</a>
-        </li>
+       	<sec:authorize access="isAuthenticated() and !hasRole('ROLE_ADMIN')"> 
+	        <li class="nav-item">
+	            <a class="nav-link" href="${ctxPath}/mypage">마이페이지</a>
+	        </li>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+        	<li class="nav-item">
+	            <a class="nav-link" href="${ctxPath}/adminPage">관리자페이지</a>
+	        </li>
+        </sec:authorize>
     </ul>
 </nav>
 <nav>

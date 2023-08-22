@@ -13,6 +13,8 @@ public interface FreeBoardRepository {
 	List<FreeBoardVO> getList(Criteria criteria);
 	
 	void insert(FreeBoardVO vo);
+
+	void testinsert(FreeBoardVO vo);
 	
 	Integer insertSelectKey(FreeBoardVO vo);
 	

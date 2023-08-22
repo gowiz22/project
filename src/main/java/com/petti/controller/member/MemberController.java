@@ -60,9 +60,9 @@ public class MemberController {
 
 	// 관리자 페이지 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/admin/adminPage")
+	@GetMapping("/adminPage")
 	public String adminPage(HttpServletRequest request) {
-		return "admin/adminPage";
+		return "adminPage";
 	}	
 	
 	//회원 정보수정 처리

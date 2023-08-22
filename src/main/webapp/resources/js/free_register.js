@@ -39,9 +39,11 @@ $(function(){
 		let form = $('<form/>')
 		let type = $('[name="type"]');
 		let keyword = $('[name="keyword"]');
+		
 		if(type.val()&&keyword.val()){
 			form.append(type).append(keyword);				
 		}
+		
 		form.attr('action','${ctxPath}/board/list')
 			.append($('[name="pageNum"]'))
 			.append($('[name="amount"]'))

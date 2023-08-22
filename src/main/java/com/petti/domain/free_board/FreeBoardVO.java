@@ -25,6 +25,7 @@ public class FreeBoardVO {
 	private String title;
 	private String content;
 	private String writer;
+	private String category;
 	private int cno;
 	private int replyCnt;
 	private int likeCount;
@@ -37,5 +38,4 @@ public class FreeBoardVO {
 	
 	private List<FreeBoardAttachVO> attachList;
 	
-	private List<CategoryVO> categoryList;
 }

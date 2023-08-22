@@ -14,8 +14,9 @@ public class Criteria{
 	
 	private String type;
 	private String keyword;
-	private int cno;
 	private String kind;
+	private int cno;
+	private String recommend = "F";
 	
 	public Criteria() {
 		this(1,10); // 1페이지, 한 페이지당 게시물 수는 10개 

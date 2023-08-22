@@ -31,6 +31,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	
 	@Override
 	public List<FreeBoardVO> getList(Criteria criteria) {
+		log.info(boardRepository.getList(criteria));
+		log.info("---------------------------------------------");
+		log.info("");
 		return boardRepository.getList(criteria);
 	}
 

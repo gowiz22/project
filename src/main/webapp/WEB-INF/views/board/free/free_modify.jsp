@@ -87,10 +87,15 @@ $(function(){
 	let modifyForm = $('form')
 	let type = '${criteria.type}'
 	let keyword = '${criteria.keyword}'
+	let recommend = '${criteria.recommend}'
 
 	if(type&&keyword){
 		modifyForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
 				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
+	}
+
+	if(recommend=="T") {
+		modifyForm.append($('<input/>',{type : 'hidden', name : 'recommend', value : '${criteria.recommend}'}))
 	}
 	
 	$('button').click(function(){

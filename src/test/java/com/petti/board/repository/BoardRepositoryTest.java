@@ -1,12 +1,17 @@
 package com.petti.board.repository;
 
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.petti.board.AppTest;
+import com.petti.domain.Criteria;
 import com.petti.domain.board.AnnounceVO;
+import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.repository.board.AnnoBoardRepository;
+import com.petti.repository.free_board.FreeBoardRepository;
 
 import lombok.extern.log4j.Log4j;
 
@@ -16,15 +21,21 @@ public class BoardRepositoryTest extends AppTest{
 	@Autowired
 	private AnnoBoardRepository boardRepository;
 	
+	@Autowired
+	FreeBoardRepository freeBoardRepository; 
+	
 	@Test
-	@Ignore
+//	@Ignore
 	public void testGetList() {
 //		List<AnnounceVO> list = boardRepository.getList();
 //		log.info(list);
+		List<FreeBoardVO> list = freeBoardRepository.getList(new Criteria());
+		list.forEach(b->System.out.println(b));
+	
 	}
 
 	@Test
-//	@Ignore
+	@Ignore
 	public void testRead() {
 		AnnounceVO read = boardRepository.read(1L);
 		log.info(read);
@@ -62,7 +73,4 @@ public class BoardRepositoryTest extends AppTest{
 		
 		log.info(update);
 	}
-	
-
-	
 }
