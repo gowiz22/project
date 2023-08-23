@@ -16,4 +16,9 @@
 	<select id="selectByBno" resultType="freeBoardAttachVO">
 		select * from tbl_freeAttach where bno = #{bno}
 	</select>
+	
+	<select id="selectByUuid" resultType="freeBoardAttachVO">
+		select * from tbl_freeAttach where uuid = #{uuid}
+	</select>
+	
 </mapper>

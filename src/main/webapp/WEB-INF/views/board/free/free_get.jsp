@@ -23,7 +23,7 @@
 					        no.${board.bno}
 					    </div>
 					    <div class="d-inline-block" style="text-align: center;">
-					        ${board.title}
+					        ${board.title}       
 					    </div>
 					    <div class="d-inline-block" style="margin-left: auto;">
 					        ${board.writer}
@@ -56,6 +56,21 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="row my-5">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>첨부 파일</h4>
+				</div>
+				<div class="card-body">
+					<div class="uploadResultDiv mt-3"> <!-- 파일업로드 결과 보여주기  -->
+						<ul class="list-group"></ul>
+					</div>
+				</div> <!-- card-body -->
+			</div> <!-- caard end -->
+		</div> <!-- col end -->
+	</div><!-- row end -->
 	
 	<h3 class="mt-5">댓글</h3>
 	<div class="row">
@@ -115,6 +130,21 @@
 	<input type="hidden" name="bno"  value="${board.bno}">
 </form>
 
+<!-- Modal -->
+<div class="modal fade" id="showImage">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">원본 이미지 보기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="../../includes/footer.jsp" %>
 <script>
 $(function(){
@@ -167,5 +197,6 @@ $(function(){
 })
 </script>
 
-<script src="${ctxPath}/resources/js/free_replyService.js"></script>
-<script src="${ctxPath}/resources/js/free_reply.js"></script>
+<script src="${ctxPath}/resources/js/free/free_get.js"></script>
+<script src="${ctxPath}/resources/js/free/free_replyService.js"></script>
+<script src="${ctxPath}/resources/js/free/free_reply.js"></script>

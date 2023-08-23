@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.free_board.CategoryVO;
+import com.petti.domain.free_board.FreeBoardAttachVO;
 import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.domain.free_board.FreeLikeDTO;
 import com.petti.repository.free_board.FreeBoardAttachRepository;
@@ -89,6 +90,16 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 			boardRepository.updateLikeCnt(likeDTO.getBno(), -1);
 			return false;
 		}
+	}
+
+	@Override
+	public List<FreeBoardAttachVO> getAttachList(Long bno) {
+		return attachRepository.selectByBno(bno);
+	}
+
+	@Override
+	public FreeBoardAttachVO getAttach(String uuid) {
+		return attachRepository.selectByUuid(uuid);
 	}
 
 }

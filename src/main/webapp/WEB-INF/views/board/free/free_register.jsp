@@ -67,7 +67,7 @@
 <input type="hidden" name="type" value="${param.type}" >
 <input type="hidden" name="keyword" value="${param.keyword}" >
 
-<script src="${ctxPath}/resources/js/free_register.js"></script>
+<script src="${ctxPath}/resources/js/free/free_register.js"></script>
 <script>
 $(function(){
 	let registerForm = $('.regForm')

@@ -89,7 +89,7 @@ function checkExtension(fileName, fileSize){
             <a class="nav-link" href="${ctxPath}/free/list">자유게시판</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="${ctxPath}/review/list">제품 리뷰</a>
+            <a class="nav-link" href="${ctxPath}/product/list">제품 리뷰</a>
         </li>
        	<sec:authorize access="isAuthenticated() and !hasRole('ROLE_ADMIN')"> 
 	        <li class="nav-item">
@@ -107,19 +107,19 @@ function checkExtension(fileName, fileSize){
 	<div align="right">
 	  <ul class="navbar-nav">
 		<sec:authorize access="isAnonymous()">
-		  	<li class="nav-item">
-		          <a class="nav-link" href="${ctxPath}/login">로그인</a>
-		    </li>
+			  	<div class="d-inline-block">
+			          <a class="nav-link" href="${ctxPath}/login">로그인</a>
+			    </div>
 	    </sec:authorize>
 		<sec:authorize access="isAuthenticated()">
-		    <li class="nav-item">
+		    <div class="d-inline-block">
 		       <a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
-		    </li>
+		    </div>
 	    </sec:authorize> 
   		<sec:authorize access="isAnonymous()"> 
-		  	<li class="nav-item">
+		  	<div class="d-inline-block">
 		          <a class="nav-link" href="${ctxPath}/join/step1">회원가입</a>
-		    </li>
+		    </div>
    	    </sec:authorize>
 	  </ul>
 	</div>

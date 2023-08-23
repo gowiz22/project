@@ -1,6 +1,7 @@
 package com.petti.controller.board;
 
 import java.nio.file.AccessDeniedException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.Pagination;
+import com.petti.domain.free_board.FreeBoardAttachVO;
 import com.petti.domain.free_board.FreeBoardVO;
 import com.petti.domain.free_board.FreeLikeDTO;
 import com.petti.service.free_board.FreeBoardService;
@@ -109,5 +112,18 @@ public class FreeController {
 			message += "게시글 추천을 취소하였습니다.";
 		}
 		return new ResponseEntity<String>(message, HttpStatus.OK);
+	}
+	
+	// 첨부파일 리스트
+	@GetMapping("/getAttachList")
+	@ResponseBody
+	public ResponseEntity<List<FreeBoardAttachVO>> getAttachList(Long bno) {
+		return new ResponseEntity<>(boardService.getAttachList(bno), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAttachFileInfo")
+	@ResponseBody
+	public ResponseEntity<FreeBoardAttachVO> getAttach(String uuid) {
+		return new ResponseEntity<>(boardService.getAttach(uuid), HttpStatus.OK);
 	}
 }

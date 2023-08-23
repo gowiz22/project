@@ -11,4 +11,7 @@ public interface FreeBoardAttachRepository {
 	void delete(String uuid);
 	
 	List<FreeBoardAttachVO> selectByBno(Long bno);
+	
+	FreeBoardAttachVO selectByUuid(String uuid);
+	
 }
