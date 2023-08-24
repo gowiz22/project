@@ -34,7 +34,30 @@
 			</div>
 		</div>
 	</div>
-	
+
+	<div class="row my-5">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>파일 첨부</h4>
+				</div>
+				<div class="card-body">
+					<div class="uploadDiv">
+						<input type="file" name="uploadFile" multiple="multiple">
+					</div>
+					<div class="uploadResultDiv form-group">
+						<ul class="list-group"></ul>
+					</div>
+				</div> <!-- panel-body -->
+			</div> <!-- panel end -->
+		</div> <!-- col end -->
+	</div><!-- row end -->	
+
+<input type="hidden" name="pageNum" value="${param.pageNum}" >
+<input type="hidden" name="amount" value="${param.amount}" >
+<input type="hidden" name="type" value="${param.type}" >
+<input type="hidden" name="keyword" value="${param.keyword}" >
+
 </div>
 <%@ include file="../../includes/footer.jsp" %>
 
@@ -57,3 +80,4 @@ $(function(){
 	})
 })
 </script>
+<script src="${ctxPath}/resources/js/product/product_register.js"></script>

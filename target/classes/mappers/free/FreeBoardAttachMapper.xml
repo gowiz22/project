@@ -13,6 +13,10 @@
 		delete from tbl_freeAttach where uuid=#{uuid}
 	</delete>
 
+	<delete id="deleteAll">
+		delete from tbl_freeAttach where bno=#{bno}
+	</delete>
+
 	<select id="selectByBno" resultType="freeBoardAttachVO">
 		select * from tbl_freeAttach where bno = #{bno}
 	</select>

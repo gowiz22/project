@@ -19,7 +19,7 @@
 						</select>
 				</div>
 				<div class="card-body">
-					<form action="${ctxPath}/free/modify" method="post">
+					<form action="${ctxPath}/free/modify" method="post" class="modifyForm">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class="form-group">
 							<label>글 번호</label>	
@@ -73,27 +73,20 @@
 				</div>
 			</div>
 		</div>	
-	
+	</div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modifyModal">
-    <div class="modal-dialog">
+<div class="modal fade" id="showImage">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">확인 창</h4>
+                <h4 class="modal-title">원본 이미지 보기</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
-            <div class="modal-body">
-                수정 완료하시겠습니까
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" id="certain" class="btn btn-light" data-dismiss="modal">확인</button>
-                <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">취소</button>
-            </div>
+            <div class="modal-body"></div>
         </div>
     </div>
 </div>
@@ -101,42 +94,21 @@
 <%@ include file="../../includes/footer.jsp" %>
 
 <script>
-$(function(){
-	let modifyForm = $('form')
+	let formObj = $('.modifyForm')
 	let type = '${criteria.type}'
 	let keyword = '${criteria.keyword}'
 	let recommend = '${criteria.recommend}'
 
-	if(type&&keyword){
-		modifyForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
-				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
-	}
-
-	if(recommend=="T") {
-		modifyForm.append($('<input/>',{type : 'hidden', name : 'recommend', value : '${criteria.recommend}'}))
-	}
-	
-	$('button').click(function(){
-		let operation = $(this).data('oper');
-		modifyForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
-					.append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))	
-
-		if(operation=='list'){ // 목록으로
-			$('.form-group').remove()
-			modifyForm.attr('action','${ctxPath}/free/list')
-						.attr('method','get');
-		} else if(operation=='modify'){ // 수정처리
-
-		} else if(operation=='remove'){ // 삭제처리
-			modifyForm.attr('action','${ctxPath}/free/remove')
+	let addCriteria = function() {		
+		if(type&&keyword){
+			modifyForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+					.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
 		}
-		modifyForm.submit();
-	});	
+		if(recommend=="T") {
+			modifyForm.append($('<input/>',{type : 'hidden', name : 'recommend', value : '${criteria.recommend}'}))
+		}
+	}
 	
-	$('#category').change(function(){
-		let cno = $(this).val()
-		modifyForm.find('[name="cno"]').val(cno)
-	})
-})
+
 </script>
-<script src="${ctxPath}/resources/js/free/modify.js"></script>
+<script src="${ctxPath}/resources/js/free/free_modify.js"></script>

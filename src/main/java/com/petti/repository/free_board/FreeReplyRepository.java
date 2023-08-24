@@ -21,4 +21,6 @@ public interface FreeReplyRepository {
 			@Param("criteria") Criteria criteria);
 	
 	int getReplyCount(Long bno);
+	
+	void deleteBno(Long bno);
 }

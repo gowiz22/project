@@ -1,4 +1,3 @@
-console.log('modify.js')
 $(function(){
 
 	let bnoValue = $('[name="bno"]').val()
@@ -17,7 +16,7 @@ $(function(){
 					let encodingFilePath = encodeURIComponent(filePath)
 					fileList +=
 					`<div class="d-inline-block mr-4">
-						<img alt="첨부파일" src="${ctxPath}/files/display?fileName=${encodingFilePath}">
+						<img alt="첨부파일" src="${ctxPath}/free/files/display?fileName=${encodingFilePath}">
 					</div>`
 				} else { // 이미지 파일이 아닐 때
 					fileList += 		
@@ -55,7 +54,7 @@ $(function(){
 						let encodingFilePath = encodeURIComponent(filePath)
 						fileList +=
 						`<div class="d-inline-block mr-4">
-							<img alt="첨부파일" src="${ctxPath}/files/display?fileName=${encodingFilePath}">
+							<img alt="첨부파일" src="${ctxPath}/free/files/display?fileName=${encodingFilePath}">
 						</div>`
 					} else { // 이미지 파일이 아닐 때
 						fileList += 		
@@ -74,7 +73,7 @@ $(function(){
 						fileList +=	`<a href="${imgUrl}" class="showImage">원본</a>`
 					} else {
 						let fileName = encodeURIComponent(e.uploadPath+"/"+e.uuid+"_"+e.fileName)
-						fileList +=	`<a href="${ctxPath}/files/download?fileName=${fileName}">다운로드</a>`
+						fileList +=	`<a href="${ctxPath}/free/files/download?fileName=${fileName}">다운로드</a>`
 					}
 					fileList +=	`
 						<div class="form-check-inline ml-2">
@@ -92,7 +91,7 @@ $(function(){
 		$('.uploadResultDiv ul').on('click','.showImage',function(e){
 			e.preventDefault()
 			let filePath = $(this).attr('href')
-			let imgSrc = `${ctxPath}/files/display?fileName=${filePath}`
+			let imgSrc = `${ctxPath}/free/files/display?fileName=${filePath}`
 			let imgTag = $('<img>' , {src : imgSrc, class : 'img-fluid'} )
 			$('#showImage').find('.modal-body').html(imgTag)
 			$('#showImage').modal()
@@ -114,7 +113,7 @@ $(function(){
 		
 		
 		$.ajax({
-			url : `${ctxPath}/files/upload`, 
+			url : `${ctxPath}/free/files/upload`, 
 			type : 'post', 
 			data : formData, 
 			processData : false, 
@@ -151,7 +150,7 @@ $(function(){
 		
 		$.ajax({
 			type : 'post',
-			url : `${ctxPath}/files/deleteFile`,
+			url : `${ctxPath}/free/files/deleteFile`,
 			data : targetFile,
 			success : function(result){
 						console.log(result)
@@ -175,10 +174,10 @@ $(function(){
 		if($(this).is(':checked')) { // 체크
 			$.ajax({
 				type : 'get',
-				url : `${ctxPath}/board/getAttachFileInfo`,
+				url : `${ctxPath}/free/getAttachFileInfo`,
 				data : {uuid : uuidVal},
-				success : function(boardAttachVO){
-					toBeDelList.push(boardAttachVO)
+				success : function(freeAttachVO){
+					toBeDelList.push(freeAttachVO)
 				}
 			}) // ajax end
 
@@ -194,11 +193,11 @@ $(function(){
 		let operation =$(this).data('oper')
 		addCriteria();
 		if(operation=='remove'){
-			formObj.attr('action',`${ctxPath}/board/remove`);
+			formObj.attr('action',`${ctxPath}/free/remove`);
 		} else if (operation=='list'){
 			formObj.empty();
 			addCriteria();
-			formObj.attr('action',`${ctxPath}/board/list`)
+			formObj.attr('action',`${ctxPath}/free/list`)
 				   .attr('method','get');
 		} else { //수정 처리
 			// List<BoardAttachVO>
@@ -240,5 +239,11 @@ $(function(){
 		formObj.submit();
 		
 		
-		});	
+		});
+	
+	// 카테고리 드롭다운시 값 변경
+	$('#category').change(function(){
+		let cno = $(this).val()
+		formObj.find('[name="cno"]').val(cno)
+	})
 })

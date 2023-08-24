@@ -16,6 +16,10 @@
 	<delete id="delete">
 		delete from tbl_FreeReply where rno=#{rno}
 	</delete>
+
+	<delete id="deleteBno">
+		delete from tbl_FreeReply where bno=#{bno}
+	</delete>
 	
 	<update id="update">
 		update tbl_FreeReply set

@@ -20,7 +20,7 @@ $(function(){
 						let encodingFilePath = encodeURIComponent(filePath)
 						fileList +=
 						`<div class="d-inline-block mr-4">
-							<img alt="첨부파일" src="${ctxPath}/files/display?fileName=${encodingFilePath}">
+							<img alt="첨부파일" src="${ctxPath}/free/files/display?fileName=${encodingFilePath}">
 						</div>`
 					} else { // 이미지 파일이 아닐 때
 						fileList += 		
@@ -39,7 +39,7 @@ $(function(){
 						fileList +=	`<a href="${imgUrl}" class="showImage">원본</a>`
 					} else {
 						let fileName = encodeURIComponent(e.uploadPath+"/"+e.uuid+"_"+e.fileName)
-						fileList +=	`<a href="${ctxPath}/files/download?fileName=${fileName}">다운로드</a>`
+						fileList +=	`<a href="${ctxPath}/free/files/download?fileName=${fileName}">다운로드</a>`
 					}
 					fileList +=	`</div></li>`		
 			})
@@ -50,7 +50,7 @@ $(function(){
 		$('.uploadResultDiv ul').on('click','.showImage',function(e){
 			e.preventDefault()
 			let filePath = $(this).attr('href')
-			let imgSrc = `${ctxPath}/files/display?fileName=${filePath}`
+			let imgSrc = `${ctxPath}/free/files/display?fileName=${filePath}`
 			let imgTag = $('<img>' , {src : imgSrc, class : 'img-fluid'} )
 			$('#showImage').find('.modal-body').html(imgTag)
 			$('#showImage').modal()

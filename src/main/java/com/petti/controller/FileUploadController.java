@@ -29,7 +29,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 
 @Log4j
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/free/files")
 public class FileUploadController {
 	
 	@PreAuthorize("isAuthenticated()")

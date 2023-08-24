@@ -12,7 +12,7 @@ $(function(){
 				let encodingFilePath = encodeURIComponent(filePath);
 				fileList +=`
 					<div class="thumnail d-inline-block mr-3">
-						<img alt="" src="${ctxPath}/free/files/display?fileName=${encodingFilePath}">	
+						<img alt="" src="${ctxPath}/files/display?fileName=${encodingFilePath}">	
 					</div>				
 				`
 			} else {
@@ -65,7 +65,7 @@ $(function(){
 		}
 		
 		$.ajax({
-			url : `${ctxPath}/free/files/upload`, 
+			url : `${ctxPath}/files/upload`, 
 			type : 'post', 
 			processData : false, 
 			contentType : false, 
@@ -123,7 +123,7 @@ $(function(){
 		
 		$.ajax({
 			type : 'post',
-			url : `${ctxPath}/free/files/deleteFile`, 
+			url : `${ctxPath}/files/deleteFile`, 
 			data : targetFile, 
 			success : function(result){
 				console.log(result);
