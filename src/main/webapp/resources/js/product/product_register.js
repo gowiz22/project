@@ -12,7 +12,7 @@ $(function(){
 				let encodingFilePath = encodeURIComponent(filePath);
 				fileList +=`
 					<div class="thumnail d-inline-block mr-3">
-						<img alt="" src="${ctxPath}/files/display?fileName=${encodingFilePath}">	
+						<img alt="" src="${ctxPath}/product/files/display?fileName=${encodingFilePath}">	
 					</div>				
 				`
 			} else {
@@ -44,7 +44,7 @@ $(function(){
 			form.append(type).append(keyword);				
 		}
 		
-		form.attr('action','${ctxPath}/board/list')
+		form.attr('action','${ctxPath}/product/list')
 			.append($('[name="pageNum"]'))
 			.append($('[name="amount"]'))
 			.appendTo('body')
@@ -65,7 +65,7 @@ $(function(){
 		}
 		
 		$.ajax({
-			url : `${ctxPath}/files/upload`, 
+			url : `${ctxPath}/product/files/upload`, 
 			type : 'post', 
 			processData : false, 
 			contentType : false, 
@@ -123,7 +123,7 @@ $(function(){
 		
 		$.ajax({
 			type : 'post',
-			url : `${ctxPath}/files/deleteFile`, 
+			url : `${ctxPath}/product/files/deleteFile`, 
 			data : targetFile, 
 			success : function(result){
 				console.log(result);

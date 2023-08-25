@@ -1,7 +1,7 @@
 package com.petti.domain.product_board;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,4 +30,6 @@ public class ProductVO {
 	
 	@DateTimeFormat(pattern = "yyyy년MM월dd일 HH시mm분")
 	private LocalDateTime updateDate;
+	
+	private List<ProductBoardAttachVO> attachList;
 }

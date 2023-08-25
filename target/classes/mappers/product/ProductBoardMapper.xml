@@ -48,7 +48,6 @@
     	values (seq_product.nextval,#{p_name},#{detail},#{writer})
 	</insert>
 
-
    	<insert id="insertSelectKey" keyColumn="pno" keyProperty="pno" useGeneratedKeys="true">
 		insert into tbl_product(pno,p_name,detail,writer)
     	values (seq_product.nextval,#{p_name},#{detail},#{writer})

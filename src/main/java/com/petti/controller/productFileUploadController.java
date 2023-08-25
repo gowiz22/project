@@ -22,26 +22,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petti.domain.free_board.FreeBoardAttachVO;
+import com.petti.domain.product_board.ProductBoardAttachVO;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
 @Log4j
 @RestController
-@RequestMapping("/free/files")
-public class FileUploadController {
+@RequestMapping("/product/files")
+public class productFileUploadController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/upload")
-	public ResponseEntity<List<FreeBoardAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
-		List<FreeBoardAttachVO> list = new ArrayList<FreeBoardAttachVO>(); 
-		File uploadPath = new File("C:/storage/free_board", getFolder());
+	public ResponseEntity<List<ProductBoardAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
+		List<ProductBoardAttachVO> list = new ArrayList<ProductBoardAttachVO>(); 
+		File uploadPath = new File("C:/storage/product", getFolder());
 		if(!uploadPath.exists()) {
 			uploadPath.mkdirs(); 
 		}
 		for(MultipartFile multipartFile : multipartFiles) {
-			FreeBoardAttachVO attachVO = new FreeBoardAttachVO();  
+			ProductBoardAttachVO attachVO = new ProductBoardAttachVO();  
 
 			String filName = multipartFile.getOriginalFilename(); // 파일이름
 			String uuid = UUID.randomUUID().toString();
@@ -80,7 +80,7 @@ public class FileUploadController {
 
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getFile(String fileName){
-		File file = new File("C:/storage/free_board/"+fileName);
+		File file = new File("C:/storage/product/"+fileName);
 		HttpHeaders headers = new HttpHeaders();
 		ResponseEntity<byte[]> result = null; 
 		
@@ -97,12 +97,12 @@ public class FileUploadController {
 	}	
 	
 	@PostMapping("/deleteFile")
-	public ResponseEntity<String> deleteFile(FreeBoardAttachVO vo){
-		File file = new File("C:/storage/free_board/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
+	public ResponseEntity<String> deleteFile(ProductBoardAttachVO vo){
+		File file = new File("C:/storage/product/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
 		log.info(file);
 		file.delete();
 		if(vo.isFileType()) {
-			file = new File("C:/storage/free_board/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
+			file = new File("C:/storage/product/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
 			file.delete();
 		}
 		

@@ -1,15 +1,21 @@
 package com.petti.controller.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.Pagination;
+import com.petti.domain.product_board.ProductBoardAttachVO;
 import com.petti.domain.product_board.ProductVO;
 import com.petti.service.product_board.ProductBoardService;
 
@@ -24,6 +30,7 @@ public class ProductController {
 	public String list(Model model, Criteria criteria) {
 		model.addAttribute("list", boardService.getList(criteria));
 		model.addAttribute("p",  new Pagination(criteria, boardService.totalCount(criteria)));
+		model.addAttribute("A_list", boardService.getAttachAll());
 		return "/board/product/product_list";
 	}
 	
@@ -70,4 +77,16 @@ public class ProductController {
 		}
 		return "redirect:/product/list";
 	}	
+	
+	@GetMapping("/getAttachList")
+	@ResponseBody
+	public ResponseEntity<List<ProductBoardAttachVO>> getAttachList(Long pno) {
+		return new ResponseEntity<List<ProductBoardAttachVO>>(boardService.getAttachList(pno),HttpStatus.OK);
+	}
+
+	@GetMapping("/getAttachFileInfo")
+	@ResponseBody
+	public ResponseEntity<ProductBoardAttachVO> getAttach(String uuid) {
+		return new ResponseEntity<ProductBoardAttachVO>(boardService.getAttach(uuid),HttpStatus.OK);
+	}
 }

@@ -10,10 +10,12 @@ public interface ProductAttachRepository {
 	
 	void delete(String uuid);
 	
-	List<ProductBoardAttachVO> selectByBno(Long bno);
+	List<ProductBoardAttachVO> selectAll();
+
+	List<ProductBoardAttachVO> selectByPno(Long pno);
 	
 	ProductBoardAttachVO selectByUuid(String uuid);
 
-	void deleteAll(Long bno);
+	void deleteAll(Long pno);
 	
 }

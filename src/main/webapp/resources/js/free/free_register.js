@@ -44,7 +44,7 @@ $(function(){
 			form.append(type).append(keyword);				
 		}
 		
-		form.attr('action','${ctxPath}/board/list')
+		form.attr('action','${ctxPath}/free/list')
 			.append($('[name="pageNum"]'))
 			.append($('[name="amount"]'))
 			.appendTo('body')

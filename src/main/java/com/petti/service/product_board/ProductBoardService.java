@@ -3,6 +3,7 @@ package com.petti.service.product_board;
 import java.util.List;
 
 import com.petti.domain.Criteria;
+import com.petti.domain.product_board.ProductBoardAttachVO;
 import com.petti.domain.product_board.ProductVO;
 
 public interface ProductBoardService {
@@ -18,4 +19,10 @@ public interface ProductBoardService {
 	boolean remove(Long pno); // 삭제
 	
 	int totalCount(Criteria criteria); // 상품 총 수
+	
+	List<ProductBoardAttachVO> getAttachList(Long pno);
+
+	List<ProductBoardAttachVO> getAttachAll();
+	
+	ProductBoardAttachVO getAttach(String uuid);
 }

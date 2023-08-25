@@ -1,6 +1,7 @@
+console.log("modify.js")
 $(function(){
 
-	let bnoValue = $('[name="bno"]').val()
+	let pnoValue = $('[name="pno"]').val()
 	let uploadResultList = [] // 새로 추가할 파일 목록
 	let toBeDelList = [] // 삭제할 파일 목록
 
@@ -16,7 +17,7 @@ $(function(){
 					let encodingFilePath = encodeURIComponent(filePath)
 					fileList +=
 					`<div class="d-inline-block mr-4">
-						<img alt="첨부파일" src="${ctxPath}/free/files/display?fileName=${encodingFilePath}">
+						<img alt="첨부파일" src="${ctxPath}/product/files/display?fileName=${encodingFilePath}">
 					</div>`
 				} else { // 이미지 파일이 아닐 때
 					fileList += 		
@@ -39,8 +40,8 @@ $(function(){
 
 	// 첨부파일 목록 불러오기
 	$.getJSON(
-	`${ctxPath}/free/getAttachList`,
-	{bno : bnoValue},
+	`${ctxPath}/product/getAttachList`,
+	{pno : pnoValue},
 	function(attachList){
 			console.log(attachList)
 
@@ -54,7 +55,7 @@ $(function(){
 						let encodingFilePath = encodeURIComponent(filePath)
 						fileList +=
 						`<div class="d-inline-block mr-4">
-							<img alt="첨부파일" src="${ctxPath}/free/files/display?fileName=${encodingFilePath}">
+							<img alt="첨부파일" src="${ctxPath}/product/files/display?fileName=${encodingFilePath}">
 						</div>`
 					} else { // 이미지 파일이 아닐 때
 						fileList += 		
@@ -73,7 +74,7 @@ $(function(){
 						fileList +=	`<a href="${imgUrl}" class="showImage">원본</a>`
 					} else {
 						let fileName = encodeURIComponent(e.uploadPath+"/"+e.uuid+"_"+e.fileName)
-						fileList +=	`<a href="${ctxPath}/free/files/download?fileName=${fileName}">다운로드</a>`
+						fileList +=	`<a href="${ctxPath}/product/files/download?fileName=${fileName}">다운로드</a>`
 					}
 					fileList +=	`
 						<div class="form-check-inline ml-2">
@@ -91,7 +92,7 @@ $(function(){
 		$('.uploadResultDiv ul').on('click','.showImage',function(e){
 			e.preventDefault()
 			let filePath = $(this).attr('href')
-			let imgSrc = `${ctxPath}/free/files/display?fileName=${filePath}`
+			let imgSrc = `${ctxPath}/product/files/display?fileName=${filePath}`
 			let imgTag = $('<img>' , {src : imgSrc, class : 'img-fluid'} )
 			$('#showImage').find('.modal-body').html(imgTag)
 			$('#showImage').modal()
@@ -113,7 +114,7 @@ $(function(){
 		
 		
 		$.ajax({
-			url : `${ctxPath}/free/files/upload`, 
+			url : `${ctxPath}/product/files/upload`, 
 			type : 'post', 
 			data : formData, 
 			processData : false, 
@@ -150,7 +151,7 @@ $(function(){
 		
 		$.ajax({
 			type : 'post',
-			url : `${ctxPath}/free/files/deleteFile`,
+			url : `${ctxPath}/product/files/deleteFile`,
 			data : targetFile,
 			success : function(result){
 						console.log(result)
@@ -174,7 +175,7 @@ $(function(){
 		if($(this).is(':checked')) { // 체크
 			$.ajax({
 				type : 'get',
-				url : `${ctxPath}/free/getAttachFileInfo`,
+				url : `${ctxPath}/product/getAttachFileInfo`,
 				data : {uuid : uuidVal},
 				success : function(freeAttachVO){
 					toBeDelList.push(freeAttachVO)
@@ -193,12 +194,12 @@ $(function(){
 		let operation =$(this).data('oper')
 		addCriteria();
 		if(operation=='remove'){
-			formObj.attr('action',`${ctxPath}/free/remove`);
+			formObj.attr('action',`${ctxPath}/product/remove`);
 			
 		} else if (operation=='list'){
 			formObj.empty();
 			addCriteria();
-			formObj.attr('action',`${ctxPath}/free/list`)
+			formObj.attr('action',`${ctxPath}/product/list`)
 				   .attr('method','get');
 		} else { //수정 처리
 			// List<BoardAttachVO>
@@ -207,13 +208,13 @@ $(function(){
 			if(toBeDelList.length>0){
 				console.log(toBeDelList)
 				$(toBeDelList).each(function(i,e){ // i=0,1,2
-					let bno = $('<input/>',{type:'hidden', name:`attachList[${i}].bno`, value : `${e.bno}`})
+					let pno = $('<input/>',{type:'hidden', name:`attachList[${i}].pno`, value : `${e.pno}`})
 					let uuid = $('<input/>',{type:'hidden', name:`attachList[${i}].uuid`, value : `${e.uuid}`})
 					let fileName = $('<input/>',{type:'hidden', name:`attachList[${i}].fileName`, value : `${e.fileName}`})
 					let fileType = $('<input/>',{type:'hidden', name:`attachList[${i}].fileType`, value : `${e.fileType}`})
 					let uploadPath = $('<input/>',{type:'hidden', name:`attachList[${i}].uploadPath`, value : `${e.uploadPath}`})
 					formObj.append(uuid)
-						.append(bno)
+						.append(pno)
 						.append(fileName)
 						.append(fileType)
 						.append(uploadPath)
@@ -238,13 +239,5 @@ $(function(){
 		} 	
 		
 		formObj.submit();
-		
-		
 		});
-	
-	// 카테고리 드롭다운시 값 변경
-	$('#category').change(function(){
-		let cno = $(this).val()
-		formObj.find('[name="cno"]').val(cno)
-	})
 })
