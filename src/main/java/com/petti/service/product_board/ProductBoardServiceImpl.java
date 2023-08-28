@@ -1,7 +1,5 @@
 package com.petti.service.product_board;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +12,7 @@ import com.petti.domain.product_board.ProductBoardAttachVO;
 import com.petti.domain.product_board.ProductVO;
 import com.petti.repository.product_board.ProductAttachRepository;
 import com.petti.repository.product_board.ProductBoardRepository;
+import com.petti.repository.product_board.ProductLikeRepository;
 
 @Service
 public class ProductBoardServiceImpl implements ProductBoardService {
@@ -23,6 +22,9 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 	
 	@Autowired
 	private ProductAttachRepository attachRepository;
+	
+	@Autowired
+	private ProductLikeRepository likeRepository;
 	
 	@Override
 	public List<ProductVO> getList(Criteria criteria) {
@@ -89,8 +91,8 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 	}
 
 	@Override
-	public List<ProductBoardAttachVO> getAttachAll() {
-		return attachRepository.selectAll();
+	public List<ProductBoardAttachVO> getThumbnail() {
+		return attachRepository.selectThumbnail();
 	}
 
 }

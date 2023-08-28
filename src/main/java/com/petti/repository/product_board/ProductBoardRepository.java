@@ -26,4 +26,6 @@ public interface ProductBoardRepository {
 			@Param("amount") int amount);
 	
 	int getTotalCount(Criteria criteria); // 총 상품 수
+	
+	void updateScoreRate(@Param("pno") Long pno, @Param("rate") double rate);
 }

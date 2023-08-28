@@ -5,8 +5,8 @@
  <mapper namespace="com.petti.repository.product_board.ProductAttachRepository">
 
  	<insert id="insert">
-		insert into tbl_reviewPhoto (uuid,uploadPath,fileName,fileType,pno)
-		values (#{uuid}, #{uploadPath}, #{fileName},#{fileType},#{pno})
+		insert into tbl_reviewPhoto (ano,uuid,uploadPath,fileName,fileType,pno)
+		values (seq_photo.nextval, #{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{pno})
 	</insert>
 	
 	<delete id="delete">
@@ -25,8 +25,14 @@
 		select * from tbl_reviewPhoto where uuid = #{uuid}
 	</select>
 	
-	<select id="selectAll" resultType="productBoardAttachVO">
-		select * from tbl_reviewPhoto
+	<select id="selectThumbnail" resultType="productBoardAttachVO">
+		select uuid, uploadPath, fileName, fileType, pno
+		FROM (
+		    SELECT uuid, uploadPath, fileName, fileType, pno, ano,
+		           ROW_NUMBER() OVER (PARTITION BY pno ORDER BY ano asc) AS rn
+		    FROM tbl_reviewPhoto
+		) ranked
+		WHERE rn = 1
 	</select>
 	
 </mapper>

@@ -1,4 +1,4 @@
-package com.petti.domain.free_board;
+package com.petti.domain.product_board;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class FreeLikeDTO {
-	private Long bno;
+public class ProductLikeDTO {
+	private Long pno;
+	private int score;
 	private String memberId;
 }

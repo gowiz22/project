@@ -1,10 +1,15 @@
 package com.petti.repository.product_board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.petti.board.AppTest;
+import com.petti.domain.product_board.ProductLikeDTO;
 import com.petti.domain.product_board.ProductVO;
 
 import lombok.extern.log4j.Log4j;
@@ -15,6 +20,9 @@ public class ProductBoardRepositoryTest extends AppTest {
 	@Autowired
 	ProductBoardRepository boardRepository;
 
+	@Autowired
+	ProductLikeRepository likeRepository;
+	
 	@Test
 	@Ignore
 	public void testGetList() {
@@ -58,7 +66,7 @@ public class ProductBoardRepositoryTest extends AppTest {
 	}
 
 	@Test
-//	@Ignores
+	@Ignore
 	public void testupdate() {
 		ProductVO vo = new ProductVO();
 		vo.setP_name("수정 제품");
@@ -68,4 +76,21 @@ public class ProductBoardRepositoryTest extends AppTest {
 		log.info(update);
 	}
 
+	@Test
+	@Ignore
+	public void testInsertscore() {
+		likeRepository.insert(new ProductLikeDTO(3L, 80, "cooicooi"));
+		likeRepository.insert(new ProductLikeDTO(3L, 30, "cooicooi"));
+		likeRepository.insert(new ProductLikeDTO(3L, 50, "cooicooi"));
+		
+	}
+	@Test
+//	@Ignore
+	@Transactional
+	public void testSelectScore() {
+		double rate = likeRepository.getScoreRate(3L);
+			boardRepository.updateScoreRate(3L, 50);
+		
+	}
+	
 }

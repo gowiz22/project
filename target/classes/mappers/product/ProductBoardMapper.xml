@@ -27,7 +27,7 @@
 	    <![CDATA[ 
 	    	select * from 
 			(select /*+ INDEX_DESC(tbl_product pk_product) */  
-	    		ROWNUM as rn, PNO, p_name, detail, WRITER, regDate, updateDate 
+	    		ROWNUM as rn, PNO, p_name, detail, WRITER, regDate, updateDate , recommendation
 	    		FROM tbl_product where
 	    ]]>		
 	    <include refid="criteria"/>
@@ -63,9 +63,15 @@
 
 	<update id="update">
 		update tbl_product set
-		p_name=#{p_name},
-		detail=#{detail},
-		updateDate = sysdate
+			p_name=#{p_name},
+			detail=#{detail},
+			updateDate = sysdate
+		where pno=#{pno}
+	</update>
+	
+	<update id="updateScoreRate">
+		update tbl_product set
+			recommendation = #{rate}
 		where pno=#{pno}
 	</update>
 	

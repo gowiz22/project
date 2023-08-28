@@ -35,7 +35,7 @@ public class FileUploadController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/upload")
 	public ResponseEntity<List<FreeBoardAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
-		List<FreeBoardAttachVO> list = new ArrayList<FreeBoardAttachVO>(); 
+		List<FreeBoardAttachVO> list = new ArrayList<FreeBoardAttachVO>();
 		File uploadPath = new File("C:/storage/free_board", getFolder());
 		if(!uploadPath.exists()) {
 			uploadPath.mkdirs(); 

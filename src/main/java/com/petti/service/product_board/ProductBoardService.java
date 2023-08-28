@@ -22,7 +22,7 @@ public interface ProductBoardService {
 	
 	List<ProductBoardAttachVO> getAttachList(Long pno);
 
-	List<ProductBoardAttachVO> getAttachAll();
-	
 	ProductBoardAttachVO getAttach(String uuid);
+
+	List<ProductBoardAttachVO> getThumbnail();
 }

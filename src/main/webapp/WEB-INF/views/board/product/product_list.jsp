@@ -1,6 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../../includes/header.jsp"%>
+<style>
+    .image-container {
+   	    display: flex; /* Flexbox 사용 */
+    	align-items: center; /* 수직 가운데 정렬 */
+    	justify-content: center; /* 수평 가운데 정렬 */
+        width: 150px; /* 원하는 너비로 설정 */
+        height: 100px; /* 원하는 높이로 설정 */
+        overflow: hidden; /* 크기를 초과하는 부분을 숨김 */
+    }
+
+    .thumbnail-image {
+        display: block; /* inline 요소에서 block 요소로 변경 */
+  		margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+        width: 100%; /* 부모 요소에 맞추어 이미지 너비 설정 */
+        height: 100%; /* 부모 요소에 맞추어 이미지 높이 설정 */
+        object-fit: cover; /* 이미지를 확대/축소하여 부모 요소를 채움 */
+        object-position: center center; /* 이미지를 가운데 정렬 */
+    }
+</style>
+
 <div class="container">
 	<div class="row">
 		<div class="col-12">
@@ -26,13 +46,32 @@
 						<tbody>
 						<c:forEach items="${list}" var="product">
 							<tr>
-								<td>${product.pno}</td>
+								<td rowspan="2">
+									<c:forEach items="${Thumbnail}" var="thumb">
+										<c:if test="${product.pno == thumb.pno}">
+								            <c:set var="filePath" value="${thumb.uploadPath}/${thumb.uuid}_${thumb.fileName}" />
+											<div class="image-container">
+												<img class="thumbnail-image" alt="썸네일" 
+													src="${ctxPath}/product/files/display?fileName=${filePath}" onclick="imageClick()">
+											</div>								
+										</c:if> 
+									</c:forEach>
+								</td>
 								<td>
 									<a class="move" href="${product.pno}">${product.p_name}</a>
 								</td>
 								<td>${product.writer}</td>
 								<td><tf:formatDateTime value="${product.regDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 								<td><tf:formatDateTime value="${product.updateDate}" pattern="yyyy-MM-dd HH:mm"/></td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<div class="progress" style="height:20px">
+										<div class="progress-bar" style="width:${product.recommendation}%; height:20px;">
+										${product.recommendation}
+										</div>
+									</div>
+								</td>
 							</tr>
 						</c:forEach>
 						</tbody>
@@ -117,6 +156,21 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="showImage">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">원본 이미지 보기</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
 <script>
 $(function(){
 	let listForm = $('#listForm')
@@ -184,5 +238,20 @@ $(function(){
 			searchForm.find('[name="pageNum"]').val(1); 
 			searchForm.submit();
 		});	
+		
+		// 썸네일 클릭 처리
+		function imageClick(clickedImage) {
+			let filePath = $(clickedImage).attr('src')
+			let imgTag = $('<img>' , {src : filePath, class : 'img-fluid'} )
+			$('#showImage').find('.modal-body').html(imgTag)
+			$('#showImage').modal()
+		}
+
+		// 이미지 클릭시 imageClick 함수 호출
+        $(document).on('click', '.thumbnail-image', function(e){
+        	imageClick(this)
+        })
+		
+		
 })
 </script>

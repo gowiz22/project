@@ -30,7 +30,7 @@ public class ProductController {
 	public String list(Model model, Criteria criteria) {
 		model.addAttribute("list", boardService.getList(criteria));
 		model.addAttribute("p",  new Pagination(criteria, boardService.totalCount(criteria)));
-		model.addAttribute("A_list", boardService.getAttachAll());
+		model.addAttribute("Thumbnail", boardService.getThumbnail());
 		return "/board/product/product_list";
 	}
 	

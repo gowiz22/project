@@ -41,14 +41,18 @@
 						<button data-oper='list' class="btn btn-info list">목록으로</button>
 						<div class="text-center">
 							<sec:authorize access="isAuthenticated()">
-							    <c:choose>
-						            <c:when test="${authInfo.memberId == likeUser}">
-						                <a class="btn btn-outline-danger like">추천 취소</a>
-						            </c:when>
-						            <c:otherwise>
-						                <a class="btn btn-outline-primary like">추천</a>
-						            </c:otherwise>
-							    </c:choose>
+							    <c:forEach items="${likeUser}" var="user">
+							    	<c:choose>	
+							            <c:when test="${authInfo.memberId == user}">
+							                <a class="btn btn-outline-danger like" data-oper="unlike">추천 취소</a>
+							            </c:when>
+						            </c:choose>
+					            </c:forEach>
+									<c:choose>
+							            <c:when test="${not likeUser.contains(authInfo.memberId)}">
+							                <a class="btn btn-outline-primary like" data-oper="like">추천</a>
+							            </c:when>
+						            </c:choose>
 							</sec:authorize>						
 						</div>
 					</div>				
@@ -192,6 +196,19 @@ $(function(){
 				alert(message)
 			}
 		})
+		var oper = this.getAttribute("data-oper")
+		
+		if(oper === "unlike") {
+			this.textContent = "추천";
+			this.classList.remove("btn-outline-danger");
+			this.classList.add("btn-outline-primary");
+			this.setAttribute("data-oper", "like");
+	    } else if (oper === "like") {
+	    	this.textContent = "추천 취소";
+	    	this.classList.remove("btn-outline-primary");
+	    	this.classList.add("btn-outline-danger");
+	    	this.setAttribute("data-oper", "unlike");
+	    }
 	})
 	
 })
