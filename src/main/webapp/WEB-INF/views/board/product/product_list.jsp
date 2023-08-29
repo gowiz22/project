@@ -67,8 +67,8 @@
 							<tr>
 								<td colspan="4">
 									<div class="progress" style="height:20px">
-										<div class="progress-bar" style="width:${product.recommendation}%; height:20px;">
-										${product.recommendation}
+										<div class="progress-bar" style="width:${product.rate *10}%; height:20px;">
+										${product.rate}
 										</div>
 									</div>
 								</td>

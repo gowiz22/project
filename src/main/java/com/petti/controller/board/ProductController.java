@@ -17,7 +17,9 @@ import com.petti.domain.Criteria;
 import com.petti.domain.Pagination;
 import com.petti.domain.product_board.ProductBoardAttachVO;
 import com.petti.domain.product_board.ProductVO;
+import com.petti.repository.product_board.ProductReplyRepository;
 import com.petti.service.product_board.ProductBoardService;
+import com.petti.service.product_board.ProductReplyService;
 
 @Controller
 @RequestMapping("/product")

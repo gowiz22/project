@@ -16,7 +16,7 @@
 	    				</when>
 	    				<when test="type=='W'.toString()">
 	    					WRITER like '%'||#{keyword}||'%'
-	    				</when>	  					
+	    				</when>
  					</choose>
  				</trim>
  			</foreach>
@@ -25,15 +25,20 @@
  
 	<select id="getList" resultType="productVO">
 	    <![CDATA[ 
-	    	select * from 
+	    	select p.*, r.rate from 
 			(select /*+ INDEX_DESC(tbl_product pk_product) */  
-	    		ROWNUM as rn, PNO, p_name, detail, WRITER, regDate, updateDate , recommendation
+	    		ROWNUM as rn, pno, p_name, detail, WRITER, regDate, updateDate
 	    		FROM tbl_product where
 	    ]]>		
 	    <include refid="criteria"/>
    	    <![CDATA[ 		
-   		 rownum <= #{maxRow}) 
-			where rn > #{minRow}
+   		 rownum <= #{maxRow}) p 
+   		 left join (
+   		     select pno, avg(score) as rate
+			    from tbl_review
+			    group by pno
+			) r on p.pno = r.pno
+			where rn > #{minRow} 
 		]]>
     </select>
     
@@ -66,12 +71,6 @@
 			p_name=#{p_name},
 			detail=#{detail},
 			updateDate = sysdate
-		where pno=#{pno}
-	</update>
-	
-	<update id="updateScoreRate">
-		update tbl_product set
-			recommendation = #{rate}
 		where pno=#{pno}
 	</update>
 	

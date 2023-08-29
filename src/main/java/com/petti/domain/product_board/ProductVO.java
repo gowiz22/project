@@ -23,7 +23,7 @@ public class ProductVO {
 	private String p_name;
 	private String detail;
 	private String writer;
-	private Double recommendation;
+	private Double rate;
 	
 	@DateTimeFormat(pattern = "yyyy년MM월dd일 HH시mm분")
 	private LocalDateTime regDate;

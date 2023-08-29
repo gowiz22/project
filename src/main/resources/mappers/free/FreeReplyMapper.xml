@@ -43,7 +43,7 @@
 	</select>
     
     <select id="getReplyCount" resultType="int">
-    	select count(rno) from tbl_freereply where bno = ${bno}
+    	select count(rno) from tbl_freereply where bno = #{bno}
     </select>
     
 </mapper>

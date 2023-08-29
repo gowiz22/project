@@ -80,29 +80,6 @@
 	<div class="row">
 		<div class="col-12">
 			<ul class="list-group chat">
-				<li class="list-group-item" data-rno="댓글번호" >
-					<div class="d-flex justify-content-between">
-					  <div class="d-flex">
-					    <div class="user_image mr-3" style="width: 75px">
-					      <img class="rounded-circle" src="${ctxPath}/resources/images/userImage.png" style="width: 100%">
-					    </div>
-					    <div class="comment_wrap">
-					      <div class="comment_info">
-					        <span class="userName badge badge-pill badge-info mr-2"></span>
-					        <span class="badge badge-dark">2023-06-20 09:30</span>
-					      </div>
-					      <div class="comment_content py-2">댓글 내용입니다. </div>
-					    </div>
-					  </div>
-					  <div class="reply_modify">
-					    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">변경</button>
-					    <div class="dropdown-menu">						   
-					      <a class="dropdown-item" href="modify">수정</a>
-					      <a class="dropdown-item" href="delete">삭제</a>
-					    </div>
-					  </div>
-					 </div>
-				</li>
 			</ul>		
 		</div>
 	</div>

@@ -55,6 +55,40 @@
 		</div> <!-- col end -->
 	</div><!-- row end -->
 	
+	<h3 class="mt-5">댓글</h3>
+	<div class="row">
+		<div class="col-12">
+			<ul class="list-group chat">
+			</ul>		
+		</div>
+	</div>
+
+	<!-- 댓글작성 -->	
+	<div class="my-3 replyWriterForm">
+		<sec:authorize access="isAnonymous()">
+			<textarea  rows="6" placeholder="로그인한 사용자만 댓글을 쓸 수 있습니다." readonly="readonly" 
+				maxlength="400" class="replyContent form-control"></textarea>		
+		</sec:authorize>
+		<sec:authorize access="isAuthenticated()">
+			<div style="display: flex; align-items: center; justify-content: flex-end;">
+			<span style="width: 80px;">제품 평점</span>
+				<select class="amount form-control ml-2" id="score" style="width: 80px;">
+					<c:forEach begin="1" end="10" var="s">
+						<option value="${s}">${s}</option>
+					</c:forEach>
+				</select>
+			</div>
+			<textarea  rows="6" placeholder="댓글을 작성해주세요" 
+				maxlength="400" class="r_comment form-control"></textarea>
+			<div class="text-right">
+				<div class="submit p-2">
+					<span class="btn btn-outline-info col-2 reviewer">${authInfo.memberId}</span>
+					<button class="btn btn-outline-primary col-3">등록</button>
+				</div>
+			</div>
+		<input type="hidden" class="score" value="1">
+		</sec:authorize>
+	</div>	
 </div>
 
 <form>
@@ -84,6 +118,7 @@ $(function(){
 	let operration = $(this).data('oper')
 	let type = '${criteria.type}'
 	let keyword = '${criteria.keyword}'
+	let memberId = '${authInfo.memberId}'
 	
 	getForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
 			.append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))
@@ -108,6 +143,15 @@ $(function(){
 				.attr('method','get')
 				.submit();
 	});
+	
+	// 제품 평점 드롭다운
+	$('#score').change(function(){
+		let score = $(this).val()
+		console.log(score)
+		$('.score').val(score)
+	})
 });
 </script>
 <script src="${ctxPath}/resources/js/product/product_get.js"></script>
+<script src="${ctxPath}/resources/js/product/product_replyService.js"></script>
+<script src="${ctxPath}/resources/js/product/product_reply.js"></script>
