@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.product_board.ProductReplyVO;
-import com.petti.domain.product_board.ProductVO;
 
 public interface ProductReplyRepository {
 	int insert(ProductReplyVO vo);

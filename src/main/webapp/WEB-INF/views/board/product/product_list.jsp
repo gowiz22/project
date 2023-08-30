@@ -1,43 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../../includes/header.jsp"%>
-<style>
-    .image-container {
-   	    display: flex; /* Flexbox 사용 */
-    	align-items: center; /* 수직 가운데 정렬 */
-    	justify-content: center; /* 수평 가운데 정렬 */
-        width: 150px; /* 원하는 너비로 설정 */
-        height: 100px; /* 원하는 높이로 설정 */
-        overflow: hidden; /* 크기를 초과하는 부분을 숨김 */
-    }
-
-    .thumbnail-image {
-        display: block; /* inline 요소에서 block 요소로 변경 */
-  		margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
-        width: 100%; /* 부모 요소에 맞추어 이미지 너비 설정 */
-        height: 100%; /* 부모 요소에 맞추어 이미지 높이 설정 */
-        object-fit: cover; /* 이미지를 확대/축소하여 부모 요소를 채움 */
-        object-position: center center; /* 이미지를 가운데 정렬 */
-    }
-</style>
-
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-			<h1 class="page-header">제품 리뷰</h1>
+			<h3 class="page-header">제품 리뷰</h3>
 		</div>
 	</div>
 	
 	<div class="row mb-3">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">소제목</div>
+				<div class="card-header radio">
+				
+				<input type="radio" name="radio" id="lastest" value="0" ${criteria.radio == 0 ? 'checked' : ''}>
+					<label class="mr-2" for="lastest">최신순</label>
+				<input type="radio" name="radio" id="row-cost" value="1" ${criteria.radio == 1 ? 'checked' : ''}>
+					<label class="mr-2" for="row-cost">가격 낮은순</label>
+				<input type="radio" name="radio" id="high-cost" value="2" ${criteria.radio == 2 ? 'checked' : ''}>
+					<label class="mr-2" for="high-cost">가격 높은순</label>
+				<input type="radio" name="radio" id="high-rate" value="3" ${criteria.radio == 3 ? 'checked' : ''}>
+					<label class="mr-2" for="high-rate">평점순</label>
+				</div>
 				<div class="card-body">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
-							<tr>
-								<th>#번호</th> 
-								<th>제목</th>
+							<tr align="center">
+								<th>제 품</th> 
+								<th>제품명</th>
+								<th>가 격</th>
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>수정일</th>
@@ -45,7 +36,7 @@
 						</thead>
 						<tbody>
 						<c:forEach items="${list}" var="product">
-							<tr>
+							<tr align="center">
 								<td rowspan="2">
 									<c:forEach items="${Thumbnail}" var="thumb">
 										<c:if test="${product.pno == thumb.pno}">
@@ -60,15 +51,17 @@
 								<td>
 									<a class="move" href="${product.pno}">${product.p_name}</a>
 								</td>
+								<td>${product.price}</td>
 								<td>${product.writer}</td>
 								<td><tf:formatDateTime value="${product.regDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 								<td><tf:formatDateTime value="${product.updateDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 							</tr>
 							<tr>
+								<td align="center">제품 평점</td>
 								<td colspan="4">
 									<div class="progress" style="height:20px">
-										<div class="progress-bar" style="width:${product.rate *10}%; height:20px;">
-										${product.rate}
+										<div class="progress-bar" style="width:${product.scoreRate *10}%; height:20px;">
+										${product.scoreRate}%
 										</div>
 									</div>
 								</td>
@@ -80,12 +73,12 @@
 						<div class="d-inline-block">
 							<select name="type" class="form-control">
 								<option value="" ${p.criteria.type == null ? 'selected' : '' }>------</option>
-								<option value="T" ${p.criteria.type eq 'T' ? 'selected' : '' }>제목</option>
-								<option value="C" ${p.criteria.type eq 'C' ? 'selected' : '' }>내용</option>
+								<option value="T" ${p.criteria.type eq 'T' ? 'selected' : '' }>제품명</option>
+								<option value="C" ${p.criteria.type eq 'C' ? 'selected' : '' }>제품상세</option>
 								<option value="W" ${p.criteria.type eq 'W' ? 'selected' : '' }>작성자</option>
-								<option value="TC" ${p.criteria.type eq 'TC' ? 'selected' : '' }>제목+내용</option>
+								<option value="TC" ${p.criteria.type eq 'TC' ? 'selected' : '' }>제품+상세</option>
 								<option value="TW" ${p.criteria.type eq 'TW' ? 'selected' : '' }>제목+작성자</option>
-								<option value="TCW" ${p.criteria.type eq 'TCW' ? 'selected' : '' }>제목+내용+작성자</option>
+								<option value="TCW" ${p.criteria.type eq 'TCW' ? 'selected' : '' }>제품+상세+작성자</option>
 							</select>
 						</div>
 						<div class="d-inline-block col-4">
@@ -99,6 +92,7 @@
 						</div>
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
+						<input type="hidden" name="radio" value="${p.criteria.radio}">
 					</form>
 			        <sec:authorize access="hasRole('ROLE_ADMIN')">
 						<div class="float-right d-flex">
@@ -125,6 +119,7 @@
 					<form id="listForm" action="${ctxPath}/product/list" method="get">
 						<input type="hidden" name="pageNum" value="${p.criteria.pageNum}">
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
+						<input type="hidden" name="radio" value="${p.criteria.radio}">
 					</form>
 				</div> <!-- card body end -->
 			</div> <!-- card end -->
@@ -238,7 +233,7 @@ $(function(){
 			searchForm.find('[name="pageNum"]').val(1); 
 			searchForm.submit();
 		});	
-		
+
 		// 썸네일 클릭 처리
 		function imageClick(clickedImage) {
 			let filePath = $(clickedImage).attr('src')
@@ -246,12 +241,21 @@ $(function(){
 			$('#showImage').find('.modal-body').html(imgTag)
 			$('#showImage').modal()
 		}
-
+		
 		// 이미지 클릭시 imageClick 함수 호출
         $(document).on('click', '.thumbnail-image', function(e){
         	imageClick(this)
         })
 		
-		
+        // 라디오 선택 처리
+		$('.radio input[name="radio"]').click(function(e){
+			e.preventDefault()
+			$('.radio input[name="radio"]').removeAttr("checked")
+			$(this).attr("checked", "checked")
+			
+			let radio = $(this).val()
+			listForm.find('[name="radio"]').val(radio); 
+			listForm.submit();
+		})
 })
 </script>

@@ -152,3 +152,22 @@ $(function(){
 	})
 })
 </script>
+<style>
+    .image-container {
+   	    display: flex; /* Flexbox 사용 */
+    	align-items: center; /* 수직 가운데 정렬 */
+    	justify-content: center; /* 수평 가운데 정렬 */
+        width: 150px; /* 원하는 너비로 설정 */
+        height: 100px; /* 원하는 높이로 설정 */
+        overflow: hidden; /* 크기를 초과하는 부분을 숨김 */
+    }
+
+    .thumbnail-image {
+        display: block; /* inline 요소에서 block 요소로 변경 */
+  		margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+        width: 100%; /* 부모 요소에 맞추어 이미지 너비 설정 */
+        height: 100%; /* 부모 요소에 맞추어 이미지 높이 설정 */
+        object-fit: cover; /* 이미지를 확대/축소하여 부모 요소를 채움 */
+        object-position: center center; /* 이미지를 가운데 정렬 */
+    }
+</style>

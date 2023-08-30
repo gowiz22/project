@@ -16,15 +16,19 @@
 				</div>
 				<div class="card-body">
 					<div class="form-group">
-						<label>번호</label>	
+						<label>제품 번호</label>	
 						<input class="form-control" name="pno" value="${product.pno}" readonly="readonly"/>
 					</div>
 					<div class="form-group">
-						<label>제목</label>
+						<label>제품명</label>
 						<input class="form-control" name="p_name" value="${product.p_name}" readonly="readonly"/>
 					</div>
 					<div class="form-group">
-						<label>내용</label>
+							<label>제품 금액</label>
+							<input class="form-control" name="price" value="${product.price}" readonly="readonly"/>
+						</div>
+					<div class="form-group">
+						<label>제품 상세</label>
 						<textarea class="form-control" rows="10" name="detail" readonly="readonly">${product.detail}</textarea>
 					</div>
 					<div class="form-group">
@@ -119,6 +123,7 @@ $(function(){
 	let type = '${criteria.type}'
 	let keyword = '${criteria.keyword}'
 	let memberId = '${authInfo.memberId}'
+	let radio = '${criteria.radio}'
 	
 	getForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
 			.append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))
@@ -128,6 +133,9 @@ $(function(){
 		getForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
 				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
 	}
+	if(radio!==0){
+		getForm.append($('<input/>',{type : 'hidden', name : 'radio', value : '${criteria.radio}'}))
+		}
 
 	// 수정페이지 
 	$('.modify').click(function(){

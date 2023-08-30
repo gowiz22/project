@@ -18,15 +18,19 @@
 					<form class="modifyForm" action="${ctxPath}/product/modify" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class="form-group">
-							<label>Bno</label>	
+							<label>제품 번호</label>	
 							<input class="form-control" name="pno" value="${product.pno}" readonly="readonly"/>
 						</div>
 						<div class="form-group">
-							<label>Title</label>
+							<label>제품명</label>
 							<input class="form-control" name="p_name" value="${product.p_name}" />
 						</div>
 						<div class="form-group">
-							<label>Text area </label>
+							<label>제품 금액</label>
+							<input class="form-control" name="price" value="${product.price}"/>
+						</div>
+						<div class="form-group">
+							<label>제품 상세 </label>
 							<textarea class="form-control" rows="10" name="detail">${product.detail}</textarea>
 						</div>
 						<div class="form-group">
@@ -88,12 +92,17 @@
 	let formObj = $('.modifyForm')
 	let type = '${criteria.type}'
 	let keyword = '${criteria.keyword}'
-
+	let radio = '${criteria.radio}'
+	
 	let addCriteria = function() {	
 		if(type&&keyword){
-			modifyForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+			formObj.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
 					.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
 		}
+		if(radio!==0){
+			formObj.append($('<input/>',{type : 'hidden', name : 'radio', value : '${criteria.radio}'}))
+			}
+
 	}
 </script>
 <script src="${ctxPath}/resources/js/product/product_modify.js"></script>

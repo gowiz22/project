@@ -17,6 +17,7 @@ public class Criteria{
 	private String kind;
 	private int cno;
 	private String recommend = "F";
+	private int radio = 0;
 	
 	public Criteria() {
 		this(1,10); // 1페이지, 한 페이지당 게시물 수는 10개 
@@ -37,6 +38,10 @@ public class Criteria{
 	
 	public int getMinRow() { // #{minRow}
 		return (pageNum-1)*amount;
+	}
+	
+	public int getRadio() { // #{radio}
+		return this.radio;
 	}
 	
 	public String[] getTypes() { // collection="types"

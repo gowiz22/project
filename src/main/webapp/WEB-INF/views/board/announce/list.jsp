@@ -4,7 +4,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-			<h1 class="page-header">공지사항</h1>
+			<h3 class="page-header">공지사항</h3>
 		</div>
 	</div>
 	
@@ -92,9 +92,6 @@
 		</div> <!-- col end -->
 	</div>
 </div>
-
-
-<%-- <form id="listForm" action="${ctxPath}/board/list"></form> --%>
 
 <%@ include file="../../includes/footer.jsp"%>
 

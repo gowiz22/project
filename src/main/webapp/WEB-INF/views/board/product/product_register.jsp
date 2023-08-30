@@ -11,15 +11,19 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">상품 등록</div>
+				<div class="card-header">제품 등록</div>
 				<div class="card-body">
 					<form action="${ctxPath}/product/register" method="post">
 						<div class="form-group">
-							<label>상품명 </label>
+							<label>제품명 </label>
 							<input class="form-control" name="p_name"/>
 						</div>
 						<div class="form-group">
-							<label>상품 정보 </label>
+							<label>제품 금액</label>
+							<input class="form-control" name="price"/>
+						</div>
+						<div class="form-group">
+							<label>제품 정보 </label>
 							<textarea class="form-control" rows="10" name="detail"></textarea>
 						</div>
 						<div class="form-group">

@@ -22,23 +22,39 @@
  			</foreach>
  		</trim>
  	</sql>
+
+	<sql id="radio">
+		<choose>
+			<when test="radio == 1">
+			 (select * from tbl_product order by price ASC)
+			</when>
+			<when test="radio == 2">
+			 (select * from tbl_product order by price DESC)
+			</when>
+			<when test="radio == 3">
+			 (select * from tbl_product order by scoreRate DESC)
+			</when>
+			<otherwise>
+			tbl_product
+			</otherwise>
+		</choose>
+	</sql>
  
 	<select id="getList" resultType="productVO">
-	    <![CDATA[ 
-	    	select p.*, r.rate from 
-			(select /*+ INDEX_DESC(tbl_product pk_product) */  
-	    		ROWNUM as rn, pno, p_name, detail, WRITER, regDate, updateDate
-	    		FROM tbl_product where
+	    <![CDATA[
+	    	select * from 
+				(select /*+ INDEX_DESC(tbl_product pk_product) */  
+	    			ROWNUM as rn, pno, p_name, detail, WRITER, regDate, updateDate, price, scoreRate
+	    		FROM  	    
+	    		]]>		
+	    <include refid="radio"/>
+   	    <![CDATA[   
+   	     where
 	    ]]>		
 	    <include refid="criteria"/>
    	    <![CDATA[ 		
-   		 rownum <= #{maxRow}) p 
-   		 left join (
-   		     select pno, avg(score) as rate
-			    from tbl_review
-			    group by pno
-			) r on p.pno = r.pno
-			where rn > #{minRow} 
+   		 rownum <= #{maxRow}		 
+   		 ) where rn > #{minRow} 
 		]]>
     </select>
     
@@ -49,13 +65,18 @@
     </select>
 
 	<insert id="insert">
-		insert into tbl_product(pno,p_name,detail,writer)
-    	values (seq_product.nextval,#{p_name},#{detail},#{writer})
+		insert into tbl_product(pno,p_name,detail,writer,price)
+    	values (seq_product.nextval,#{p_name},#{detail},#{writer},#{price})
+	</insert>
+
+	<insert id="testinsert">
+		insert into tbl_product(pno,p_name,detail,writer,price,scoreRate)
+    	values (seq_product.nextval,#{p_name},#{detail},#{writer},#{price},#{scoreRate})
 	</insert>
 
    	<insert id="insertSelectKey" keyColumn="pno" keyProperty="pno" useGeneratedKeys="true">
-		insert into tbl_product(pno,p_name,detail,writer)
-    	values (seq_product.nextval,#{p_name},#{detail},#{writer})
+		insert into tbl_product(pno,p_name,detail,writer,price)
+    	values (seq_product.nextval,#{p_name},#{detail},#{writer},#{price})
     </insert>
 
 	<select id="read" resultType="productVO">
@@ -70,8 +91,18 @@
 		update tbl_product set
 			p_name=#{p_name},
 			detail=#{detail},
+			price=#{price},
 			updateDate = sysdate
 		where pno=#{pno}
 	</update>
+
+	<update id="updateRate">
+		update tbl_product set
+			scoreRate = (
+				select round(avg(score),2) as scoreRate from tbl_review where pno=#{pno}
+			)
+		where pno=#{pno}
+	</update>
+	
 	
  </mapper>

@@ -1,14 +1,13 @@
 package com.petti.service.product_board;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.product_board.ProductReplyVO;
-import com.petti.domain.product_board.ProductVO;
 import com.petti.domain.product_board.ReviewPageDTO;
+import com.petti.repository.product_board.ProductBoardRepository;
 import com.petti.repository.product_board.ProductReplyRepository;
 
 import lombok.extern.log4j.Log4j;
@@ -20,9 +19,18 @@ public class ProductReplyServiceImpl implements ProductReplyService {
 	@Autowired
 	private ProductReplyRepository replyRepository;
 	
+	@Autowired
+	private ProductBoardRepository boardRepository;
+	
 	@Override
+	@Transactional
 	public int register(ProductReplyVO vo) {
-		return replyRepository.insert(vo);
+		if(replyRepository.insert(vo) == 1) {
+			if(boardRepository.updateRate(vo.getPno()) == 1){
+				return 1;
+			}
+		}
+		return 0;
 	}
 
 	@Override
@@ -31,13 +39,27 @@ public class ProductReplyServiceImpl implements ProductReplyService {
 	}
 
 	@Override
+	@Transactional
 	public int modify(ProductReplyVO vo) {
-		return replyRepository.update(vo);
+		if(replyRepository.update(vo) == 1) {
+			vo.setPno(replyRepository.read(vo.getRno()).getPno());
+			if(boardRepository.updateRate(vo.getPno()) == 1){
+				return 1;
+			}
+		}
+		return 0;
 	}
 
 	@Override
+	@Transactional
 	public int remove(Long rno) {
-		return replyRepository.delete(rno);
+		ProductReplyVO vo = replyRepository.read(rno);
+		if(replyRepository.delete(rno) == 1) {
+			if(boardRepository.updateRate(vo.getPno()) == 1){
+				return 1;
+			}
+		}
+		return 0;
 	}
 
 	@Override

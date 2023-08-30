@@ -4,7 +4,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-			<h1 class="page-header">자유 게시판</h1>
+			<h3 class="page-header">자유 게시판</h3>
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -105,7 +105,7 @@
 								<a href="${pagelink}" class="page-link ">${pagelink}</a>
 							</li>
 						</c:forEach>
-						<c:if test="${p.next }">
+						<c:if test="${p.next}">
 							<li class="page-item"><a class="page-link"
 								href="${p.endPage+1}">다음페이지</a></li>
 						</c:if>
