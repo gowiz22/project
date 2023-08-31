@@ -14,12 +14,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
-<title>My Web Site</title>
+<title>Petti 홈페이지</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script><script>
+
 let ctxPath = '${ctxPath}'
 let duplicateLogin = '${duplicateLogin}'
 
@@ -54,12 +56,14 @@ function checkExtension(fileName, fileSize){
 </script>
 </head>
 <body>
-	<div align="center">
+	<div align="center" class="mt-4 mr-7">
 		<div class="d-inline-block">
-	        <a class="nav-link" href="${ctxPath == '' ? '/': ctxPath}">petti</a>
+	        <a class="nav-link" href="${ctxPath == '' ? '/': ctxPath}">
+	        <img alt="logo" src="${ctxPath}/resources/images/logo.png" style="width: 100px;">
+	        </a>
 	    </div>   
-	    <div class="d-inline-block col-8">    
-			<form class="my-3" id="mainSearch" action="${ctxPath}/mainSearch">
+	    <div class="d-inline-block col-5.5">    
+			<form class="my-3 px-2" id="mainSearch" action="${ctxPath}/mainSearch">
 				<div class="d-inline-block">
 					<select name="type" class="form-control">
 						<option value="T">제목</option>
@@ -70,11 +74,11 @@ function checkExtension(fileName, fileSize){
 						<option value="TCW">제목+내용+작성자</option>
 					</select>
 				</div>
-				<div class="d-inline-block col-4">
+				<div class="d-inline-block">
 					<input type="text" name="keyword" class="form-control" placeholder="통합 검색">
 				</div>
 				<div class="d-inline-block">
-					<button class="btn btn-primary">검색</button>
+					<button class="btn btn-warning">검색</button>
 				</div>
 			</form>
 		</div>	
@@ -103,27 +107,24 @@ function checkExtension(fileName, fileSize){
         </sec:authorize>
     </ul>
 </nav>
-<nav>
 	<div align="right">
-	  <ul class="navbar-nav">
 		<sec:authorize access="isAnonymous()">
-			  	<div class="d-inline-block">
-			          <a class="nav-link" href="${ctxPath}/login">로그인</a>
-			    </div>
+		  	<div class="d-inline-block">
+	        	<a class="login" href="${ctxPath}/login">로그인</a>
+		    </div>
 	    </sec:authorize>
 		<sec:authorize access="isAuthenticated()">
 		    <div class="d-inline-block">
-		       <a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
+		    	<a class="logout" href="${ctxPath}/member/logout">로그아웃</a>
 		    </div>
 	    </sec:authorize> 
   		<sec:authorize access="isAnonymous()"> 
 		  	<div class="d-inline-block">
-		          <a class="nav-link" href="${ctxPath}/join/step1">회원가입</a>
+		        <a class="m_join" href="${ctxPath}/join/step1">회원가입</a>
 		    </div>
    	    </sec:authorize>
-	  </ul>
 	</div>
-</nav>
+
 
 <script>
 //검색 이벤트 처리 

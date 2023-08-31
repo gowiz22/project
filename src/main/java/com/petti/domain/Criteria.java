@@ -15,6 +15,7 @@ public class Criteria{
 	private String type;
 	private String keyword;
 	private String kind;
+	private String memberId;
 	private int cno;
 	private String recommend = "F";
 	private int radio = 0;
