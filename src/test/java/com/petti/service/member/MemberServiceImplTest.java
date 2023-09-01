@@ -39,10 +39,10 @@ public class MemberServiceImplTest extends AppTest{
 //	@Ignore
 	public void test3() {
 		MemberVO vo = new MemberVO(); 
-		vo.setMemberId("cooicooi");
+		vo.setMemberId("cooi22");
 		vo.setMemberPwd("1234");
 		vo.setMemberName("cooi");
-		vo.setEmail("cooicooi@test.com");
+		vo.setEmail("cooi22@test.com");
 		memberService.join(vo);
 	}
 }
