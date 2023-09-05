@@ -106,8 +106,4 @@
 		update tbl_freeBoard set likeCount = likeCount + #{amount} where bno = #{bno}
 	</update>
 	
-	<select id="category" resultType="categoryVO">
-		select * from tbl_category
-	</select>
-	
  </mapper>

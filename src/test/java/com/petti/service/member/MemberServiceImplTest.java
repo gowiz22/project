@@ -34,9 +34,15 @@ public class MemberServiceImplTest extends AppTest{
 		AuthVO vo = new AuthVO("admin", "ROLE_ADMIN");
 		authRepository.insert(vo);
 	}
-	
 	@Test
 //	@Ignore
+	public void test4() {
+		AuthVO vo = new AuthVO("lee", "ROLE_MEMBER");
+		authRepository.insert(vo);
+	}
+	
+	@Test
+	@Ignore
 	public void test3() {
 		MemberVO vo = new MemberVO(); 
 		vo.setMemberId("cooi22");

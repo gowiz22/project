@@ -12,4 +12,5 @@ import lombok.ToString;
 public class CategoryVO {
 	private int cno;
 	private String kind;
+	private int count;
 }

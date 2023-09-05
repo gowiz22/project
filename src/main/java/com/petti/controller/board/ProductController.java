@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,18 +40,21 @@ public class ProductController {
 		model.addAttribute("product", boardService.get(pno));
 		return "/board/product/product_get";
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_REVIEWER')")	
 	@GetMapping("/modify")
 		public String modify(Long pno, Model model, Criteria criteria) {
 		model.addAttribute("product", boardService.get(pno));
 		return "/board/product/product_modify";
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_REVIEWER')")	
 	@GetMapping("/register")
 	public String register() {
 		return "/board/product/product_register";
 	}	
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_REVIEWER')")
 	@PostMapping("/register")
 	public String register(ProductVO vo, RedirectAttributes rttr) {
 		boardService.register(vo);
@@ -59,6 +63,7 @@ public class ProductController {
 		return "redirect:/product/list";
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_REVIEWER')")	
 	@PostMapping("/modify")
 	public String modify(ProductVO vo, RedirectAttributes rttr) {
 		if(boardService.modify(vo)) {
@@ -68,7 +73,8 @@ public class ProductController {
 		return "redirect:/product/list";
 	}
 	
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_REVIEWER')")	
 	@PostMapping("/remove")
 	public String remove(Long pno, RedirectAttributes rttr) {
 		if(boardService.remove(pno)) {

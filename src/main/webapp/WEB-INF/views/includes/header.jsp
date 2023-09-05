@@ -102,7 +102,7 @@ function checkExtension(fileName, fileSize){
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
         	<li class="nav-item">
-	            <a class="nav-link" href="${ctxPath}/adminPage">관리자페이지</a>
+	            <a class="nav-link" href="${ctxPath}/admin">관리자페이지</a>
 	        </li>
         </sec:authorize>
     </ul>
@@ -114,6 +114,20 @@ function checkExtension(fileName, fileSize){
 		    </div>
 	    </sec:authorize>
 		<sec:authorize access="isAuthenticated()">
+		    <div class="d-inline-block mr-2">
+			<c:forEach items="${authList}" var="vo">
+				<c:if test="${vo.auth == 'ROLE_ADMIN'}">
+					<span class="badge badge-pill badge-danger">관리자</span>
+				</c:if>
+				<c:if test="${vo.auth == 'ROLE_MEMBER'}">
+					<span class="badge badge-pill badge-warning">일반회원</span>
+				</c:if>
+				<c:if test="${vo.auth == 'ROLE_REVIEWER'}">
+					<span class="badge badge-pill badge-success">리뷰어</span>
+				</c:if>			
+			</c:forEach>
+		    	<span>${authInfo.memberId}님 반갑습니다.</span>
+		    </div>
 		    <div class="d-inline-block">
 		    	<a class="logout" href="${ctxPath}/member/logout">로그아웃</a>
 		    </div>

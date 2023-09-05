@@ -94,7 +94,7 @@
 						<input type="hidden" name="amount" value="${p.criteria.amount}">
 						<input type="hidden" name="radio" value="${p.criteria.radio}">
 					</form>
-			        <sec:authorize access="hasRole('ROLE_ADMIN')">
+			        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_REVIEWER')">
 						<div class="float-right d-flex">
 							<button id="regBtn" class="btn btn-xs btn-primary">상품 등록</button>
 						</div>

@@ -1,5 +1,6 @@
 package com.petti.service.product_board;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petti.domain.Criteria;
+import com.petti.domain.free_board.FreeBoardAttachVO;
 import com.petti.domain.product_board.ProductBoardAttachVO;
 import com.petti.domain.product_board.ProductVO;
 import com.petti.repository.product_board.ProductAttachRepository;
 import com.petti.repository.product_board.ProductBoardRepository;
+import com.petti.repository.product_board.ProductReplyRepository;
 
 @Service
 public class ProductBoardServiceImpl implements ProductBoardService {
@@ -21,6 +24,9 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 	
 	@Autowired
 	private ProductAttachRepository attachRepository;
+	
+	@Autowired
+	private ProductReplyRepository replyRepository;
 	
 	@Override
 	public List<ProductVO> getList(Criteria criteria) {
@@ -52,6 +58,7 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 		if(attachList!=null) {
 			List<ProductBoardAttachVO> delList = attachList.stream()
 					.filter(attach -> attach.getPno()!=null).collect(Collectors.toList());
+			deleteFilles(delList);
 			delList.forEach(v->{
 				attachRepository.delete(v.getUuid()); // DB 기록 삭제
 			});
@@ -66,11 +73,33 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 		return boardRepository.update(vo)==1;
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(Long pno) {
+		List<ProductBoardAttachVO> attachList = getAttachList(pno);
+		if(attachList!=null) {
+			deleteFilles(attachList);
+			attachRepository.deleteAll(pno);
+		}
+		int replyCount = replyRepository.getReplyCount(pno);
+		if(replyCount>0) {
+			replyRepository.deletePno(pno);
+		}
+
 		return boardRepository.delete(pno)==1;
 	}
 
+	private void deleteFilles(List<ProductBoardAttachVO> delList) {
+		delList.forEach(vo->{
+			File file = new File("C:/storage/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
+			file.delete();
+			if(vo.isFileType()) {
+				file = new File("C:/storage/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
+				file.delete();
+			}
+		});
+	}	
+	
 	@Override
 	public int totalCount(Criteria criteria) {
 		return boardRepository.getTotalCount(criteria);

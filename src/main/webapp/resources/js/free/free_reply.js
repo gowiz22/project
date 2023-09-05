@@ -64,7 +64,7 @@ $(function(){
 					  </div>`
 					  
 				if(memberId==elem.replyer || auth.includes('ROLE_ADMIN')){
-				replyList +=					  
+				replyList +=
 					  `<div class="reply_modify">
 					    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">변경</button>
 					    <div class="dropdown-menu">						   

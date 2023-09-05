@@ -7,4 +7,8 @@
 	<insert id="insert">
 		insert into tbl_member_auth values(#{memberId},#{auth})
 	</insert>
+	
+	<update id="changeRole">
+		update tbl_member_auth set auth = #{auth} where memberId = #{memberId}
+	</update>
 </mapper>

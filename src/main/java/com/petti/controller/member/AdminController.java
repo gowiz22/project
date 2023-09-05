@@ -1,12 +1,17 @@
 package com.petti.controller.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.petti.domain.free_board.CategoryVO;
+import com.petti.domain.member.AuthVO;
 import com.petti.service.member.AdminService;
 
 import lombok.extern.log4j.Log4j;
@@ -19,14 +24,37 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")		
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String searchMember(Model model, @RequestParam(required = false) String memberId) {
-		if(memberId != "") {
-			model.addAttribute("list", adminService.findMemeber(memberId));
-			model.addAttribute("memberId",memberId);
-		} else {
-			model.addAttribute("list", "아이디를 입력해주세요");
-		}
-		return "adminPage";
+			if(memberId != null) {
+				model.addAttribute("list", adminService.findMemeber(memberId));
+				model.addAttribute("memberId",memberId);
+			} else {
+				memberId = "";
+				model.addAttribute("list", adminService.findMemeber(memberId));
+			}
+		return "/admin/adminPage";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@PostMapping("/changeRole")
+	public String giveRoll(AuthVO vo) {
+		adminService.updateAuth(vo);
+		return "redirect:/admin";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@GetMapping("/board")
+	public String boardManage(Model model) {
+		model.addAttribute("category", adminService.categoryList());
+		return "/admin/board_manage";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@PostMapping("/renameCategory")
+	public String renameCategory(CategoryVO vo) {
+		adminService.renameCategory(vo);
+		return "redirect:/admin/board";
 	}
 }

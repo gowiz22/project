@@ -35,7 +35,7 @@
 						<label>작성자</label>
 						<input class="form-control" name="writer" value="${product.writer}" readonly="readonly"/>
 					</div>
-					<sec:authorize access="isAuthenticated() and hasRole('ROLE_ADMIN')">
+					<sec:authorize access="isAuthenticated() and hasAnyRole('ROLE_ADMIN', 'ROLE_REVIEWER')">
 						<button data-oper='modify' class="btn btn-light modify">수정페이지</button>
 					</sec:authorize>
 					<button data-oper='list' class="btn btn-info list">목록으로</button>						

@@ -16,6 +16,7 @@ import com.petti.domain.free_board.FreeLikeDTO;
 import com.petti.repository.free_board.FreeBoardAttachRepository;
 import com.petti.repository.free_board.FreeBoardLikeRepository;
 import com.petti.repository.free_board.FreeBoardRepository;
+import com.petti.repository.free_board.FreeCategoryRepository;
 import com.petti.repository.free_board.FreeReplyRepository;
 
 import lombok.extern.log4j.Log4j;
@@ -35,6 +36,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 	
 	@Autowired
 	private FreeReplyRepository replyRepository;
+	
+	@Autowired
+	private FreeCategoryRepository categoryRepository;
 	
 	@Override
 	public List<FreeBoardVO> getList(Criteria criteria) {
@@ -118,7 +122,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 	@Override
 	public List<CategoryVO> category() {
-		return boardRepository.category();
+		return categoryRepository.allCategory();
 	}
 
 	// 게시물 추천
