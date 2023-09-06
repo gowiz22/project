@@ -18,4 +18,12 @@
     	update tbl_category set category=#{kind} where cno=#{cno}
     </update>
     
+    <insert id="newCategory">
+    	insert into tbl_category(cno,category) values(seq_category.nextval,#{kind})
+    </insert>
+    
+    <delete id="removeCategory">
+    	delete from tbl_category where cno = #{cno}
+    </delete>
+    
 </mapper>

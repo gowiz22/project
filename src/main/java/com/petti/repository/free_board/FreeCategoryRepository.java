@@ -9,4 +9,8 @@ public interface FreeCategoryRepository {
 	List<CategoryVO> allCategory();
 	
 	void renameCategory(CategoryVO vo);
+	
+	void newCategory(String kind);
+	
+	void removeCategory(Long cno);
 }

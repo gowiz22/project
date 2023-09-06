@@ -90,10 +90,10 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 
 	private void deleteFilles(List<FreeBoardAttachVO> delList) {
 		delList.forEach(vo->{
-			File file = new File("C:/storage/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
+			File file = new File("C:/storage/free_board/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
 			file.delete();
 			if(vo.isFileType()) {
-				file = new File("C:/storage/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
+				file = new File("C:/storage/free_board/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
 				file.delete();
 			}
 		});

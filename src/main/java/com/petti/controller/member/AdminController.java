@@ -1,5 +1,6 @@
 package com.petti.controller.member;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -57,4 +58,33 @@ public class AdminController {
 		adminService.renameCategory(vo);
 		return "redirect:/admin/board";
 	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@PostMapping("/newCategory")
+	public String newCategory(String kind) {
+		adminService.newCategory(kind);
+		return "redirect:/admin/board";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@PostMapping("/removeCategory")
+	public String removeCategory(Long cno) {
+		adminService.deleteCategory(cno);
+		return "redirect:/admin/board";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@PostMapping("/removeBoard")
+	public String removeBoard(Long cno) {
+		adminService.deleteBoard(cno);
+		return "redirect:/admin/board";
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")	
+	@PostMapping("/relocateBoard")
+	public String relocateBoard(@Param("newCno") Long newCno, @Param("oldCno") Long oldCno) {
+			adminService.updateCategory(oldCno, newCno);
+		return "redirect:/admin/board";
+	}
+	
 }

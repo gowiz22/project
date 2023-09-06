@@ -29,4 +29,8 @@
 		where m.memberId like '%'||#{memberId}||'%'
 	</select>
 	
+	<update id="changeCategory">
+		update tbl_freeBoard set cno = #{newCno} where cno = #{oldCno}
+	</update>
+	
 </mapper>

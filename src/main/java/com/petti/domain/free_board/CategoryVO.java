@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class CategoryVO {
-	private int cno;
+	private Long cno;
 	private String kind;
-	private int count;
+	private Long count;
 }

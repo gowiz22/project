@@ -37,7 +37,7 @@
 
  	<sql id="recommended">
  		<if test='recommend == "T"'>
-	 			likeCount >= 9 AND
+	 			likeCount >= 5 AND
  		</if>
  	</sql>
 
@@ -71,10 +71,10 @@
     	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno})
 	</insert>
 
-<!-- 	<insert id="testinsert"> -->
-<!-- 		insert into tbl_freeBoard(bno,title,content,writer,cno,likeCount) -->
-<!--     	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno},#{likeCount}) -->
-<!-- 	</insert> -->
+	<insert id="testinsert">
+		insert into tbl_freeBoard(bno,title,content,writer,cno,likeCount)
+    	values (seq_freeboard.nextval,#{title},#{content},#{writer},#{cno},#{likeCount})
+	</insert>
 
    	<insert id="insertSelectKey" keyColumn="bno" keyProperty="bno" useGeneratedKeys="true">
   	    insert into tbl_freeBoard(bno,title,content,writer,cno)
@@ -105,5 +105,9 @@
 	<update id="updateLikeCnt">
 		update tbl_freeBoard set likeCount = likeCount + #{amount} where bno = #{bno}
 	</update>
+	
+	<select id="boardInCategory" resultType="Long">
+		select bno from tbl_freeBoard where cno=#{cno}
+	</select>
 	
  </mapper>

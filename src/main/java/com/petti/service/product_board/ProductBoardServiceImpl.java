@@ -91,10 +91,10 @@ public class ProductBoardServiceImpl implements ProductBoardService {
 
 	private void deleteFilles(List<ProductBoardAttachVO> delList) {
 		delList.forEach(vo->{
-			File file = new File("C:/storage/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
+			File file = new File("C:/storage/product/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
 			file.delete();
 			if(vo.isFileType()) {
-				file = new File("C:/storage/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
+				file = new File("C:/storage/product/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
 				file.delete();
 			}
 		});

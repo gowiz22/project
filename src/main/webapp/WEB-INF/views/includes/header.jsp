@@ -128,12 +128,12 @@ function checkExtension(fileName, fileSize){
 			</c:forEach>
 		    	<span>${authInfo.memberId}님 반갑습니다.</span>
 		    </div>
-		    <div class="d-inline-block">
+		    <div class="d-inline-block mr-5">
 		    	<a class="logout" href="${ctxPath}/member/logout">로그아웃</a>
 		    </div>
 	    </sec:authorize> 
   		<sec:authorize access="isAnonymous()"> 
-		  	<div class="d-inline-block">
+		  	<div class="d-inline-block mr-5">
 		        <a class="m_join" href="${ctxPath}/join/step1">회원가입</a>
 		    </div>
    	    </sec:authorize>

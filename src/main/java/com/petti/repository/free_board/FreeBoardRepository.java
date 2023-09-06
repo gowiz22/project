@@ -35,4 +35,8 @@ public interface FreeBoardRepository {
 	
 	// 추천수 업데이트
 	void updateLikeCnt(@Param("bno") Long bno, @Param("amount") int amount);
+	
+	// 카테고리별 게시글 리스트
+	List<Long> boardInCategory(Long cno);
+	
 }
