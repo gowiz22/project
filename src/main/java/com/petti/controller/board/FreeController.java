@@ -48,7 +48,7 @@ public class FreeController {
 	public String get(Long bno, Model model, Criteria criteria) {
 		model.addAttribute("board", boardService.get(bno));
 		model.addAttribute("category", boardService.category());
-		model.addAttribute("likeUser", likeService.confimLike(bno));
+		model.addAttribute("likeUser", likeService.confirmLike(bno));
 		return "/board/free/free_get";
 	}
 

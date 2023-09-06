@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface FreeLikeService {
 
-	List<String> confimLike(Long bno);
+	List<String> confirmLike(Long bno);
 }

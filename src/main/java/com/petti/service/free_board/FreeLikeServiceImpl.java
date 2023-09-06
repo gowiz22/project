@@ -14,7 +14,7 @@ public class FreeLikeServiceImpl implements FreeLikeService {
 	private FreeBoardLikeRepository likeRepository;
 	
 	@Override
-	public List<String> confimLike(Long bno) {
+	public List<String> confirmLike(Long bno) {
 		return likeRepository.findLikeUser(bno);
 	}
 
