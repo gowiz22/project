@@ -52,7 +52,7 @@
 	    <include refid="criteria"/>
 	    <include refid="category"/>
 	    <include refid="recommended"/>
-   	    <![CDATA[ 		
+   	    <![CDATA[
    		 rownum <= #{maxRow}) 
 			where rn > #{minRow}
 		]]>

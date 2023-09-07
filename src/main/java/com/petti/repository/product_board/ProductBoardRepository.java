@@ -21,16 +21,12 @@ public interface ProductBoardRepository {
 	
 	int update(ProductVO vo);
 	
-	int updateRate(Long pno);
-
 	List<ProductVO> getList( // 페이징 처리
 			@Param("pageNum") int pageNum,
 			@Param("amount") int amount);
 	
 	int getTotalCount(Criteria criteria); // 총 상품 수
 	
-	void updateScoreRate(@Param("pno") Long pno, @Param("rate") double rate);
-
 	void testinsert(ProductVO vo);
 	
 }

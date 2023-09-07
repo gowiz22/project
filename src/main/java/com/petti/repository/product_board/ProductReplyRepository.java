@@ -24,4 +24,5 @@ public interface ProductReplyRepository {
 	
 	void deletePno(Long pno);
 	
+	int updateRate(Long pno);
 }

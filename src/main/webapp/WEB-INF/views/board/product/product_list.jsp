@@ -51,14 +51,14 @@
 								<td>
 									<a class="move" href="${product.pno}">${product.p_name}</a>
 								</td>
-								<td>${product.price}</td>
+								<td>${product.price}원</td>
 								<td>${product.writer}</td>
 								<td><tf:formatDateTime value="${product.regDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 								<td><tf:formatDateTime value="${product.updateDate}" pattern="yyyy-MM-dd HH:mm"/></td>
 							</tr>
 							<tr>
 								<td align="center">제품 평점</td>
-								<td colspan="4">
+								<td colspan="3">
 									<div class="progress" style="height:20px">
 										<div class="progress-bar" style="width:${product.scoreRate *10}%; height:20px;">
 										${product.scoreRate}%

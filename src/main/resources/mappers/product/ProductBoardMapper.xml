@@ -95,14 +95,5 @@
 			updateDate = sysdate
 		where pno=#{pno}
 	</update>
-
-	<update id="updateRate">
-		update tbl_product set
-			scoreRate = (
-				select round(avg(score),2) as scoreRate from tbl_review where pno=#{pno}
-			)
-		where pno=#{pno}
-	</update>
-	
 	
  </mapper>

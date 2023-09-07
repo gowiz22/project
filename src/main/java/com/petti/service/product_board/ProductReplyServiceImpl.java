@@ -19,14 +19,11 @@ public class ProductReplyServiceImpl implements ProductReplyService {
 	@Autowired
 	private ProductReplyRepository replyRepository;
 	
-	@Autowired
-	private ProductBoardRepository boardRepository;
-	
 	@Override
 	@Transactional
 	public int register(ProductReplyVO vo) {
 		if(replyRepository.insert(vo) == 1) {
-			if(boardRepository.updateRate(vo.getPno()) == 1){
+			if(replyRepository.updateRate(vo.getPno()) == 1){
 				return 1;
 			}
 		}
@@ -43,7 +40,7 @@ public class ProductReplyServiceImpl implements ProductReplyService {
 	public int modify(ProductReplyVO vo) {
 		if(replyRepository.update(vo) == 1) {
 			vo.setPno(replyRepository.read(vo.getRno()).getPno());
-			if(boardRepository.updateRate(vo.getPno()) == 1){
+			if(replyRepository.updateRate(vo.getPno()) == 1){
 				return 1;
 			}
 		}
@@ -55,7 +52,7 @@ public class ProductReplyServiceImpl implements ProductReplyService {
 	public int remove(Long rno) {
 		ProductReplyVO vo = replyRepository.read(rno);
 		if(replyRepository.delete(rno) == 1) {
-			if(boardRepository.updateRate(vo.getPno()) == 1){
+			if(replyRepository.updateRate(vo.getPno()) == 1){
 				return 1;
 			}
 		}

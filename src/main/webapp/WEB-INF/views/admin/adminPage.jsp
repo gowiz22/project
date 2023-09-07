@@ -106,8 +106,7 @@ $(function(){
 	$('.RoleChange').click(function(){
 		let memberId =$(this).closest('tr').find('.memberId').text()
 		let roleSelect = $(this).closest('tr').find('.roleSelect').val()
-		console.log(memberId)
-		console.log(roleSelect)
+
 		changeForm.append($('<input/>',{type : 'hidden', name : 'memberId', value : memberId}))
 		changeForm.append($('<input/>',{type : 'hidden', name : 'auth', value : roleSelect}))
 		
