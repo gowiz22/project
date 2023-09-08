@@ -5,3 +5,12 @@
 	<h1>게시판 실습</h1>
 </div>
 <%@ include file="includes/footer.jsp"%>
+
+<script>
+window.onload = function() {
+	let validMessage = "${checkValid}"
+	if(validMessage) {
+		alert(validMessage)
+	}
+}
+</script>

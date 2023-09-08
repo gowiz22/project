@@ -25,4 +25,6 @@ public interface ProductReplyRepository {
 	void deletePno(Long pno);
 	
 	int updateRate(Long pno);
+	
+	List<String> getReviewerList(Long pno);
 }

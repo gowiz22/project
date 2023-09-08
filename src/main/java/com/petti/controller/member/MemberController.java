@@ -105,14 +105,18 @@ public class MemberController {
 	
 	// 회원가입작성
 	@PostMapping("/join/step3")
-	public String step3(MemberVO memberVO) {
+	public String step3(MemberVO vo) {
 		return "member/join";
 	}
 	
 	// 회원가입 처리 
 	@PostMapping("/member/join")
-	public String join(MemberVO memberVO, RedirectAttributes rttr) {
-		memberService.join(memberVO);
+	public String join(MemberVO vo, RedirectAttributes rttr) {
+		if(!memberService.join(vo)) {
+			rttr.addFlashAttribute("checkValid", "유효하지않은 회원 가입입니다.");
+		} else {
+			rttr.addFlashAttribute("checkValid", "회원 가입이 완료되었습니다.");
+		}
 		return "redirect:/";
 	}
 	

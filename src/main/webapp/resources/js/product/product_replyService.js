@@ -30,6 +30,22 @@ var replyService = {
 			}
 		})
 	},
+
+	getReviewerList : function(param, callback, error) {
+		let pno = param.pno
+		
+		$.ajax({
+			type : 'post',
+			url : `${ctxPath}/productReplies/pages/${pno}`,
+			success : function(reviewList){
+				if(callback) callback(reviewList);
+			}, 
+			error : function(xhr, status, er){
+				if(error) error(er);
+			}
+		})
+	},
+
 	
 	update : function(reply, callback, error) {
 		$.ajax({

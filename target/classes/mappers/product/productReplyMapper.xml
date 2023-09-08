@@ -43,6 +43,10 @@
 	]]>
 	</select>
     
+    <select id="getReviewerList" resultType="string">
+    	select reviewer from tbl_review where pno = #{pno}
+    </select>
+    
     <select id="getReplyCount" resultType="int">
     	select count(rno) from tbl_review where pno = #{pno}
     </select>

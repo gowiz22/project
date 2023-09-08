@@ -6,7 +6,7 @@ import com.petti.domain.member.MemberVO;
 
 public interface MemberService {
 	
-	void join(MemberVO vo);
+	boolean join(MemberVO vo);
 	
 	void modify(MemberVO vo);
 	
