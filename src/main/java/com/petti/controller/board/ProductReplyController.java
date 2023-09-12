@@ -44,7 +44,7 @@ public class ProductReplyController {
 			return new ResponseEntity<>(replyService.getList(criteria, pno),HttpStatus.OK); 
 		}
 		@PostMapping("/pages/{pno}")
-		public ResponseEntity<List<String>> getReviewrList(@PathVariable Long pno){
+		public ResponseEntity<List<String>> getReviewerList(@PathVariable Long pno){
 			return new ResponseEntity<>(replyService.getReviewerList(pno),HttpStatus.OK); 
 		}
 

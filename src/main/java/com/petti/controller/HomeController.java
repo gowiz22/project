@@ -29,8 +29,7 @@ public class HomeController {
 	
 	@GetMapping("/mainSearch")
 	public void mainSearch(Model model, Criteria criteria) {
-		model.addAttribute("mainSearchTypes", criteria.getTypes());
-		model.addAttribute("mainSearchKeyword", criteria.getKeyword());
+		model.addAttribute("criteria", criteria);
 		model.addAttribute("result_anno", annoBoardService.getList(criteria));
 		model.addAttribute("result_free", freeBoardService.getList(criteria));
 		model.addAttribute("result_product", productBoardService.getList(criteria));
