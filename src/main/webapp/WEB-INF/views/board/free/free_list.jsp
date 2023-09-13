@@ -38,9 +38,10 @@
 								<th>제목</th>
 								<th>작성자</th>
 								<th>분류</th>
-								<th>추천</th>
 								<th>작성일</th>
 								<th>수정일</th>
+								<th>추천</th>
+								<th>조회수</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -53,11 +54,12 @@
 									<td>
 										<p>${board.category}</p>
 									</td>
-									<td>${board.likeCount}</td>
 									<td><tf:formatDateTime value="${board.regDate}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 									<td><tf:formatDateTime value="${board.updateDate}"
 											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td>${board.likeCount}</td>
+									<td>${board.count}</td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -151,4 +151,9 @@ public class FreeBoardServiceImpl implements FreeBoardService {
 		return attachRepository.selectByUuid(uuid);
 	}
 
+	@Override
+	public void countUp(Long bno) {
+		boardRepository.updateCount(bno);
+	}
+
 }
