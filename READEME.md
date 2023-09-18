@@ -11,3 +11,8 @@
 * 1인 프로젝트
 
 ### 개발 환경
+* 'JAVA 11.0.15'
+* 'JDK 11.0.15'
+* IDE : STS 3.9
+* Spring Framework : web mvc(5.2.24)
+* Database : Oracle DB(11g xe)
