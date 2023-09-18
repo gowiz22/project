@@ -1,7 +1,5 @@
 package com.petti.service.free_board;
 
-import java.util.List;
-
 import com.petti.domain.Criteria;
 import com.petti.domain.free_board.FreeReplyPageDTO;
 import com.petti.domain.free_board.FreeReplyVO;

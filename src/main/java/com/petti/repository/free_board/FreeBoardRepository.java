@@ -39,4 +39,7 @@ public interface FreeBoardRepository {
 	// 카테고리별 게시글 리스트
 	List<Long> boardInCategory(Long cno);
 	
+	// 조회수 업데이트
+	void updateCount(Long bno);
+	
 }

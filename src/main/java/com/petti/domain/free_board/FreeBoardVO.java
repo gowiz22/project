@@ -29,6 +29,7 @@ public class FreeBoardVO {
 	private int cno;
 	private int replyCnt;
 	private int likeCount;
+	private int count;
 	
 	@DateTimeFormat(pattern = "yyyy년MM월dd일 HH시mm분")
 	private LocalDateTime regDate;

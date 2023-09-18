@@ -87,16 +87,12 @@ public class MailSendService {
 	@Transactional
 	public void tempPwdEmail(String email) {
 		String findMemberId = memberRepository.selectByEmail(email);
-		log.info("임시 비밀번호");
 		if(findMemberId==null) {
 			throw new NotFoundMemberException();
 		}
 		String tempPassword = generateTemporaryPassword(); // 임시 비밀번호 생성
 		String encodingPwd = passwordEncoder.encode(tempPassword);
 		memberRepository.updatePassword(findMemberId, encodingPwd);
-		log.info("-----------------------------------------------------------");
-		log.info(tempPassword);
-		log.info("-----------------------------------------------------------");
 		
 		String setFrom = "ajgksh12@naver.com"; // 발신자  
 		String toMail = email; // 수신자

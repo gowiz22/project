@@ -29,4 +29,6 @@ public interface FreeBoardService {
 	FreeBoardAttachVO getAttach(String uuid);
 	
 	boolean hitLike(FreeLikeDTO likeDTO);
+	
+	void countUp(Long bno);
 }

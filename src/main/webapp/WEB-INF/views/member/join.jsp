@@ -24,6 +24,7 @@
 			<div class="form-group">
 				<span class="validMessage"></span>
 				<form:password class="form-control password" path="memberPwd" placeholder="비밀번호" maxlength="15"/>
+				<span style="font-size: 12px;">비밀번호는 8자리 이상 15자리 미만 숫자+영문+특수문자 조합이어야 합니다.</span>
 			</div>
 			<button type="button" class="btn btn-outline-primary join">회원가입</button>
 		</form:form>
@@ -76,9 +77,10 @@ $(function(){
 	$('.password').on('keyup',function(){
 		let inputPwd = $(this).val()
 		let validMessage = $('.validMessage')
+		let reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+
 		
-		if (inputPwd.length < 8 || inputPwd.length>15 ||
-				!/[0-9]/.test(inputPwd) || !(/[A-Z]/.test(inputPwd) || /[a-z]/.test(inputPwd))) {
+		if (!reg.test(inputPwd)) {
 			checkPwd = false
 			validMessage.html('유효하지않은 비밀번호입니다.')
 			validMessage.css('color','red')

@@ -40,15 +40,15 @@ $(document).ajaxSend(function(e, xhr, options){
 })
 
 function checkExtension(fileName, fileSize){
-	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");	
+	let regex = new RegExp("(.*?)\.(jpg|jpeg|png|gif|bmp)$");	
 	let maxSize = 10485760; // 10MB
 	if(fileSize > maxSize) {
 		alert('파일크기는 최대 10MB까지 업로드 가능합니다.');
 		return false; 
 	}
 	
-	if(regex.test(fileName)) {
-		alert('해당 종류의 파일은 업로드 할 수 없습니다.');
+	if(!regex.test(fileName)) {
+		alert('이미지 파일만 업로드 가능합니다.');
 		return false; 
 	}
 	return true;

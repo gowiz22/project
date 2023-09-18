@@ -45,7 +45,7 @@
 	    	 <![CDATA[ 
 	    	select * from 
 			(select /*+ INDEX_DESC(m pk_freeboard) */  
-	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, m.cno, regDate, updateDate, a.category, likeCount
+	    		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, replyCnt, m.cno, regDate, updateDate, a.category, likeCount, count
 	    		FROM tbl_freeBoard m inner join tbl_category a on m.cno = a.cno where
 	    ]]>		
 	     
@@ -109,5 +109,9 @@
 	<select id="boardInCategory" resultType="Long">
 		select bno from tbl_freeBoard where cno=#{cno}
 	</select>
+	
+	<update id="updateCount">
+		update tbl_freeBoard set count = count + 1 where bno = #{bno}
+	</update>
 	
  </mapper>
