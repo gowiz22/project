@@ -1,4 +1,4 @@
-# SpringBoot-project-PETTI
+# project-PETTI
 스프링 부트 + JSP 반려 동물 커뮤니티
 
 ## 프로젝트 소개
@@ -11,7 +11,7 @@
 * 1인 프로젝트
 
 ### 개발 환경
-* 'JAVA 11.0.15'
+* 'JAVA 11'
 * 'JDK 11.0.15'
 * IDE : STS 3.9
 * Spring Framework : web mvc(5.2.24)
