@@ -1,6 +1,8 @@
 package com.petti.service.member;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,13 +32,29 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	@Override
-	public void join(MemberVO vo) {
-		vo.setMemberPwd(passwordEncoder.encode(vo.getMemberPwd()));
-		AuthVO authVO = new AuthVO(vo.getMemberId(), "ROLE_MEMBER");
-		memberRepository.insert(vo);
-		authRepository.insert(authVO);
+	public boolean join(MemberVO vo) {
+		if(!new PasswordValidator().isVaild(vo.getMemberPwd())) return false;
+		
+		else {
+			vo.setMemberPwd(passwordEncoder.encode(vo.getMemberPwd()));
+			AuthVO authVO = new AuthVO(vo.getMemberId(), "ROLE_MEMBER");
+			memberRepository.insert(vo);
+			authRepository.insert(authVO);
+			return true;
+		}
 	}
 
+	public static class PasswordValidator{
+		private static final String PASSWORD_PATTERN = 
+				"^.*(?=^.{8,15}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$";
+		
+		public boolean isVaild(String password) {
+			Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+			Matcher matcher = pattern.matcher(password);
+			return matcher.matches();
+		}
+	}
+	
 	@Override
 	public void modify(MemberVO vo) {
 		memberRepository.update(vo);

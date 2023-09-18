@@ -1,5 +1,7 @@
 package com.petti.service.product_board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +66,11 @@ public class ProductReplyServiceImpl implements ProductReplyService {
 		return new ReviewPageDTO(
 				replyRepository.getReplyCount(pno), 
 				replyRepository.getList(pno, criteria));
+	}
+
+	@Override
+	public List<String> getReviewerList(Long pno) {
+		return replyRepository.getReviewerList(pno);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.petti.controller.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,10 @@ public class ProductReplyController {
 				@PathVariable Integer page, @PathVariable Long pno){
 			Criteria criteria = new Criteria(page,10);
 			return new ResponseEntity<>(replyService.getList(criteria, pno),HttpStatus.OK); 
+		}
+		@PostMapping("/pages/{pno}")
+		public ResponseEntity<List<String>> getReviewrList(@PathVariable Long pno){
+			return new ResponseEntity<>(replyService.getReviewerList(pno),HttpStatus.OK); 
 		}
 
 		@PreAuthorize("isAuthenticated()")

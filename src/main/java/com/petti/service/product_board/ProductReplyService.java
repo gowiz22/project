@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.petti.domain.Criteria;
 import com.petti.domain.product_board.ProductReplyVO;
-import com.petti.domain.product_board.ProductVO;
 import com.petti.domain.product_board.ReviewPageDTO;
 
 public interface ProductReplyService {
@@ -19,4 +18,5 @@ public interface ProductReplyService {
 	
 	ReviewPageDTO getList(Criteria criteria, Long pno);
 	
+	List<String> getReviewerList(Long pno);
 }

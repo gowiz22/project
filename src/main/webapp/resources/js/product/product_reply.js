@@ -93,23 +93,35 @@ $(function(){
 	});
 
 	// 댓글 추가 
-	$('.submit button').click(function(){
-		let reply = { // 입력 데이터 객체  
-			pno : pnoValue, // 게시물 번호 
-			r_comment : $('.r_comment').val(), // 내용
-			reviewer : $('.reviewer').html(),	// 작성자
-			score : $('.score').val()
+	$('.submit button').click(function(){	
+		let pno = {
+			pno : pnoValue
 		}
-			
-		replyService.add(reply,function(result){ // 댓글 추가 처리 
-			if(result=='success'){
-				alert('댓글을 등록하였습니다.');
+		
+			// 댓글 작성 확인
+		replyService.getReviewerList(pno, function (reviewers) {
+			if(reviewers.includes(memberId)) {
+				alert("이미 작성한 리뷰가 있습니다.")
 			} else {
-				alert('댓글 등록 실패');
+			
+				let reply = { // 입력 데이터 객체  
+					pno : pnoValue, // 게시물 번호 
+					r_comment : $('.r_comment').val(), // 내용
+					reviewer : $('.reviewer').html(),	// 작성자
+					score : $('.score').val()
+				}
+					
+				replyService.add(reply,function(result){ // 댓글 추가 처리 
+					if(result=='success'){
+						alert('댓글을 등록하였습니다.');
+					} else {
+						alert('댓글 등록 실패');
+					}
+					$('.replyContent').val(''); // 댓글입력창 초기화 
+					showList(1); // 목록 갱신		
+				});
 			}
-			$('.replyContent').val(''); // 댓글입력창 초기화 
-			showList(1); // 목록 갱신		
-		});
+		})
 	});	
 	
 	// 댓글 수정 및 삭제 처리 

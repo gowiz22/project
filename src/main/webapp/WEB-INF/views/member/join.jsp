@@ -20,9 +20,10 @@
 			</div>
 			<div class="form-group">
 				<form:input class="form-control" path="email" placeholder="이메일" readonly="true"/>
-			</div>	
+			</div>
 			<div class="form-group">
-				<form:password class="form-control" path="memberPwd" placeholder="비밀번호"/>
+				<span class="validMessage"></span>
+				<form:password class="form-control password" path="memberPwd" placeholder="비밀번호" maxlength="15"/>
 			</div>
 			<button type="button" class="btn btn-outline-primary join">회원가입</button>
 		</form:form>
@@ -33,7 +34,8 @@
 
 <script>
 $(function(){
-	let idCheckFlag = false;
+	let idCheckFlag = false
+	let checkPwd = false
 	
 	$('.idCheck').click(function(){
 		let idInput = $('#memberId');
@@ -71,11 +73,39 @@ $(function(){
 		})
 	});
 	
+	$('.password').on('keyup',function(){
+		let inputPwd = $(this).val()
+		let validMessage = $('.validMessage')
+		
+		if (inputPwd.length < 8 || inputPwd.length>15 ||
+				!/[0-9]/.test(inputPwd) || !(/[A-Z]/.test(inputPwd) || /[a-z]/.test(inputPwd))) {
+			checkPwd = false
+			validMessage.html('유효하지않은 비밀번호입니다.')
+			validMessage.css('color','red')
+			$(this).removeClass('border-success')
+					.addClass('border border-danger')
+					.css('box-shadow','0 0 0 0.2rem rgba(255,0,0,.25)')
+		} else {
+			checkPwd = true
+			validMessage.html('유효한 비밀번호입니다.')
+			validMessage.css('color','green')
+			$(this).removeClass('border-danger')
+				.addClass('border border-success')	
+				.css('box-shadow','0 0 0 0.2rem rgba(0,128,0,.25)')
+		}
+	})
+	
+	
 	$('.join').click(function(){
 		
 		if(!idCheckFlag){
-			alert('ID중복 확인바람!')
-			return;
+			alert('ID중복 확인해주세요!')
+			return
+		}
+		
+		if(!checkPwd) {
+			alert('비밀번호를 확인해주세요!')
+			return
 		}
 		
 		$('#memberVO').submit();			
