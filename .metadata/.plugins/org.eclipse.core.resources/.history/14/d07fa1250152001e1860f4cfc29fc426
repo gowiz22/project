@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="includes/header.jsp"%>
+<div class="container">
+	<h3>홈</h3>
+	<div class="row mb-3">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="d-inline-block" style="width: 120px;">
+						<select class="amount form-control" id="category">
+							<option value="0">전체</option>
+							<c:forEach items="${category}" var="c">
+									<option value="${c.cno}" ${criteria.cno eq c.cno ? 'selected':''}>${c.kind}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="d-inline-block ml-2">
+						<c:choose>
+							<c:when test="${criteria.recommend == 'T'}">
+								<button class="recommend btn btn-danger">5추천 글</button>
+							</c:when>
+							<c:when test="${criteria.recommend == 'F'}">
+								<button class="recommend btn btn-outline-danger">5추천 글</button>
+							</c:when>
+						</c:choose>
+					</div>
+				</div>
+				<div class="card-body">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>#번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>분류</th>
+								<th>작성일</th>
+								<th>수정일</th>
+								<th>추천</th>
+								<th>조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${list}" var="board">
+								<tr>
+									<td>${board.bno}</td>
+									<td><a class="move" href="${board.bno}">${board.title}
+											${board.replyCnt == 0 ? '': [board.replyCnt]}</a></td>
+									<td>${board.writer}</td>
+									<td>
+										<p>${board.category}</p>
+									</td>
+									<td><tf:formatDateTime value="${board.regDate}"
+											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td><tf:formatDateTime value="${board.updateDate}"
+											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td>${board.likeCount}</td>
+									<td>${board.count}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+	
+</div>
+<%@ include file="includes/footer.jsp"%>
+
+<script>
+window.onload = function() {
+	let validMessage = "${checkValid}"
+	if(validMessage) {
+		alert(validMessage)
+	}
+}
+</script>

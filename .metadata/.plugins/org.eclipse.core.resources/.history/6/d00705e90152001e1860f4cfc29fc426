@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="includes/header.jsp"%>
+<div class="container">
+	<h3>인기 게시글</h3>
+	<table>
+		<tr>
+			<th>
+				<a href="${ctxPath}">실시간</a>
+			</th>
+			<th>
+				<a href="${ctxPath}">일간</a>
+			</th>
+			<th>
+				<a href="${ctxPath}">주간</a>
+			</th>
+			<th>
+				<a href="${ctxPath}">월간</a>
+			</th>
+		</tr>
+		<div class="List"></div>
+		<tr>
+			<td colspan="4">
+
+			</td>
+		</tr>
+	</table>
+	
+</div>
+<%@ include file="includes/footer.jsp"%>
+
+<script>
+window.onload = function() {
+	let validMessage = "${checkValid}"
+	if(validMessage) {
+		alert(validMessage)
+	}
+}
+</script>

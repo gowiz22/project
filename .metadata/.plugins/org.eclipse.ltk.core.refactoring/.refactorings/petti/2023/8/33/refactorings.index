@@ -1,0 +1,34 @@
+1691971864150	Rename type 'AnnoReplyRepositoryTest'
+1691971895560	Rename type 'AnnoReplyRepository'
+1691971898963	Move compilation unit
+1691971917877	Delete element
+1691971929164	Rename type 'AnnoReplyVO'
+1691971932263	Move compilation unit
+1691971941527	Rename type 'AnnoReplyController'
+1691971956823	Rename type 'AnnoReplyService'
+1691971964565	Rename type 'AnnoReplyServiceImpl'
+1691971967410	Move compilation unit
+1691971969277	Move compilation unit
+1691971977176	Rename resource 'AnnoReplyMapper.xml'
+1691974418659	Move file
+1691978291787	Copy file
+1691993598228	Rename type 'BoardAttachRepository'
+1691993730019	Copy file
+1691997134928	Copy file
+1692000887746	Delete element
+1692147414283	Delete element
+1692150294575	Delete element
+1692150435503	Delete element
+1692152482794	Copy file
+1692153168918	Delete element
+1692153600103	Copy file
+1692167176825	Copy file
+1692235936991	Move compilation unit
+1692237907208	Copy file
+1692341213164	Rename resource 'FreeBoard'
+1692341218681	Rename resource 'freeBoard'
+1692341223417	Rename resource 'freeboard'
+1692341226670	Move files
+1692341255036	Move file
+1692341270114	Move files
+1692341288526	Copy file
