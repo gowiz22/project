@@ -16,6 +16,3 @@
 * IDE : STS 3.9
 * Spring Framework : web mvc(5.2.24)
 * Database : Oracle DB(11g xe)
-
-## 주요 기능
-#### 로그인 - <a href="https://github.com/gowiz22/project/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C(Login)">상세보기 -WIKI 이동</a>
